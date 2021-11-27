@@ -1,0 +1,54 @@
+import logo from "./logo.svg";
+import style from "./App.module.sass";
+import { Link, Route, Switch } from "react-router-dom";
+import FAQ from "./pages/faq/FAQ";
+import Contact from "./pages/contact/Contact";
+import Demo from "./pages/demo/DemoApp";
+import Home from "./pages/home/Home";
+import React from "react";
+
+const App = () => {
+  return (
+    <div className={style.App}>
+      <header className={style["App-header"]}>
+        <nav>
+          <div>
+            <Link to="/" className={style['pull-left']}>
+              <img src={logo} className={style['logo']} />
+            </Link>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/faq">FAQ</Link>
+              </li>
+              <li>
+                <Link to="/contact">Contact</Link>
+              </li>
+              <li>
+                <Link to="/demo">Demo</Link>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <Switch>
+        <Route path="/faq">
+          <FAQ />
+        </Route>
+        <Route path="/contact">
+          <Contact />
+        </Route>
+        <Route path="/demo">
+          <Demo />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </div>
+  );
+};
+
+export default App;

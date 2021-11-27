@@ -1,0 +1,58 @@
+@import "bootstrap"
+.button-wrong
+    @extend .text-danger
+.button-right
+    @extend .text-success
+
+.field-container
+
+.field-list
+    overflow: hidden
+    width: 100%
+    box-sizing: border-box
+    list-style: none
+
+    li
+        cursor: pointer
+        padding: 12px 8px
+
+        -webkit-transform-origin: 50% 0%
+        transform-origin: 50% 0
+
+        /* Close transition */
+        -webkit-transition: 0.2s linear 0.3s
+        transition: 0.2s linear 0.3s
+
+    .field-card-item
+        &.folded
+            -webkit-transform: perspective(240px) rotateX(90deg)
+            transform: perspective(240px) rotateX(90deg)
+            -webkit-transition: linear 0s
+            transition: linear 0s
+
+.card-review-controls
+    -webkit-transition: opacity 0.2s linear 0.6s
+    transition: opacity 0.2s linear 0.6s
+    position: static
+    opacity: 1
+    &.folded
+        position: absolute
+        opacity: 0
+        -webkit-transition: opacity linear 0s
+        transition: opacity linear 0s
+
+.dots-container
+    padding: 4px
+    .dot
+        margin: 4px
+        height: 16px
+        width: 16px
+        background-color: #aaa
+        border-radius: 50%
+        display: inline-block
+        -webkit-transition: background-color 0.2s linear
+        transition: background-color 0.2s linear
+        &.active
+            background-color: #333
+.note-list-item
+    overflow: ellipsis
