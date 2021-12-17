@@ -45,7 +45,9 @@ export class AccountService {
             .post<ILoginRequest, AxiosResponse<[ILoginResponse, number]>>("/auth", postData)
             .then((res) => {
                 if (res.status === 200) {
-                    resolve(User.from_document(res.data[0].user));
+                    let user = User.from_document(res.data[0].user);
+                    user.loggedIn = true;
+                    resolve(user);
                 } else {
                     reject({
                         ...res.data,

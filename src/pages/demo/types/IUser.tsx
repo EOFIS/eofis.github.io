@@ -30,6 +30,7 @@ export class User implements IUser {
     is_activated: boolean;
 
     constructor (name: string, email: string, last_login: Date, is_activated: boolean = false, loggedIn: boolean = false, _id?: ObjectId) {
+        console.log(`_ID: ${_id} : ${_id?.id}`);
         this._id = _id;
         this.name = name;
         this.email = email;
