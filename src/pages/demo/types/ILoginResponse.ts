@@ -1,6 +1,6 @@
-import IUser from "./IUser";
+import { IUserDocument } from "./IUser";
 
 export interface ILoginResponse {
-    user: IUser;
-    errorMessage?: string;
+    user: IUserDocument;
+    errorMessage?: Array<string>;
 }

@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import { AccountService } from "../services/AccountService";
 import { IAuthContext } from "../types/IAuthContext";
 import { ILoginRequest } from "../types/ILoginRequest";
-import IUser from "../types/IUser";
+import { IUser } from "../types/IUser";
 
 const authContext = createContext<IAuthContext>({signin: ()=>{}, signout: ()=>{}});
 
@@ -28,8 +28,8 @@ const useProvideAuth = (): IAuthContext => {
         console.log(`useProvideAuth.signin: loginRequest: ${JSON.stringify(loginRequest)}; signedIn: ${signedIn}`);
         return AccountService.login(loginRequest)
             .then((res) => {
-                console.log(`useProvideAuth.signin (after AccountService.login): USER: ${JSON.stringify(res.user)}; ERROR: ${JSON.stringify(res.errorMessage)}`);
-                setUser(res.user);
+                console.log(`useProvideAuth.signin (after AccountService.login): USER: ${JSON.stringify(res)}`);
+                setUser(res);
                 signedIn();
             });
     };

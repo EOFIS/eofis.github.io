@@ -10,7 +10,7 @@ import NotePage from "./pages/notes/components/NotePage";
 import QuizPage from "./pages/quiz/QuizPage";
 import { INote } from "./types/INote";
 import { NoteService } from "./services/NoteService";
-import IUser from "./types/IUser";
+import { IUser } from "./types/IUser";
 import { ILoginResponse } from "./types/ILoginResponse";
 import AccountPage from "./pages/account/AccountPage";
 import { ProtectedRoute, ProvideAuth } from "./components/ProtectedRoute";

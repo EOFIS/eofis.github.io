@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react"
 import { useAuth } from "../../components/ProtectedRoute";
-import IUser from "../../types/IUser";
+import { IUser } from "../../types/IUser";
 
 interface IAccountPageProps {
     user?: IUser;

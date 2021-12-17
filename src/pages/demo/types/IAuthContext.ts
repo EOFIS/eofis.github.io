@@ -1,5 +1,5 @@
 import { ILoginRequest } from "./ILoginRequest";
-import IUser from "./IUser";
+import { IUser } from "./IUser";
 
 export interface IAuthContext {
     user?: IUser;

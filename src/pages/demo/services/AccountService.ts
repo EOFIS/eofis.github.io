@@ -4,9 +4,8 @@ import { api } from "../../../http-common";
 import { AxiosResponse } from "axios";
 import { ILoginRequest } from "../types/ILoginRequest";
 import { ILoginResponse } from "../types/ILoginResponse";
-import IUser from "../types/IUser";
+import { IUser, IUserDocument, User } from "../types/IUser";
 import { IUpdateResponse } from "../types/IUpdateResponse";
-import { resolve } from "dns";
 import IUpdateRequest from "../types/IUpdateRequest";
 
 export class AccountService {
@@ -40,15 +39,15 @@ export class AccountService {
         });
     }
 
-    public static login(postData: ILoginRequest): Promise<ILoginResponse> {
-        return new Promise<ILoginResponse>((resolve, reject) => {
+    public static login(postData: ILoginRequest): Promise<IUser> {
+        return new Promise<IUser>((resolve, reject) => {
             console.log(`AccountService.login`);
             api
             .post<ILoginRequest, AxiosResponse<[ILoginResponse, number]>>("/auth", postData)
             .then((res) => {
                 console.log(`AccountService.login: RX: ${JSON.stringify(res.data)}`);
                 if (res.status === 200) {
-                    resolve(res.data[0]);
+                    resolve(User.from_document(res.data[0].user));
                 } else {
                     reject({
                         ...res.data,
