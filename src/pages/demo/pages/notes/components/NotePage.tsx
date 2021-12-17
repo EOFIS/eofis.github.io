@@ -61,7 +61,6 @@ export default class NotePage extends React.PureComponent<RouteComponentProps<IN
         this.setState((prevState) => {
             const fields = [...prevState.note.fields]
             fields[idx] = fieldValue;
-            console.log(`Old: ${prevState.note.fields} > New: ${fields}`);
             return {
                 note: {
                     ...prevState.note,

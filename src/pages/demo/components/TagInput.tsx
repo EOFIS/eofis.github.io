@@ -55,7 +55,6 @@ export default class TagInput extends React.PureComponent<ITagInputProps, ITagIn
                 tags: tags,
                 newTag: ''
             }));
-            console.log(`NEW TAG SUBMITTED: ${tags}`);
             this.props.onChangeTags(tags);
         }
     }

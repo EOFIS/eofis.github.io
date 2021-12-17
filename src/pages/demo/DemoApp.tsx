@@ -20,41 +20,12 @@ export default () => {
     const [user, setUser] = useState<IUser | undefined>(undefined);
     const [notes, setNotes] = useState<Array<INote>>([]);
 
-    useEffect(() => {
-        // api.interceptors.response.use(response => {
-        //     return response;
-        // }, (error: AxiosError<any>) => {
-        //     if (error.response?.status === 401) {
-        //         if (user === undefined) {
-        //             AccountService
-        //                 .login({ email: "tiarnachreidy@gmail.com", password: "WatchEOFISMate", rememberMe: true })
-        //                 .then((result: ILoginResponse) => {
-        //                     setUser(result.user);
-        //                 })
-        //                 .catch((reason: any) => {
-        //                     console.log(`LOGIN REQUEST REJECTED IN DemoApp.tsx: ${JSON.stringify(reason)}`)
-        //                 })
-        //             // AuthService.logout().then(res => {
-        //             //     window.location.replace("/signOut");
-        //             // });
-        //         } else {
-        //             // This user is not permitted to access this content somehow
-        //             throw error;
-        //         }
-        //     } else if (error.response?.status === 500) {
-        //         throw error.response.data["message"];
-        //     }
-        //     return error;
-        // })
-    })
-
     // useEffect(() => {
     //     NoteService.getNotes().then(response => { setNotes(response) });
     // }, [user]);
 
     return (
         <>
-            {/* <UserContext.Provider value={user}> */}
             <ProvideAuth>
                 <Switch>
                     <Route path="/demo/quiz">
@@ -78,7 +49,6 @@ export default () => {
                     </Route>
                 </Switch>
             </ProvideAuth>
-            {/* </UserContext.Provider> */}
         </>
     );
 };

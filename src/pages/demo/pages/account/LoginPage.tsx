@@ -12,7 +12,6 @@ export default () => {
     let { from } = location.state || { from : { pathname: '/' }};
     let login = (loginRequest: ILoginRequest) => {
         auth.signin(loginRequest, () => {
-            console.log(`LoginPage: SIGNED IN, navigating to ${from.pathname} | ${JSON.stringify(from)}`);
             history.replace(from);
         });
     };

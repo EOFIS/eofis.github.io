@@ -17,7 +17,6 @@ export class CardService {
         return NoteService.getNotes()
             .then(response => {
                 let notes = response.filter(note => note.cards !== undefined);
-                console.log(notes);
                 notes.forEach(n => {
                     n.cards.forEach(c => {
                         c.tags = n.tags;
@@ -26,7 +25,6 @@ export class CardService {
                 });
                 let cards = notes.map((note) => note.cards).flat(1);
                 //let cardsAugmented = ( notes.map((note) => note.cards.forEach( card => card.tags = note.tags ).forEach( card => card.source = note.source ))).flat(1).filter('Object');
-                //console.log(cardsAugmented);
                 let cardsSorted = cards.sort((a, b) => {
                     const now = Date.now();
                     return cardRecall(a, now) - cardRecall(b, now);
@@ -34,7 +32,7 @@ export class CardService {
                 return cardsSorted.slice(0, amount);
             })
             .catch(e => {
-                console.log(e);
+                console.error(e);
             });
     }
     public static getCards() : Promise<ICard[]>{

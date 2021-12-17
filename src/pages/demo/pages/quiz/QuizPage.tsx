@@ -40,9 +40,7 @@ export default class QuizPage extends React.PureComponent<IQuizPageProps, IQuizP
 
     componentDidMount() {
         this.refreshList().then(() => {
-            console.log(`componentDidMount: ${this.state.toReview}`);
             this.nextCard();
-            console.log(`componentDidMount (after nextCard): ${this.state.toReview}`);
         });
     }
     componentWillUnmount() {
@@ -53,7 +51,6 @@ export default class QuizPage extends React.PureComponent<IQuizPageProps, IQuizP
 
     async refreshList() {
         await this.retrieveCards();
-        console.log(`refreshList: ${this.state.toReview}`);
         this.setState(state => ({
             toReview: [...state.cards.reverse()]
         }));
@@ -88,7 +85,6 @@ export default class QuizPage extends React.PureComponent<IQuizPageProps, IQuizP
     nextCard() {
         this.setState(state => {
             const nextCard = state.toReview[0];
-            console.log(`nextCard (setState): ${this.state.toReview}`);
             return {
                 currentCard: nextCard,
                 toReview: state.toReview.slice(1),

@@ -33,7 +33,7 @@ export class AccountService {
                 resolve(true);
             })
             .catch(err => {
-                console.log(`Error logging out: ${err}`);
+                console.error(`Error logging out: ${err}`);
                 reject(err);
             });
         });
@@ -41,11 +41,9 @@ export class AccountService {
 
     public static login(postData: ILoginRequest): Promise<IUser> {
         return new Promise<IUser>((resolve, reject) => {
-            console.log(`AccountService.login`);
             api
             .post<ILoginRequest, AxiosResponse<[ILoginResponse, number]>>("/auth", postData)
             .then((res) => {
-                console.log(`AccountService.login: RX: ${JSON.stringify(res.data)}`);
                 if (res.status === 200) {
                     resolve(User.from_document(res.data[0].user));
                 } else {

@@ -72,7 +72,6 @@ export default class NotesPage extends React.PureComponent<INotesPageProps, INot
             currentNote: note,
             currentIndex: index
         });
-        console.log(this.state.currentNote);
     }
 
     search() {
@@ -88,7 +87,7 @@ export default class NotesPage extends React.PureComponent<INotesPageProps, INot
                 });
             })
             .catch(err => {
-                console.log(`Error querying notes: ${err}`);
+                console.error(`Error querying notes: ${err}`);
             })
     }
 
