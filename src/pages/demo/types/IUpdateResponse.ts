@@ -1,3 +1,4 @@
+// Empty if all goes well
 export interface IUpdateResponse<T> {
-    message: string;
+    errorMessages?: Array<string>;
 }

@@ -8,6 +8,7 @@ export class NoteService {
             api
             .get("/notes")
             .then((res : AxiosResponse<any>) => {
+                console.log(`NoteService.getNotes(): ${JSON.stringify(res)}`);
                 resolve(res.data?.map((note : any) => ({
                     _id: note._id.$oid,
                     _partition: note._partition,
