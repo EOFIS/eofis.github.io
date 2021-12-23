@@ -17,7 +17,6 @@ import { ProtectedRoute, ProvideAuth } from "./components/ProtectedRoute";
 import LoginPage from "./pages/account/LoginPage";
 
 export default () => {
-    const [user, setUser] = useState<IUser | undefined>(undefined);
     const [notes, setNotes] = useState<Array<INote>>([]);
 
     // useEffect(() => {

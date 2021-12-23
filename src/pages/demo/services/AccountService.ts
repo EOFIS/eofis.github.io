@@ -39,8 +39,8 @@ export class AccountService {
         });
     }
 
-    public static login(postData: ILoginRequest): Promise<IUser> {
-        return new Promise<IUser>((resolve, reject) => {
+    public static login(postData: ILoginRequest): Promise<User> {
+        return new Promise<User>((resolve, reject) => {
             api
             .post<ILoginRequest, AxiosResponse<[ILoginResponse, number]>>("/auth", postData)
             .then((res) => {

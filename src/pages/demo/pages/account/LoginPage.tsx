@@ -16,6 +16,12 @@ export default () => {
         });
     };
 
+    useEffect(() => {
+        if (auth.user) {
+            history.replace(from);
+        }
+    })
+
     return (
         <>
         AUTH: {JSON.stringify(auth)}<br/>

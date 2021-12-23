@@ -13,6 +13,8 @@ export interface IUser {
 
 const __LAST_LOGIN_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S%z";
 
+export interface IUserLocalStorage extends IUserDocument {}
+
 export interface IUserDocument {    
     _id?: ObjectId;
     name: string;
@@ -43,4 +45,15 @@ export class User implements IUser {
         let last_login = new Date(doc.last_login);
         return new User(doc.name, doc.email, last_login, doc.is_activated, false, doc._id);
     }
+    public to_document() : object {
+        return this;
+    }
+    public static from_localstorage(localStorageString: string) : User {
+        const doc: IUserLocalStorage = JSON.parse(localStorageString);
+        return this.from_document(doc);
+    }
+    public to_localstorage() : string {
+        return JSON.stringify(this.to_document());
+    }
+
 }
