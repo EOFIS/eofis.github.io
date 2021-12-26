@@ -2,7 +2,7 @@ import { ICard } from "../types/ICard";
 import { NoteService } from "./NoteService";
 import ebisu from "ebisu-js";
 import { ICardReview } from "../types/ICardReview";
-import { api } from "../../../http-common";
+import { api } from "../../../api";
 import { IUpdateResponse } from "../types/IUpdateResponse";
 import { AxiosResponse } from "axios";
 

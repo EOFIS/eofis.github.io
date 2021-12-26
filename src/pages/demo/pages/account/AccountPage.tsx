@@ -13,6 +13,7 @@ interface IAccountPageProps {
 export default (props: IAccountPageProps) => {
     const [cachedUser, setCachedUser] = useState<IUser>();
     const [lastLogin, setLastLogin] = useState<string>();
+    const [errorMessages, setErrorMessages] = useState<Array<string>>([]);
 
     let history = useHistory();
     let auth = useAuth();
@@ -30,8 +31,11 @@ export default (props: IAccountPageProps) => {
     }, [cachedUser?.last_login]);
 
     let logout = () => {
+        setErrorMessages([]);
         auth.signout(() => {
             history.push('/demo/login');
+        }, (messages) => {
+            setErrorMessages(messages);
         });
     };
 

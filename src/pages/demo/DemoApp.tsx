@@ -1,7 +1,6 @@
 import { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import { api } from "../../http-common";
 import DemoHome from "./pages/DemoHome";
 import NotesPage from "./pages/notes/NotesPage";
 import { AccountService } from "./services/AccountService";

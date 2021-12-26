@@ -12,11 +12,8 @@ export const ProvideAuth: React.FC<{}> = ({ children }) => {
     const auth = useProvideAuth();
     useEffect(() => {
         const loggedInUser : string|null = localStorage.getItem(LOCAL_STORAGE.USER);
-        console.log(`May load user from local storage: ${loggedInUser}`);
         if (loggedInUser != null) {
-            console.log(`Loading user ${loggedInUser}`);
             auth.user = User.from_localstorage(loggedInUser);
-            console.log(`Logged in user set: ${auth.user}`);
         }
     },[]);
     return (
@@ -32,17 +29,27 @@ export function useAuth() {
 
 const useProvideAuth = (): IAuthContext => {
     const [user, setUser] = useState<IUser | undefined>(undefined);
-    const signin = async (loginRequest: ILoginRequest, signedIn: () => void) => {
-        const res = await AccountService.login(loginRequest);
-        setUser(res);
-        localStorage.setItem(LOCAL_STORAGE.USER, res.to_localstorage())
-        signedIn();
+    const signin = async (loginRequest: ILoginRequest, signedIn: () => void, error: (messages: Array<string>) => void) => {
+        AccountService.login(loginRequest)
+        .then(
+            (value: User) => {
+                setUser(value);
+                localStorage.setItem(LOCAL_STORAGE.USER, value.to_localstorage())
+                signedIn();
+            },
+            (reason: Array<string>) => {
+                error(reason);
+            });
     };
-    const signout = async (signedOut: () => void) => {
-        const res = await AccountService.logout();
-        localStorage.removeItem(LOCAL_STORAGE.USER)
-        setUser(undefined);
-        signedOut();
+    const signout = async (signedOut: () => void, error: (messages: Array<string>) => void) => {
+        AccountService.logout()
+        .then((value: boolean) => {
+            localStorage.removeItem(LOCAL_STORAGE.USER);
+            setUser(undefined);
+            signedOut();
+        }, (reason: Array<string>) => {
+            error(reason);
+        });
     };
     return {
         user,
@@ -52,15 +59,6 @@ const useProvideAuth = (): IAuthContext => {
 };
 export const ProtectedRoute: React.FC<{ path: string }> = ({ children, ...rest }) => {
     let auth = useAuth();
-    // useEffect(() => {
-    //     const loggedInUser : string|null = localStorage.getItem(LOCAL_STORAGE.USER);
-    //     console.log(`May load user from local storage in ProtectedRoute: ${loggedInUser}`);
-    //     if (loggedInUser != null) {
-    //         console.log(`Loading user in ProtectedRoute ${loggedInUser}`);
-    //         auth.user = User.from_localstorage(loggedInUser);
-    //         console.log(`Logged in user set in ProtectedRoute: ${auth.user}`);
-    //     }
-    // });
     return (
         <Route
             {...rest}

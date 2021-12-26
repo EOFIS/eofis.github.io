@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { api } from "../../../http-common";
+import { api } from "../../../api";
 import { INote } from "../types/INote";
 
 export class NoteService {
