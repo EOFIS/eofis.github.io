@@ -6,7 +6,13 @@ import { ILoginRequest } from "../../types/ILoginRequest";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Form } from "../../components/Form";
 import { Input } from "../../components/Input";
+import { ErrorWrapper } from "../../components/ErrorWrapper";
+import styled from "styled-components";
 
+const LoginPageStyle = styled.div`
+background: #771527;
+padding: 48px 128px;
+`;
 export default function LoginPage() {
     let history = useHistory();
     let location = useLocation<ILocationState>();
@@ -24,7 +30,7 @@ export default function LoginPage() {
             setErrorMessages(messages);
         });
     };
-    // data: ILoginRequest
+
     const onLoginSubmit: SubmitHandler<ILoginRequest> = (data: ILoginRequest) => login(data);
 
     useEffect(() => {
@@ -34,29 +40,24 @@ export default function LoginPage() {
     }, []);
 
     return (
-        <>
-            LOG IN to view protected page "{from.pathname}"<br />
-
-
-            <form onSubmit={handleSubmit(onLoginSubmit)}>
-                <input type="email" placeholder="Email" {...register("email", { required: 'An email is required' })} />
-                <input type="password" placeholder="Password" {...register("password", { required: 'Please enter your password' })} />
-                <input type="checkbox" placeholder="Remember Me" {...register("rememberMe", { required: false })} />
-
-                <input type="submit" />
-
-                {errorMessages.length > 0?
-                    <ul>
-                        {errorMessages.map((value, index, array) => 
+        <LoginPageStyle>
+            <Form onSubmit={handleSubmit(onLoginSubmit)}>
+                <h2>Login</h2>
+                <hr/>
+                {errorMessages.length > 0 ?
+                    <ErrorWrapper>
+                        {errorMessages.map((value, index, array) =>
                             <li key={index}>{value}</li>
                         )}
-                    </ul>
-                    : JSON.stringify(errorMessages)}
-            </form>
+                    </ErrorWrapper>
+                    : ''}
+                <Input type="email" placeholder="Email" {...register("email", { required: 'An email is required' })} />
+                <Input type="password" placeholder="Password" {...register("password", { required: 'Please enter your password' })} />
 
-            <button onClick={() => login({ email: "tiarnachreidy@gmail.com", password: "WatchEOFISMate", rememberMe: true })}>
-                LOG IN
-            </button>
-        </>
+                <Input type="submit" value="Log in" />
+
+                {/* <Input type="checkbox" placeholder="Remember Me" {...register("rememberMe", { required: false })} /> */}
+            </Form>
+        </LoginPageStyle>
     )
 }

@@ -2,45 +2,78 @@ import React from "react";
 import styled from "styled-components";
 
 const InputStyle = styled.div`
-position: relative;
-margin-bottom: 16px;
-background: none;
+display: inline-block;
+width: 100%;
+margin-top: 24px;
 
-span {
-    position: absolute;
-    padding: 0 0 0 6px;
-    color: #c2c2c2;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+label {
+    display: block;
+    text-align: left;
+    line-height: 1.5;
+    font-size: clamp(1.0125rem, 1.25vm, 1.125rem);
+    margin-bottom: 4px;
 }
+
+input {
+    color: #FCECB6;
+    background: none;
+    width: 100%;
+    height: 48px;
+    padding-left: 16px;
+    font-size: 0.875rem;
+    line-height: 1.4rem;
+
+    &[type='text'], &[type='password'], &[type='email'] {
+        border: none;
+        border-bottom: 2px solid #FCECB6;
+        transition: border-color 0.3s ease-in-out;
+        transition: color 0.3s ease-in-out;
+
+        &::placeholder {
+            font-weight: bold;
+        }
+        &:focus, &:hover {
+            outline: none;
+            border-bottom: 2px solid #ff4906;
+            color: #ff4906;
+        }
+    }
+
+    &[type='submit'] {
+        border: none;
+        border-radius: 24px;
+        height: 48px;
+        color: white;
+        background: #ff4906;
+        padding: 4px;
+        width: 100%;
+        font-weight: bold;
+        &:hover {
+            background: #df3e02;
+        }
+    }
+}
+
 `;
 
-interface IInputProps{
+interface IInputProps {
     type?: string;
-    icon?: string;
     placeholder?: string;
     onChange?: (e?: any) => {};
     value?: string | number;
     name?: string;
     autoComplete?: string;
 }
-export const Input = (props: IInputProps) => {
+export const Input: React.FC<IInputProps> = React.forwardRef(({...props}, ref) => {//(props: IInputProps) => {
     return (
         <InputStyle>
-            {props.icon && 
-                <span>
-                    {props.icon}
-                </span>}
+            <label htmlFor={props.name}>
+                {props.placeholder}
+            </label>
             <input
-                name={props.name}
-                type={props.type}
-                autoComplete={props.autoComplete}
-                placeholder={props.placeholder}
-                onChange={props.onChange}
-                value={props.value}
+                ref={ref}
+                {...props}
             />
         </InputStyle>
     )
-}
+})
