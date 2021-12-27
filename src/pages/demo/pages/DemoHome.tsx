@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
-import { NoteService } from "../services/NoteService";
-import { INote } from "../types/INote";
 
 export default () => {
 

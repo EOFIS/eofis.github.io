@@ -28,11 +28,11 @@ export default class NotesPage extends React.PureComponent<INotesPageProps, INot
         };
 
         this.onChangeSearchQuery = this.onChangeSearchQuery.bind(this);
-    
+
         this.retrieveNotes = this.retrieveNotes.bind(this);
-    
+
         this.refreshList = this.refreshList.bind(this);
-    
+
         this.setActiveNote = this.setActiveNote.bind(this);
         this.search = this.search.bind(this);
     }
@@ -123,11 +123,11 @@ export default class NotesPage extends React.PureComponent<INotesPageProps, INot
                                         className={
                                             "list-group-item " + (index === currentIndex ? "active" : "")
                                         }
-                                      onClick={() => this.setActiveNote(note, index)}
-                                      key={index}
-                                      >
-                                          {note.fields[0]}
-                                          </li>
+                                        onClick={() => this.setActiveNote(note, index)}
+                                        key={index}
+                                    >
+                                        {note.fields[0]}
+                                    </li>
                                 ))
                             }
                         </ul>
@@ -160,16 +160,22 @@ export default class NotesPage extends React.PureComponent<INotesPageProps, INot
                                     </label>
                                     {" " + currentNote.source.title}
                                 </div>
-                                <Link to={'/demo/notes/' + currentNote._id }
-                                className="badge badge-warning">
+                                <div>
+                                    <label>
+                                        <strong>ID</strong>
+                                    </label>
+                                    {" " + currentNote._id}
+                                </div>
+                                <Link to={'/demo/notes/' + currentNote._id}
+                                    className="badge badge-warning">
                                     Edit
                                 </Link>
                             </div>
                         ) : <div>
-                            <br/>
+                            <br />
                             <p>Please select a note to view.</p>
-                            </div>
-                            }
+                        </div>
+                        }
                     </div>
                 </div>
             </>

@@ -12,6 +12,7 @@ import styled from "styled-components";
 const LoginPageStyle = styled.div`
 background: #771527;
 padding: 48px 128px;
+color: #FCECB6;
 `;
 export default function LoginPage() {
     let history = useHistory();
@@ -41,9 +42,9 @@ export default function LoginPage() {
 
     return (
         <LoginPageStyle>
+            <h1>Log in to your account</h1>
+            <caption>Let's get revising!</caption>
             <Form onSubmit={handleSubmit(onLoginSubmit)}>
-                <h2>Login</h2>
-                <hr/>
                 {errorMessages.length > 0 ?
                     <ErrorWrapper>
                         {errorMessages.map((value, index, array) =>
