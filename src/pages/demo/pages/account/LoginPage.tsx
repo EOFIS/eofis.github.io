@@ -11,7 +11,7 @@ import styled from "styled-components";
 
 const LoginPageStyle = styled.div`
 background: #771527;
-padding: 48px 128px;
+// padding: 48px 128px;
 color: #FCECB6;
 `;
 export default function LoginPage() {
@@ -43,7 +43,7 @@ export default function LoginPage() {
     return (
         <LoginPageStyle>
             <h1>Log in to your account</h1>
-            <caption>Let's get revising!</caption>
+            <h3>Let's get revising!</h3>
             <Form onSubmit={handleSubmit(onLoginSubmit)}>
                 {errorMessages.length > 0 ?
                     <ErrorWrapper>

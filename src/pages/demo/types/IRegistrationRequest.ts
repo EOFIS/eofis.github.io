@@ -1,4 +1,4 @@
-export interface IRegisterViewModel {
+export interface IRegistrationRequest {
     email: string;
     name: string;
     password: string;

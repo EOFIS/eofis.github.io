@@ -1,4 +1,4 @@
-import { IRegisterViewModel } from "../types/IRegisterViewModel";
+import { IRegistrationRequest } from "../types/IRegistrationRequest";
 import { IRegistrationResponse } from "../types/IRegistrationResponse";
 import { api } from "../../../api";
 import { AxiosError, AxiosResponse } from "axios";
@@ -10,18 +10,18 @@ import IUpdateRequest from "../types/IUpdateRequest";
 import { ClientError, IErrorResponse } from "../types/IErrorResponse";
 
 export class AccountService {
-    public static register(viewModel: IRegisterViewModel): Promise<IRegistrationResponse> {
+    public static register(request: IRegistrationRequest): Promise<IRegistrationResponse> {
         return new Promise<IRegistrationResponse>((resolve, reject) => {
             api
-                .post("/users", viewModel)
-                .then((res: AxiosResponse<any>) => {
-                    if (res.data.success) {
-                        sessionStorage.email = "";
-                    }
-                    resolve({ success: res.data.success, errors: res.data.errors });
+                .post<IRegistrationRequest, AxiosResponse<[IRegistrationResponse, number]>>("/users", request)
+                .then((res) => {
+                    if (res.status === 201)
+                        resolve(res.data[0]);
+                    else
+                        reject(res.data[0].errorMessages)
                 })
                 .catch(res => {
-                    resolve({ success: false, errors: res.data.errors });
+                    reject({ ...res });
                 })
         })
     }

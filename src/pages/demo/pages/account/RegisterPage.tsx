@@ -1,18 +1,101 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation } from "react-router"
+import { useAuth } from "../../components/ProtectedRoute";
+import ILocationState from "../../types/ILocationState";
+import { ILoginRequest } from "../../types/ILoginRequest";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { Form } from "../../components/Form";
+import { Input } from "../../components/Input";
+import { ErrorWrapper } from "../../components/ErrorWrapper";
+import styled from "styled-components";
+import { IRegistrationRequest } from '../../types/IRegistrationRequest';
+import { AccountService } from '../../services/AccountService';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
-export default () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = (data: any) => console.debug(data);
+const RegisterPageStyle = styled.div`
+background: #771527;
+// padding: 48px 128px;
+color: #FCECB6;
+`;
+
+interface IRegisterFormInputs {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+const schema = yup.object({
+  name: yup.string().required("Please enter a display name"),
+  email: yup.string().email("Please enter a valid email").required("An email is required"),
+  password: yup.string().min(8, 'Password must be at least 8 characters long'),
+  confirmPassword: yup.string().oneOf([yup.ref('password')], 'Passwords must match')
+});
+
+export default function RegisterPage() {
+  let history = useHistory();
+  let location = useLocation<ILocationState>();
+  let auth = useAuth();
+
+  let [errorMessages, setErrorMessages] = useState<Array<string>>([]);
+
+  const { register, handleSubmit, formState: { errors }, formState, getValues, setError } = useForm<IRegisterFormInputs>({
+    resolver: yupResolver(schema)
+  });
+
+  let { from } = location.state || { from: { pathname: '/' } };
+  let signup = (registerRequest: IRegistrationRequest) => {
+    setErrorMessages([]);
+    AccountService.register(registerRequest)
+      .then(() => {
+        history.replace(from);
+      }, (messages) => {
+        setErrorMessages(messages);
+      });
+  };
+
+  const onSubmit: SubmitHandler<IRegistrationRequest> = (data) => signup(data);
+
+  useEffect(() => {
+    if (auth.user) {
+      history.replace(from);
+    }
+  }, []);
+
+  useEffect(() => {
+    const [ password, confirmPassword ] = getValues(['password', 'confirmPassword']);
+    if (password !== confirmPassword) {
+      setError('confirmPassword', {
+        type: 'validate',
+        message: "Passwords don't match"
+      }, { shouldFocus: false});
+    } 
+  },[formState]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" placeholder="Name" {...register("Name", {required: 'A display name is required', maxLength: 1024})} />
-      <input type="email" placeholder="Email" {...register("Email", {required: 'An email is required'})} />
-      <input type="password" placeholder="Confirm Password" {...register("Confirm Password", {required: 'Please enter a password', pattern: /^\S+@\S+$/i})} />
-      <input type="password" placeholder="Password" {...register("Password", {required: 'Please confirm your password', min: 8})} />
+    <RegisterPageStyle>
+      <h1>Register</h1>
+      <h3>Let's get revising!</h3>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        {errorMessages.length > 0 ?
+          <ErrorWrapper>
+            {errorMessages.map((value, index, array) =>
+              <li key={index}>{value}</li>
+            )}
+          </ErrorWrapper>
+          : ''}
+        <Input type="text" placeholder="Name" {...register("name")} />
+        {errors.name?.message}
+        <Input type="email" placeholder="Email" {...register("email")} />
+        {errors.email?.message}
+        <Input type="password" placeholder="Password" {...register("password")} />
+        {errors.password?.message}
+        <Input type="password" placeholder="Confirm Password" {...register("confirmPassword")} />
+        {errors.confirmPassword?.message}
 
-      <input type="submit" />
-    </form>
+        <Input type="submit" value="Register" />
+      </Form>
+    </RegisterPageStyle>
   );
 };

@@ -13,24 +13,8 @@ import RegisterPage from "./pages/account/RegisterPage";
 import { NotePage } from "./pages/notes/components/NotePage";
 
 const AppStyle = styled.div`
-h1 {
-    font-family: "GT Haptik Medium", sans-serif;
-    font-weight: 400;
-    line-height: 1.1;
-    font-size: clamp(2.25rem, 5.3vw, 5rem);
-    color: rgb(255, 243, 237);
-    margin-bottom: 25px;
-    text-align: center;
-}
+padding: 48px 128px;
 
-caption {
-    color: #FCECB6;
-    width: 100%;
-    margin-bottom: 24px;
-    text-align: center;
-    font-size: clamp(1.0125rem, 1.25vw, 1.125rem);
-    line-height: 1.5;
-}
 `;
 
 export default () => {
@@ -44,9 +28,9 @@ export default () => {
         <AppStyle>
             <ProvideAuth>
                 <Switch>
-                    <Route path="/demo/quiz">
+                    <ProtectedRoute path="/demo/quiz">
                         <QuizPage />
-                    </Route>
+                    </ProtectedRoute>
                     <ProtectedRoute path="/demo/notes/:id" >
                         <NotePage/>
                     </ProtectedRoute>

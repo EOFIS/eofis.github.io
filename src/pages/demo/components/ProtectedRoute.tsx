@@ -29,6 +29,13 @@ export function useAuth() {
 
 const useProvideAuth = (): IAuthContext => {
     const [user, setUser] = useState<IUser | undefined>(undefined);
+    // useEffect(() => {
+    //     const loggedInUser : string|null = localStorage.getItem(LOCAL_STORAGE.USER);
+    //     if (loggedInUser != null) {
+    //         setUser(User.from_localstorage(loggedInUser));
+    //     }
+    // });
+
     const signin = async (loginRequest: ILoginRequest, signedIn: () => void, error: (messages: Array<string>) => void) => {
         AccountService.login(loginRequest)
         .then(

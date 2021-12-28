@@ -6,10 +6,36 @@ import Contact from "./pages/contact/Contact";
 import Demo from "./pages/demo/DemoApp";
 import Home from "./pages/home/Home";
 import React from "react";
+import styled from "styled-components";
+
+const AppStyle = styled.div`
+background-color: #771527
+width: 100vw;
+height: 100vh;
+color: #FCECB6;
+
+h1 {
+  font-family: "GT Haptik Medium", sans-serif;
+  font-weight: 400;
+  line-height: 1.1;
+  font-size: clamp(2.25rem, 5.3vw, 5rem);
+}
+h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+}
+h3 {
+  width: 100%;
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: clamp(1.0125rem, 1.25vw, 1.125rem);
+  line-height: 1.5;
+}
+
+`
 
 const App = () => {
   return (
-    <div className={style.App}>
+    <AppStyle>
       <header className={style["App-header"]}>
         <nav>
           <div>
@@ -47,7 +73,7 @@ const App = () => {
           <Home />
         </Route>
       </Switch>
-    </div>
+    </AppStyle>
   );
 };
 

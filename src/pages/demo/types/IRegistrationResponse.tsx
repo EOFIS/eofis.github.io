@@ -1,4 +1,7 @@
+import { ObjectId } from "bson";
+
 export interface IRegistrationResponse {
-    success: boolean;
-    errors: [];
+    id: ObjectId;
+    emailVerificationSent: boolean;
+    errorMessages?: [];
 }
