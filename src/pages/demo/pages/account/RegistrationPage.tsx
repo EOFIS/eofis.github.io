@@ -13,13 +13,13 @@ import { AccountService } from '../../services/AccountService';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
-const RegisterPageStyle = styled.div`
+const RegistrationPageStyle = styled.div`
 background: #771527;
 // padding: 48px 128px;
 color: #FCECB6;
 `;
 
-interface IRegisterFormInputs {
+interface IRegistrationFormInputs {
   name: string;
   email: string;
   password: string;
@@ -33,14 +33,14 @@ const schema = yup.object({
   confirmPassword: yup.string().oneOf([yup.ref('password')], 'Passwords must match')
 });
 
-export default function RegisterPage() {
+export default function RegistrationPage() {
   let history = useHistory();
   let location = useLocation<ILocationState>();
   let auth = useAuth();
 
   let [errorMessages, setErrorMessages] = useState<Array<string>>([]);
 
-  const { register, handleSubmit, formState: { errors }, formState, getValues, setError } = useForm<IRegisterFormInputs>({
+  const { register, handleSubmit, formState: { errors }, formState, getValues, setError } = useForm<IRegistrationFormInputs>({
     resolver: yupResolver(schema)
   });
 
@@ -49,7 +49,7 @@ export default function RegisterPage() {
     setErrorMessages([]);
     AccountService.register(registerRequest)
       .then(() => {
-        history.replace(from);
+        history.push(`/demo/register?registered=true`);
       }, (messages) => {
         setErrorMessages(messages);
       });
@@ -74,7 +74,7 @@ export default function RegisterPage() {
   },[formState]);
 
   return (
-    <RegisterPageStyle>
+    <RegistrationPageStyle>
       <h1>Register</h1>
       <h3>Let's get revising!</h3>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -96,6 +96,6 @@ export default function RegisterPage() {
 
         <Input type="submit" value="Register" />
       </Form>
-    </RegisterPageStyle>
+    </RegistrationPageStyle>
   );
 };

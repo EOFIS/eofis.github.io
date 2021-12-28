@@ -9,8 +9,9 @@ import AccountPage from "./pages/account/AccountPage";
 import { ProtectedRoute, ProvideAuth } from "./components/ProtectedRoute";
 import LoginPage from "./pages/account/LoginPage";
 import styled from "styled-components";
-import RegisterPage from "./pages/account/RegisterPage";
+import RegistrationPage from "./pages/account/RegistrationPage";
 import { NotePage } from "./pages/notes/components/NotePage";
+import RegistrationConfirmationPage from "./pages/account/RegistrationConfirmationPage";
 
 const AppStyle = styled.div`
 padding: 48px 128px;
@@ -40,8 +41,11 @@ export default () => {
                     <Route path="/demo/login">
                         <LoginPage />
                     </Route>
+                    <Route path="/demo/register/confirmation">
+                        <RegistrationConfirmationPage/>
+                    </Route>
                     <Route path="/demo/register">
-                        <RegisterPage/>
+                        <RegistrationPage/>
                     </Route>
                     <ProtectedRoute path="/demo/account">
                         <AccountPage/>
