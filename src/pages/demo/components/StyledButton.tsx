@@ -4,7 +4,7 @@ interface IButtonProps {
     readonly primary?: boolean;
 }
 
-const Button = styled.button<IButtonProps>`
+const StyledButton = styled.button<IButtonProps>`
     background: ${props => props.primary ? "palevioletred" : "white"};
     color: ${props => props.primary ? "white" : "palevioletred"};
     margin: 1em;
@@ -12,4 +12,4 @@ const Button = styled.button<IButtonProps>`
     border: 2px solid palevioletred;
     border-radius: 3px;
 `;
-export default Button;
+export default StyledButton;

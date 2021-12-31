@@ -4,6 +4,9 @@ import { NoteService } from "../../services/NoteService";
 import { INote } from "../../types/INote";
 import { ObjectId } from "mongodb";
 import BSON from "bson";
+import { StyledLink } from "../../components/StyledLink";
+import StyledButton from "../../components/StyledButton";
+import { Input } from "../../components/Input";
 
 export interface INotesPageProps {
 
@@ -102,18 +105,15 @@ export default class NotesPage extends React.PureComponent<INotesPageProps, INot
             <>
                 <div className="list row">
                     <div className="col-md-8">
-                        <div className="input-groyp mb-3">
-                            <input type="text" className="form-control" placeholder="Search by field, tags, etc." value={searchQuery} onChange={this.onChangeSearchQuery} />
-                            <div className="input-group-append">
-                                <button
-                                    className="btn bt-outline-secondary"
-                                    type="button"
-                                    onClick={this.search}>
-                                    Search
-                                </button>
-                            </div>
-                        </div>
+                        <Input type="text" title="Search" placeholder="Search by field, tags, etc." value={searchQuery} onChange={this.onChangeSearchQuery} />
+                        <StyledButton
+                            onClick={this.search}>
+                            Search
+                        </StyledButton>
                     </div>
+                    <StyledLink to="/demo/notes/new">
+                        <StyledButton primary>New note</StyledButton>
+                    </StyledLink>
                     <div className="col-md-6">
                         <h4>Notes List</h4>
                         <ul className="list-group">

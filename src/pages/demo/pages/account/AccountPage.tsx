@@ -2,11 +2,9 @@ import React, { useEffect } from "react";
 import { useState } from "react"
 import { useAuth } from "../../components/ProtectedRoute";
 import { IUser } from "../../types/IUser";
-import styled from "styled-components";
 import DateView from "../../components/DateView";
 import { useHistory } from "react-router";
-// import { ProfilePicture } from "../../components/ProfilePicture";
-import Button from "../../components/Button";
+import StyledButton from "../../components/StyledButton";
 import { InsetContainer } from "../../components/InsetContainer";
 
 interface IAccountPageProps {
@@ -55,7 +53,7 @@ export default (props: IAccountPageProps) => {
                             Email address not verified for this account
                         </div>
                         : ''}
-                    <Button onClick={() => logout()}>Sign out</Button>
+                    <StyledButton onClick={() => logout()}>Sign out</StyledButton>
                 </>
             ) : 'No user logged in'}
         </InsetContainer>

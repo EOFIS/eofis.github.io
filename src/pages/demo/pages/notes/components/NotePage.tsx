@@ -4,6 +4,7 @@ import { INote } from "../../../types/INote";
 import { ObjectId } from "mongodb";
 import { NoteService } from "../../../services/NoteService";
 import TagInput from "../../../components/TagInput";
+import { CardTemplateType } from "../../../types/Template";
 
 interface INotePageParams {
     id: string
@@ -21,7 +22,7 @@ export const NotePage = () => {
             url: ""
         },
         tags: [],
-        template: ""
+        template: CardTemplateType.SIMPLE
     });
     const {id} = useParams<INotePageParams>();
 

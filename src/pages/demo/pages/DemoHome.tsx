@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from "../components/Button";
+import StyledButton from "../components/StyledButton";
 import { useAuth } from "../components/ProtectedRoute";
 import { StyledLink } from "../components/StyledLink";
 
@@ -25,9 +25,9 @@ export default () => {
                     <>
                         <StyledLink to="/demo/login">Log in</StyledLink>
                         <Link to="/demo/register">
-                            <Button primary>
+                            <StyledButton primary>
                                 Try EOFIS!
-                            </Button>
+                            </StyledButton>
                         </Link>
                     </>
             }

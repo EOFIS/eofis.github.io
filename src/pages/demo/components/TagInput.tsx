@@ -10,7 +10,7 @@ const delimiters = [...KeyCodes.enter, KeyCodes.comma];
 type ITag = string;
 
 export interface ITagInputProps {
-    tags: Array<ITag>,
+    tags?: Array<ITag>,
     onChangeTags(tags: ITag[]): void
 };
 
@@ -24,7 +24,7 @@ export default class TagInput extends React.PureComponent<ITagInputProps, ITagIn
         super(props);
 
         this.state = {
-            tags: this.props.tags,
+            tags: this.props.tags || [],
             newTag: ''
         }
 
@@ -35,7 +35,7 @@ export default class TagInput extends React.PureComponent<ITagInputProps, ITagIn
     componentDidUpdate(props: ITagInputProps) {
         if (this.props.tags !== props.tags) {
             this.setState(state => ({
-                tags: this.props.tags
+                tags: this.props.tags || []
             }));
         }
     }

@@ -12,6 +12,7 @@ import styled, { ThemeProvider } from "styled-components";
 import RegistrationPage from "./pages/account/RegistrationPage";
 import { NotePage } from "./pages/notes/components/NotePage";
 import RegistrationConfirmationPage from "./pages/account/RegistrationConfirmationPage";
+import AddNotePage from "./pages/notes/components/AddNotePage";
 
 const AppStyle = styled.div`
 padding: 48px 128px;
@@ -38,6 +39,9 @@ export default () => {
                     <Switch>
                         <ProtectedRoute path="/demo/quiz">
                             <QuizPage />
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/demo/notes/new" >
+                            <AddNotePage />
                         </ProtectedRoute>
                         <ProtectedRoute path="/demo/notes/:id" >
                             <NotePage />

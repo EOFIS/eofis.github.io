@@ -3,3 +3,9 @@ export interface ISource {
     type: string;
     url: string;
 }
+
+export enum SourceType {
+    ARTICLE = "ARTICLE",
+    ONLINE = "ONLINE",
+    TEST = "TEST"
+}

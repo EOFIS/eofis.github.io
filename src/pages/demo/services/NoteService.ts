@@ -1,6 +1,10 @@
 import { AxiosResponse } from "axios";
+import { ObjectId } from "bson";
 import { api } from "../../../api";
-import { INote } from "../types/INote";
+import { ICard } from "../types/ICard";
+import { ICreateRequest } from "../types/ICreateRequest";
+import { ICreateResponse } from "../types/ICreateResponse";
+import { ICreateNoteRequest, INewNoteData, INote } from "../types/INote";
 
 export class NoteService {
     public static getNotes() : Promise<INote[]> {
@@ -43,15 +47,18 @@ export class NoteService {
         });
     }
 
-    public static create(note: INote) {
-        return new Promise((resolve, reject) => {
+    public static create(note: ICreateRequest<INewNoteData>) {
+        return new Promise<ObjectId>((resolve, reject) => {
             api
-            .put(`/notes`, note)
-            .then((res: AxiosResponse<any>) => {
-                resolve({
-                    ...res.data,
-                    _id: res.data._id.$oid
-                });
+            .put<ICreateRequest<INewNoteData>, AxiosResponse<[ICreateResponse<INote>, number]>>(`/notes`, note)
+            .then((res) => {
+                if (res.status === 201) {
+                    resolve(res.data[0]._id);    
+                } else {
+                    reject(
+                        res.data[0].errorMessages
+                    )
+                }
             })
             .catch(res => {
                 reject(res);

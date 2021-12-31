@@ -1,5 +1,7 @@
 import React from "react";
+import { FieldError } from "react-hook-form";
 import styled from "styled-components";
+import { ErrorWrapper } from "./ErrorWrapper";
 
 const InputStyle = styled.div`
 display: inline-block;
@@ -23,6 +25,10 @@ input {
     font-size: 0.875rem;
     line-height: 1.4rem;
 
+    &.error {
+        background: white;
+    }
+
     &[type='text'], &[type='password'], &[type='email'] {
         border: none;
         border-bottom: 2px solid #FCECB6;
@@ -32,7 +38,7 @@ input {
         &::placeholder {
             font-weight: bold;
         }
-        &:focus, &:hover {
+        &:focus, &:hover, &.error {
             outline: none;
             border-bottom: 2px solid #ff4906;
             color: #ff4906;
@@ -63,17 +69,34 @@ interface IInputProps {
     value?: string | number;
     name?: string;
     autoComplete?: string;
+    error?: FieldError;
 }
-export const Input: React.FC<IInputProps> = React.forwardRef(({...props}, ref) => {//(props: IInputProps) => {
+export const Input: React.FC<IInputProps> = React.forwardRef(({ ...props }, ref) => {//(props: IInputProps) => {
     return (
         <InputStyle>
             <label htmlFor={props.name}>
                 {props.placeholder}
             </label>
-            <input
-                ref={ref}
-                {...props}
-            />
+            {
+                props.type === 'select' ?
+                    <select
+                        ref={ref}
+                        {...props}>
+                        {props.children}
+                    </select>
+                    :
+                    <input
+                        className={props.error ? 'error' : ''}
+                        ref={ref}
+                        {...props}
+                    />
+
+            }
+
+            {props.error?.message &&
+                <ErrorWrapper>
+                    {props.error?.message}
+                </ErrorWrapper>}
         </InputStyle>
     )
 })
