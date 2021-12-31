@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import { useAuth } from "../components/ProtectedRoute";
+import { StyledLink } from "../components/StyledLink";
 
 export default () => {
     let auth = useAuth();
@@ -9,21 +10,25 @@ export default () => {
     return (
         <>
             <h1>EOFIS Demo coming soon!</h1>
+
             {auth.user && <h3>Welcome back {auth.user.name}</h3>}
-            
-            <Link to="/demo/quiz">Today's Quiz</Link> <br />
-            <Link to="/demo/notes">All your notes</Link> <br />
+
+            <p>
+                This is a block of normal text
+            </p>
+            <StyledLink to="/demo/quiz">Today's Quiz</StyledLink> <br />
+            <StyledLink to="/demo/notes">All your notes</StyledLink> <br />
             {
                 auth.user ?
-                    <Link to="/demo/account">Account</Link>
+                    <StyledLink to="/demo/account">Account</StyledLink>
                     :
                     <>
-                        <Link to="/demo/login">Log in</Link>
-                        <Button primary>
-                            <Link to="/demo/register">
+                        <StyledLink to="/demo/login">Log in</StyledLink>
+                        <Link to="/demo/register">
+                            <Button primary>
                                 Try EOFIS!
-                            </Link>
-                        </Button>
+                            </Button>
+                        </Link>
                     </>
             }
         </>

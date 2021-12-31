@@ -4,8 +4,10 @@ import { useAuth } from "../../components/ProtectedRoute";
 import { IUser } from "../../types/IUser";
 import styled from "styled-components";
 import DateView from "../../components/DateView";
-import Button from "@restart/ui/esm/Button";
 import { useHistory } from "react-router";
+// import { ProfilePicture } from "../../components/ProfilePicture";
+import Button from "../../components/Button";
+import { InsetContainer } from "../../components/InsetContainer";
 
 interface IAccountPageProps {
 }
@@ -40,12 +42,11 @@ export default (props: IAccountPageProps) => {
     };
 
     return (
-        <>
+        <InsetContainer>
             {cachedUser ? (
                 <>
-                    {JSON.stringify(cachedUser)}
                     <h1>{cachedUser.name}</h1>
-                    <div>{cachedUser.name[0]}</div>
+                    <img src="../profile-128.png"/>
                     <h2>{cachedUser.email}</h2>
                     <div title={cachedUser.last_login.toLocaleString()}>Last login: <DateView>{lastLogin}</DateView></div>
                     {cachedUser.loggedIn ? <div>Logged in</div> : ''}
@@ -57,6 +58,6 @@ export default (props: IAccountPageProps) => {
                     <Button onClick={() => logout()}>Sign out</Button>
                 </>
             ) : 'No user logged in'}
-        </>
+        </InsetContainer>
     );
 }

@@ -8,7 +8,6 @@ import { StyledLink } from "../../components/StyledLink";
 const RegistrationPageStyle = styled.div`
 background: #771527;
 // padding: 48px 128px;
-color: #FCECB6;
 `;
 
 interface IRegistrationConfirmationQueryParams {

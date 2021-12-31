@@ -11,7 +11,6 @@ import styled from "styled-components";
 
 const LoginPageStyle = styled.div`
 background: #771527;
-// padding: 48px 128px;
 color: #FCECB6;
 `;
 export default function LoginPage() {
