@@ -62,21 +62,32 @@ input {
 
 `;
 
-interface IInputProps {
+interface IInputProps extends React.HTMLProps<HTMLInputElement>{
     type?: string;
     placeholder?: string;
-    onChange?: (e?: any) => {};
+    title?: string;
+    labeltext?: string;
+    onChange?: (e?: any) => void;
     value?: string | number;
     name?: string;
     autoComplete?: string;
     error?: FieldError;
+    // onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void | null;
 }
-export const Input: React.FC<IInputProps> = React.forwardRef(({ ...props }, ref) => {//(props: IInputProps) => {
+export const Input: React.FC<IInputProps> = React.forwardRef(({ ...props }, ref) => {
     return (
         <InputStyle>
-            <label htmlFor={props.name}>
-                {props.placeholder}
-            </label>
+            {
+                props.labeltext ?
+                    <label htmlFor={props.name}>
+                        {props.labeltext}
+                    </label>
+                    : ( props.value?.toString().length || (ref) ) && props.placeholder ? 
+                    <label htmlFor={props.name}>
+                        {props.placeholder}
+                    </label>
+                    : ''
+            }
             {
                 props.type === 'select' ?
                     <select

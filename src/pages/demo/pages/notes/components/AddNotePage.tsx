@@ -16,6 +16,7 @@ import { CardTemplateType, TemplateDetails } from '../../../types/Template';
 import { URL_PATTERN } from '../../../types/Constants';
 import { SourceType } from '../../../types/ISource';
 import TagInput from '../../../components/TagInput';
+import { ITag } from '../../../types/ITag';
 
 const PageStyle = styled.div``;
 
@@ -26,6 +27,7 @@ export default function AddNotePage() {
     let history = useHistory();
     let auth = useAuth();
 
+    const [tags, setTags] = useState<Array<ITag>>([]);
     let [errorMessages, setErrorMessages] = useState<Array<string>>([]);
 
     let [template, setTemplate] = useState<CardTemplateType>(Object.keys(CardTemplateType)[0] as CardTemplateType);
@@ -34,7 +36,8 @@ export default function AddNotePage() {
 
     let createNewNote = (newNote: INewNoteData) => {
         setErrorMessages([]);
-        console.debug(`Creating new note: ${newNote}`);
+        console.debug(`Creating new note: ${newNote} with tags [${tags}] and template ${template}`);
+
         // NoteService.create({
         //     _partition: `userid=${auth.user?._id}`,
         //     ...newNote

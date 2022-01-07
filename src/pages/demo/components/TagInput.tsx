@@ -1,88 +1,61 @@
-import React, { ChangeEvent, KeyboardEvent } from "react";
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
+import { ITag } from "../types/ITag";
+import { Input } from "./Input";
 import style from './TagInput.module.sass';
 
-const KeyCodes = {
-    comma: 188,
-    enter: [10, 13]
+enum DELIMITERS {
+    COMMA = 'Comma',
+    SEMICOLON = 'Semicolon',
+    TAB = 'Tab'
 };
-const delimiters = [...KeyCodes.enter, KeyCodes.comma];
-
-type ITag = string;
 
 export interface ITagInputProps {
     tags?: Array<ITag>,
     onChangeTags(tags: ITag[]): void
 };
 
-interface ITagInputState {
-    tags: Array<ITag>,
-    newTag: string
-};
+export default function TagInput(props: ITagInputProps) {
+    const [tags, setTags] = useState<Array<ITag>>(props.tags || []);
+    const [newTag, setNewTag] = useState<string>("");
 
-export default class TagInput extends React.PureComponent<ITagInputProps, ITagInputState> {
-    constructor(props: ITagInputProps) {
-        super(props);
+    const onDelete = (i: number) => {
+        setTags(tags.filter((tag, index) => index !== i));
+        props.onChangeTags(tags);
+    };
 
-        this.state = {
-            tags: this.props.tags || [],
-            newTag: ''
-        }
+    useEffect(() => {
+        setTags(props.tags || []);
+    }, [props.tags]);
 
-        this.onDelete = this.onDelete.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-    }
-
-    componentDidUpdate(props: ITagInputProps) {
-        if (this.props.tags !== props.tags) {
-            this.setState(state => ({
-                tags: this.props.tags || []
-            }));
+    const onSubmit = (event: KeyboardEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        if (newTag !== '') {
+            let _newTag = (event.key === newTag.slice(-1)) ? newTag.slice(0, -1) : newTag;
+            setTags([...tags, _newTag]);
+            setNewTag("");
+            props.onChangeTags(tags);
         }
     }
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => setNewTag(event.target.value);
 
-    onDelete(i: number) {
-        const tags = this.state.tags.filter((tag, index) => index !== i);
-        this.setState({
-            tags: tags
-        });
-        this.props.onChangeTags(tags);
-    }
-
-    onSubmit(event: KeyboardEvent<HTMLInputElement>) {
-        if (this.state.newTag !== '') {
-            const tags = [...this.state.tags, this.state.newTag];
-            this.setState(state => ({
-                tags: tags,
-                newTag: ''
-            }));
-            this.props.onChangeTags(tags);
-        }
-    }
-    onChange(event: ChangeEvent<HTMLInputElement>) {
-        this.setState(state => ({
-            newTag: event.target.value
-        }));
-    }
-
-    render() {
-        const { tags, newTag } = this.state;
-        return (
-            <div className={style['tag-input']}>
+    return (
+        <div className={style['tag-input']}>
+            <Input
+                type="text"
+                value={newTag}
+                onChange={onChange}
+                onKeyDown={event => (event.code === 'Enter' || event.code === 'Tab') ? event.preventDefault() : null}
+                onKeyUp={event => (event.code === 'Comma' || event.code === 'Semicolon' || event.code === 'Tab' || event.code === 'Enter' ? onSubmit(event) : null)}
+                placeholder="Press comma, semicolon or tab to add a tag"
+                labeltext="Add tags" />
                 <ul className={style['tags']}>
-                    {tags && tags.map((tag, index) => (
-                        <li key={index} className={style["tag"]}>
-                            <span className={style["tag-title"]}>{tag}</span>
-                            <span className={style["tag-close-icon"]} onClick={() => this.onDelete(index)}>x</span>
-                        </li>
-                    ))}
-                </ul>
-                <input
-                    type="text"
-                    value={newTag}
-                    onChange={this.onChange.bind(this)}
-                    onKeyUp={event => (event.key === 'Enter' ? this.onSubmit(event) : null)}
-                    placeholder="Press enter  to add a tag" />
-            </div>
-        );
-    }
+                {tags && tags.map((tag, index) => (
+                    <li key={index} className={style["tag"]}>
+                        <span className={style["tag-title"]}>{tag}</span>
+                        <span className={style["tag-close-icon"]} onClick={() => onDelete(index)}>x</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
