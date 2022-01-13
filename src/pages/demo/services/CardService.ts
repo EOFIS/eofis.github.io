@@ -1,4 +1,4 @@
-import { ICard } from "../types/ICard";
+import { CardId, ICard } from "../types/ICard";
 import { NoteService } from "./NoteService";
 import ebisu from "ebisu-js";
 import { ICardReview } from "../types/ICardReview";
@@ -35,14 +35,17 @@ export class CardService {
                 console.error(e);
             });
     }
-    public static getCards() : Promise<ICard[]>{
-        return NoteService.getNotes()
-            .then(response => {
-                let notes = response.filter(note => note.cards !== undefined);
-                let cards = (notes.map((note) => 'cards' in note ? note.cards : [])).flat(1).filter(Object);
-                return cards;
-            });
+    public static getCards(cardids?: Array<CardId>) : Promise<ICard[]>{
+        return api
+            .get("/cards" + (cardids? "?" + cardids.map(cardid => `cardids=${cardid}`).join("&") : '') );
+        // NoteService.getNotes()
+        //     .then(response => {
+        //         let notes = response.filter(note => note.cards !== undefined);
+        //         let cards = (notes.map((note) => 'cards' in note ? note.cards : [])).flat(1).filter(Object);
+        //         return cards;
+        //     });
     }
+
     public static reviewCards(cardReviews: Array<ICardReview>) : Promise<IUpdateResponse<ICard>> {
         return new Promise<IUpdateResponse<ICard>>( (resolve, reject) => 
             api

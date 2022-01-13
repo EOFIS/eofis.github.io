@@ -7,6 +7,7 @@ import BSON from "bson";
 import { StyledLink } from "../../components/StyledLink";
 import StyledButton from "../../components/StyledButton";
 import { Input } from "../../components/Input";
+import { CardService } from "../../services/CardService";
 
 export interface INotesPageProps {
 
@@ -19,166 +20,140 @@ export interface INotesPageState {
     searchQuery: string
 }
 
-export default class NotesPage extends React.PureComponent<INotesPageProps, INotesPageState> {
-    constructor(props: INotesPageProps) {
-        super(props);
+export default function NotesPage(props: INotesPageProps) {
+    const [notes, setNotes] = useState<Array<INote>>([]);
+    const [currentNote, setCurrentNote] = useState<INote | null>(null);
+    const [currentIndex, setCurrentIndex] = useState<number>(-1);
+    const [searchQuery, setSearchQuery] = useState<string>("");
 
-        this.state = {
-            notes: [],
-            currentNote: null,
-            currentIndex: -1,
-            searchQuery: ""
-        };
+    useEffect(() => {
+        retrieveNotes();
+    }, []);
 
-        this.onChangeSearchQuery = this.onChangeSearchQuery.bind(this);
-
-        this.retrieveNotes = this.retrieveNotes.bind(this);
-
-        this.refreshList = this.refreshList.bind(this);
-
-        this.setActiveNote = this.setActiveNote.bind(this);
-        this.search = this.search.bind(this);
-    }
-
-    componentDidMount() {
-        this.retrieveNotes();
-    }
-
-    onChangeSearchQuery(e: ChangeEvent<HTMLInputElement>) {
+    const onChangeSearchQuery = (e: ChangeEvent<HTMLInputElement>) => {
         const searchQuery = e.target.value;
+        setSearchQuery(searchQuery);
+    };
 
-        this.setState({
-            searchQuery: searchQuery
-        });
-    }
-
-    retrieveNotes() {
+    const retrieveNotes = () => {
         NoteService.getNotes()
             .then(response => {
-                this.setState({
-                    // TODO: remove this reverse
-                    notes: response.reverse()
-                })
-            })
-    }
+                // TODO: remove this reverse
+                setNotes(response.reverse());
+            });
+    };
 
-    refreshList() {
-        this.retrieveNotes();
-        this.setState({
-            currentNote: null,
-            currentIndex: -1
-        });
-    }
+    const refreshList = () => {
+        retrieveNotes();
+        setCurrentNote(null);
+        setCurrentIndex(-1);
+    };
 
-    setActiveNote(note: INote, index: number) {
-        this.setState({
-            currentNote: note,
-            currentIndex: index
-        });
-    }
+    const setActiveNote = (note: INote, index: number) => {
+        setCurrentNote(note);
+        setCurrentIndex(index);
+    };
 
-    search() {
-        this.setState({
-            currentNote: null,
-            currentIndex: -1
-        });
+    const search = () => {
+        setCurrentNote(null);
+        setCurrentIndex(-1);
 
-        NoteService.queryNotes(this.state.searchQuery)
-            .then(response => {
-                this.setState({
-                    notes: response
-                });
-            })
-            .catch(err => {
-                console.error(`Error querying notes: ${err}`);
-            })
-    }
+        NoteService.queryNotes(searchQuery)
+            .then(response => setNotes(response)
+            )
+            .catch(err =>
+                console.error(`Error querying notes: ${err}`)
+            );
+    };
 
-    render() {
-        const {
-            currentIndex,
-            currentNote,
-            notes,
-            searchQuery
-        } = this.state;
-        return (
-            <>
-                <div className="list row">
-                    <div className="col-md-8">
-                        <Input type="text" title="Search" placeholder="Search by field, tags, etc." value={searchQuery} onChange={this.onChangeSearchQuery} />
-                        <StyledButton
-                            onClick={this.search}>
-                            Search
-                        </StyledButton>
-                    </div>
-                    <StyledLink to="/demo/notes/new">
-                        <StyledButton primary>New note</StyledButton>
-                    </StyledLink>
-                    <div className="col-md-6">
-                        <h4>Notes List</h4>
-                        <ul className="list-group">
-                            {
-                                notes && notes.map((note: INote, index: number) => (
-                                    <li
-                                        className={
-                                            "list-group-item " + (index === currentIndex ? "active" : "")
-                                        }
-                                        onClick={() => this.setActiveNote(note, index)}
-                                        key={index}
-                                    >
-                                        {note.fields[0]}
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                    </div>
-                    <div className="col-md-6">
-                        {currentNote ? (
-                            <div>
-                                <h4>Note</h4>
-                                <div>
-                                    <label>
-                                        <strong>Field 1</strong>
-                                    </label>
-                                    {" " + currentNote.fields[0]}
-                                </div>
-                                <div>
-                                    <label>
-                                        <strong>Field 2</strong>
-                                    </label>
-                                    {" " + currentNote.fields[1]}
-                                </div>
-                                <div>
-                                    <label>
-                                        <strong>Tags</strong>
-                                    </label>
-                                    {" " + currentNote.tags.join(', ')}
-                                </div>
-                                <div>
-                                    <label>
-                                        <strong>Source</strong>
-                                    </label>
-                                    {" " + currentNote.source.title}
-                                </div>
-                                <div>
-                                    <label>
-                                        <strong>ID</strong>
-                                    </label>
-                                    {" " + currentNote._id}
-                                </div>
-                                <Link to={'/demo/notes/' + currentNote._id}
-                                    className="badge badge-warning">
-                                    Edit
-                                </Link>
-                            </div>
-                        ) : <div>
-                            <br />
-                            <p>Please select a note to view.</p>
-                        </div>
-                        }
-                    </div>
+    return (
+        <>
+            <div className="list row">
+                <div className="col-md-8">
+                    <Input type="text" title="Search" placeholder="Search by field, tags, etc." value={searchQuery} onChange={onChangeSearchQuery} />
+                    <StyledButton
+                        onClick={search}>
+                        Search
+                    </StyledButton>
                 </div>
-            </>
-        );
-    }
+                <StyledLink to="/demo/notes/new">
+                    <StyledButton primary>New note</StyledButton>
+                </StyledLink>
+                <div className="col-md-6">
+                    <h4>Notes List</h4>
+                    <ul className="list-group">
+                        {
+                            notes && notes.map((note: INote, index: number) => (
+                                <li
+                                    className={
+                                        "list-group-item " + (index === currentIndex ? "active" : "")
+                                    }
+                                    onClick={() => setActiveNote(note, index)}
+                                    key={index}
+                                >
+                                    {note.fields[0]}
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+                <div className="col-md-6">
+                    {currentNote ? (
+                        <div>
+                            <h4>Note</h4>
+                            <div>
+                                <label>
+                                    <strong>Field 1</strong>
+                                </label>
+                                {" " + currentNote.fields[0]}
+                            </div>
+                            <div>
+                                <label>
+                                    <strong>Field 2</strong>
+                                </label>
+                                {" " + currentNote.fields[1]}
+                            </div>
+                            <div>
+                                <label>
+                                    <strong>Tags</strong>
+                                </label>
+                                {" " + currentNote.tags.join(', ')}
+                            </div>
+                            <div>
+                                <label>
+                                    <strong>Source</strong>
+                                </label>
+                                {" " + currentNote.source.title}
+                            </div>
+                            <div>
+                                <label>
+                                    <strong>ID</strong>
+                                </label>
+                                {" " + currentNote._id}
+                            </div>
+                            <Link to={'/demo/notes/' + currentNote._id}
+                                className="badge badge-warning">
+                                Edit
+                            </Link>
+                            <div>
+                                {currentNote && currentNote.cards.map(card =>
+                                    " " + card.id
+                                )}
+                                <button>Get Cards</button>
+                                <ul>
+                                    {currentNote && currentNote.cards ? CardService.getCards(currentNote.cards.map(card => card.id)).then(res => res.map(rcard => {
+                                        <li key={rcard.id}><strong>{rcard.id}</strong>{JSON.stringify(rcard.fields)}</li>
+                                    })) : ''}
+                                </ul>
+                            </div>
+                        </div>
+                    ) : <div>
+                        <br />
+                        <p>Please select a note to view.</p>
+                    </div>
+                    }
+                </div>
+            </div>
+        </>
+    );
 }
