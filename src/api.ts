@@ -13,11 +13,11 @@ export const api = axios.create({
 api.interceptors.response.use(
     (response) => response,
     (error: AxiosError<{message: IErrorResponse}>) => {
-        console.debug(JSON.stringify(error));
-        console.debug(JSON.stringify(error.response));
-        console.debug(JSON.stringify(error.response?.data));
-        console.debug(JSON.stringify(error.response?.data.message));
-        console.debug(JSON.stringify(error.response?.data.message.errorMessages));
+        // console.debug(JSON.stringify(error));
+        // console.debug(JSON.stringify(error.response));
+        // console.debug(JSON.stringify(error.response?.data));
+        // console.debug(JSON.stringify(error.response?.data.message));
+        // console.debug(JSON.stringify(error.response?.data.message.errorMessages));
 
         if (error.response) {
             if (error.response.status >= 400 && error.response.status < 500) {

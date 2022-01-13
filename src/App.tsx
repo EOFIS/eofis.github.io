@@ -9,7 +9,7 @@ import React from "react";
 import styled from "styled-components";
 
 const AppStyle = styled.div`
-background-color: #771527
+background-color: #771527;
 width: 100vw;
 height: 100vh;
 color: #FCECB6;

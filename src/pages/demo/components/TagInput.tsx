@@ -14,7 +14,7 @@ export interface ITagInputProps {
     onChangeTags(tags: ITag[]): void
 };
 
-export default function TagInput(props: ITagInputProps) {
+export const TagInput = React.forwardRef((props: ITagInputProps, ref) => {
     const [tags, setTags] = useState<Array<ITag>>(props.tags || []);
     const [newTag, setNewTag] = useState<string>("");
 
@@ -31,9 +31,10 @@ export default function TagInput(props: ITagInputProps) {
         event.preventDefault();
         if (newTag !== '') {
             let _newTag = (event.key === newTag.slice(-1)) ? newTag.slice(0, -1) : newTag;
-            setTags([...tags, _newTag]);
+            let _newTags = [...tags, _newTag];
+            setTags(_newTags);
             setNewTag("");
-            props.onChangeTags(tags);
+            props.onChangeTags(_newTags);
         }
     }
     const onChange = (event: ChangeEvent<HTMLInputElement>) => setNewTag(event.target.value);
@@ -44,10 +45,11 @@ export default function TagInput(props: ITagInputProps) {
                 type="text"
                 value={newTag}
                 onChange={onChange}
-                onKeyDown={event => (event.code === 'Enter' || event.code === 'Tab') ? event.preventDefault() : null}
-                onKeyUp={event => (event.code === 'Comma' || event.code === 'Semicolon' || event.code === 'Tab' || event.code === 'Enter' ? onSubmit(event) : null)}
-                placeholder="Press comma, semicolon or tab to add a tag"
-                labeltext="Add tags" />
+                onKeyDown={event => (event.code === 'Enter') ? event.preventDefault() : null}
+                onKeyUp={event => (event.code === 'Comma' || event.code === 'Semicolon' || event.code === 'Enter' ? onSubmit(event) : null)}
+                placeholder="Press enter, comma, or semicolon to add a tag"
+                labeltext="Add tags"
+                ref={ref}/>
                 <ul className={style['tags']}>
                 {tags && tags.map((tag, index) => (
                     <li key={index} className={style["tag"]}>
@@ -59,3 +61,4 @@ export default function TagInput(props: ITagInputProps) {
         </div>
     );
 }
+)

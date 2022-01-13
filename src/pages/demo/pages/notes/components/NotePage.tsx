@@ -3,7 +3,7 @@ import { RouteComponentProps, useParams } from "react-router-dom";
 import { INote } from "../../../types/INote";
 import { ObjectId } from "mongodb";
 import { NoteService } from "../../../services/NoteService";
-import TagInput from "../../../components/TagInput";
+import { TagInput } from "../../../components/TagInput";
 import { CardTemplateType } from "../../../types/Template";
 
 interface INotePageParams {

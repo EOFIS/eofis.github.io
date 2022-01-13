@@ -62,7 +62,7 @@ input {
 
 `;
 
-interface IInputProps extends React.HTMLProps<HTMLInputElement>{
+interface IInputProps extends React.HTMLProps<HTMLInputElement | HTMLSelectElement>{
     type?: string;
     placeholder?: string;
     title?: string;

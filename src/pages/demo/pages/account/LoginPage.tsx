@@ -44,7 +44,7 @@ export default function LoginPage() {
             <h1>Log in to your account</h1>
             <h3>Let's get revising!</h3>
             <Form onSubmit={handleSubmit(onLoginSubmit)}>
-                {errorMessages.length > 0 ?
+            {errorMessages && errorMessages.length > 0 ?
                     <ErrorWrapper>
                         {errorMessages.map((value, index, array) =>
                             <li key={index}>{value}</li>

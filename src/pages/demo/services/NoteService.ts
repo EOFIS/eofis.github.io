@@ -50,7 +50,7 @@ export class NoteService {
     public static create(note: ICreateRequest<INewNoteData>) {
         return new Promise<ObjectId>((resolve, reject) => {
             api
-            .put<ICreateRequest<INewNoteData>, AxiosResponse<[ICreateResponse<INote>, number]>>(`/notes`, note)
+            .post<ICreateRequest<INewNoteData>, AxiosResponse<[ICreateResponse<INote>, number]>>(`/notes`, note)
             .then((res) => {
                 if (res.status === 201) {
                     resolve(res.data[0]._id);    

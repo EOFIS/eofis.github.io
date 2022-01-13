@@ -15,7 +15,7 @@ import { NoteService } from '../../../services/NoteService';
 import { CardTemplateType, TemplateDetails } from '../../../types/Template';
 import { URL_PATTERN } from '../../../types/Constants';
 import { SourceType } from '../../../types/ISource';
-import TagInput from '../../../components/TagInput';
+import { TagInput } from '../../../components/TagInput';
 import { ITag } from '../../../types/ITag';
 
 const PageStyle = styled.div``;
@@ -36,34 +36,30 @@ export default function AddNotePage() {
 
     let createNewNote = (newNote: INewNoteData) => {
         setErrorMessages([]);
-        console.debug(`Creating new note: ${newNote} with tags [${tags}] and template ${template}`);
+        newNote.tags = tags;
+        // console.debug(`Creating new note: ${JSON.stringify(newNote)} with tags [${tags}] and template ${template}`);
 
-        // NoteService.create({
-        //     _partition: `userid=${auth.user?._id}`,
-        //     ...newNote
-        // })
-        //     .then(() => {
-        //         history.push(`/demo/notes/new?created=true`);
-        //     }, (messages) => {
-        //         setErrorMessages(messages);
-        //     });
+        NoteService.create({
+            _partition: `userid=${auth.user?._id}`,
+            ...newNote
+        })
+        .then(() => {
+            history.push(`/demo/notes/new?created=true`);
+        }, (messages) => {
+            setErrorMessages(messages);
+        });
     };
 
     // SubmitHandler<INewNoteData>
     const onSubmit = handleSubmit((data) => createNewNote(data));
-    // const onSubmit = handleSubmit((data) => console.debug(data));
 
     useEffect(() => {
         const { template } = getValues();
-        console.debug(template)
         setTemplate(template);
     })
 
     const onChangeTags = (tags: string[]) => {
-        // setNote({
-        //     ...note,
-        //     tags: tags
-        // });
+        setTags(tags);
     };
 
     return (
@@ -79,13 +75,13 @@ export default function AddNotePage() {
                     </ErrorWrapper>
                     : ''}
 
-                {console.debug(errors)}
+                {errors.fields || errors.source || errors.tags || errors.template ? console.debug(errors) : ''}
                 <Input
                     error={errors.template}
                     type="select"
                     placeholder="Note template"
                     {...register("template",
-                        { 
+                        {
                             required: "Please select a note template from the list.",
                             onChange: (e: ChangeEvent<HTMLSelectElement>) => setTemplate(CardTemplateType[e.target.value as keyof typeof CardTemplateType])
                         })}>
@@ -108,8 +104,8 @@ export default function AddNotePage() {
                                 { required: 'Please fill in this field.' })} />
                     </div>)}
                 {/* <Input type="text" error={errors.tags ? errors.tags[0] : undefined} placeholder={`Tag`} {...register(`tags.${0}`)} /> */}
-                
-                <TagInput onChangeTags={onChangeTags} />
+
+                <TagInput onChangeTags={onChangeTags} {...register(`tags`)} />
 
                 <Input type="text" placeholder="Source title" {...register("source.title", { required: "Please enter a title for the source" })} />
                 {errors?.source?.title?.message}
