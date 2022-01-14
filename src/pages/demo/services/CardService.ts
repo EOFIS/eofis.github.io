@@ -1,49 +1,39 @@
-import { CardId, ICard } from "../types/ICard";
-import { NoteService } from "./NoteService";
+import { Card, CardId, ICard } from "../types/ICard";
 import ebisu from "ebisu-js";
 import { ICardReview } from "../types/ICardReview";
 import { api } from "../../../api";
 import { IUpdateResponse } from "../types/IUpdateResponse";
 import { AxiosResponse } from "axios";
-
-function cardRecall(card: ICard, currentDate: number) : number {
-    let last_reviewed = new Date(card.last_reviewed);
-    let elapsedHours = Math.floor(Math.abs(currentDate - last_reviewed.getHours()) / 36e5);
-    return ebisu.predictRecall(card.recall_model, elapsedHours, false); // log-probability returned, is quicker
-}
+import { IGetResponse } from "../types/IGetResponse";
 
 export class CardService {
-    public static getLowestRecall(amount: number) {
-        return NoteService.getNotes()
-            .then(response => {
-                let notes = response.filter(note => note.cards !== undefined);
-                notes.forEach(n => {
-                    n.cards.forEach(c => {
-                        c.tags = n.tags;
-                        c.source = n.source;
-                    })
-                });
-                let cards = notes.map((note) => note.cards).flat(1);
-                //let cardsAugmented = ( notes.map((note) => note.cards.forEach( card => card.tags = note.tags ).forEach( card => card.source = note.source ))).flat(1).filter('Object');
-                let cardsSorted = cards.sort((a, b) => {
-                    const now = Date.now();
-                    return cardRecall(a, now) - cardRecall(b, now);
-                });
-                return cardsSorted.slice(0, amount);
+    public static getLowestRecall(howManyCards?: number, lowestRecall?: number): Promise<Card[]> {
+        return new Promise((resolve, reject) => {
+            api.get<{}, AxiosResponse<IGetResponse<ICard[]>>>("/cards/reviews", {
+                params: {
+                    n_to_review: howManyCards,
+                    lowest_recall: lowestRecall
+                }
             })
-            .catch(e => {
-                console.error(e);
+            .then((res) => {
+                if (res.status === 200) {
+                    resolve(res.data.map(card_doc => Card.from_document(card_doc)))
+                } else {
+                    reject(res.data.errorMessages)
+                }
+            })
+            .catch((reason) => {
+                if ('errorMessages' in reason) {
+                    reject(reason.errorMessages)
+                } else {
+                    reject(reason);
+                }
             });
+        })
     }
     public static getCards(cardids?: Array<CardId>) : Promise<ICard[]>{
         return api
             .get("/cards" + (cardids? "?" + cardids.map(cardid => `cardids=${cardid}`).join("&") : '') );
-        // NoteService.getNotes()
-        //     .then(response => {
-        //         let notes = response.filter(note => note.cards !== undefined);
-        //         let cards = (notes.map((note) => 'cards' in note ? note.cards : [])).flat(1).filter(Object);
-        //         return cards;
-        //     });
     }
 
     public static reviewCards(cardReviews: Array<ICardReview>) : Promise<IUpdateResponse<ICard>> {

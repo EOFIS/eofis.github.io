@@ -1,16 +1,20 @@
-export interface IErrorResponse {
-    errorMessages: Array<string>;
-    status: number;
+import { IResponse } from "./IResponse";
+
+export interface IErrorResponse extends IResponse {
+    errorMessages?: Array<string>;
+    status?: number;
 }
 
 export class GenericErrorResponse implements IErrorResponse {
-    errorMessages: Array<string>;
-    constructor(errorMessages: Array<string> | string, public status: number) {
+    errorMessages?: Array<string>;
+    constructor(errorMessages?: Array<string> | string, public status?: number) {
         if (Array.isArray(errorMessages)) {
             this.errorMessages = errorMessages;
-        } else {
+        } else if (errorMessages !== undefined) {
             this.errorMessages = [];
             this.errorMessages.push(errorMessages);
+        } else {
+            this.errorMessages = undefined;
         }
     }
 };

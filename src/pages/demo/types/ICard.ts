@@ -1,5 +1,6 @@
 import { ObjectId } from "bson";
 import { ISource } from "./ISource";
+import ebisu from "ebisu-js";
 
 export interface ICard {
     id: string;
@@ -44,4 +45,10 @@ export class Card implements ICard {
     public note_card_index() : number {
         return Number(this.id.slice(25));
     }
+}
+
+function cardRecall(card: ICard, currentDate: number) : number {
+    let last_reviewed = new Date(card.last_reviewed);
+    let elapsedHours = Math.floor(Math.abs(currentDate - last_reviewed.getHours()) / 36e5);
+    return ebisu.predictRecall(card.recall_model, elapsedHours, false); // log-probability returned, is quicker
 }
