@@ -69,13 +69,13 @@ export default function NotesPage(props: INotesPageProps) {
     return (
         <>
             <div className="list row">
-                <div className="col-md-8">
+                {/* <div className="col-md-8">
                     <Input type="text" title="Search" placeholder="Search by field, tags, etc." value={searchQuery} onChange={onChangeSearchQuery} />
                     <StyledButton
                         onClick={search}>
                         Search
                     </StyledButton>
-                </div>
+                </div> */}
                 <StyledLink to="/demo/notes/new">
                     <StyledButton primary>New note</StyledButton>
                 </StyledLink>
@@ -101,50 +101,48 @@ export default function NotesPage(props: INotesPageProps) {
                     {currentNote ? (
                         <div>
                             <h4>Note</h4>
-                            <div>
-                                <label>
-                                    <strong>Field 1</strong>
-                                </label>
-                                {" " + currentNote.fields[0]}
-                            </div>
-                            <div>
-                                <label>
-                                    <strong>Field 2</strong>
-                                </label>
-                                {" " + currentNote.fields[1]}
-                            </div>
+                            {
+                                currentNote.fields && currentNote.fields.map((field, fi) =>
+                                    <div key={fi}>
+                                        <label>
+                                            <strong>Field {fi + 1}</strong>
+                                        </label>
+                                        {": " + field}
+                                    </div>
+                                )
+                            }
                             <div>
                                 <label>
                                     <strong>Tags</strong>
                                 </label>
-                                {" " + currentNote.tags.join(', ')}
+                                {": " + currentNote.tags.join(', ')}
                             </div>
                             <div>
                                 <label>
                                     <strong>Source</strong>
                                 </label>
-                                {" " + currentNote.source.title}
+                                {": " + currentNote.source.title}
                             </div>
                             <div>
                                 <label>
                                     <strong>ID</strong>
                                 </label>
-                                {" " + currentNote._id}
+                                {": " + currentNote._id}
                             </div>
                             <Link to={'/demo/notes/' + currentNote._id}
                                 className="badge badge-warning">
                                 Edit
                             </Link>
                             <div>
-                                {currentNote && currentNote.cards.map(card =>
+                                {/* {currentNote && currentNote.cards.map(card =>
                                     " " + card.id
-                                )}
-                                <button>Get Cards</button>
+                                )} */}
+                                {/* <button>Get Cards</button>
                                 <ul>
                                     {currentNote && currentNote.cards ? CardService.getCards(currentNote.cards.map(card => card.id)).then(res => res.map(rcard => {
                                         <li key={rcard.id}><strong>{rcard.id}</strong>{JSON.stringify(rcard.fields)}</li>
                                     })) : ''}
-                                </ul>
+                                </ul> */}
                             </div>
                         </div>
                     ) : <div>

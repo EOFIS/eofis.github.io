@@ -28,7 +28,7 @@ export const NotePage = () => {
 
     useEffect(() => {
         refreshNote(id);
-    });
+    },[]);
 
     const refreshNote = (id: string) => {
         NoteService.get(id)
@@ -97,7 +97,10 @@ export const NotePage = () => {
 
     const updateNote = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        NoteService.update(note._id.toString(), note);
+        NoteService.update(note._id.toString(), note)
+        .then((value) => {
+        console.debug(`Succesfully updated note`);
+        }).catch(err => console.error(`Error updating note: ${err}`));
     }
 
 

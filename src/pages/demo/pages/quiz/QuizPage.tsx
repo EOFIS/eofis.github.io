@@ -36,8 +36,11 @@ export default function QuizPage(props: IQuizPageProps) {
     // CardService.reviewCards(this.state.reviewedList);
 
     const refreshList = async () => {
-        await retrieveCards();
-        setToReview([...cards]);
+        retrieveCards().then(() => {
+            setToReview([...cards]);
+
+        }
+        )
     };
     const retrieveCards = async () => {
         CardService.getLowestRecall(20).then((response) => {
@@ -46,7 +49,6 @@ export default function QuizPage(props: IQuizPageProps) {
         setToReview(response);
         console.debug(`CARDS: ${cards}`);
         console.debug(`TOREVIEW: ${toReview}`);
-
         });
     };
 

@@ -44,7 +44,8 @@ export default function AddNotePage() {
             ...newNote
         })
         .then(() => {
-            history.push(`/demo/notes/new?created=true`);
+            console.debug(`CREATED NEW NOTE`);
+            history.push(`/demo/notes`);
         }, (messages) => {
             setErrorMessages(messages);
         });

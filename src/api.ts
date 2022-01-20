@@ -12,7 +12,7 @@ export const api = axios.create({
 
 api.interceptors.response.use(
     (response) => response,
-    (error: AxiosError<{message: IErrorResponse}>) => {
+    (error: AxiosError<IErrorResponse>) => {
         // console.debug(JSON.stringify(error));
         // console.debug(JSON.stringify(error.response));
         // console.debug(JSON.stringify(error.response?.data));
@@ -21,12 +21,12 @@ api.interceptors.response.use(
 
         if (error.response) {
             if (error.response.status >= 400 && error.response.status < 500) {
-                return Promise.reject(new ClientError(error.response.data.message.errorMessages, error.response.status));
+                return Promise.reject(new ClientError(error.response.data.errorMessages, error.response.status));
             }
             if (error.response.status >= 500) {
-                return Promise.reject(new ServerError(error.response.data.message.errorMessages, error.response.status));
+                return Promise.reject(new ServerError(error.response.data.errorMessages, error.response.status));
             }
-            return new GenericErrorResponse(error.response.data.message.errorMessages, error.response.status);
+            return new GenericErrorResponse(error.response.data.errorMessages, error.response.status);
         }
     }
 );
