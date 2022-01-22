@@ -10,7 +10,7 @@ export class NoteService {
     public static getNotes() : Promise<INote[]> {
         return new Promise<INote[]>((resolve, reject) => {
             api
-            .get("/notes")
+            .get("/notes", {withCredentials: true})
             .then((res : AxiosResponse<any>) => {
                 resolve(res.data?.map((note : any) => ({
                     _id: note._id.$oid,
@@ -21,10 +21,6 @@ export class NoteService {
                     tags: note.tags,
                     template: note.template
                 })));
-                // const notes = plainToClass(INote, res.data);
-                // resolve(res.data);
-                //resolve(notes);
-                //resolve(res.data);
             })
             .catch(res => {
                 reject(res);
@@ -34,7 +30,7 @@ export class NoteService {
     public static get(id: string) : Promise<INote> {
         return new Promise<INote>((resolve, reject) => {
             api
-            .get(`/notes/${id}`)
+            .get(`/notes/${id}`, {withCredentials: true})
             .then((res: AxiosResponse<any>) => {
                 resolve({
                     ...res.data,

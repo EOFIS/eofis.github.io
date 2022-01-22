@@ -1,10 +1,10 @@
 import { IRegistrationRequest } from "../types/IRegistrationRequest";
 import { IRegistrationResponse } from "../types/IRegistrationResponse";
 import { api } from "../../../api";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { ILoginRequest } from "../types/ILoginRequest";
 import { ILoginResponse } from "../types/ILoginResponse";
-import { IUser, IUserDocument, User } from "../types/IUser";
+import { IUser, User } from "../types/IUser";
 import { IUpdateResponse } from "../types/IUpdateResponse";
 import IUpdateRequest from "../types/IUpdateRequest";
 import { ClientError, IErrorResponse } from "../types/IErrorResponse";
@@ -29,7 +29,7 @@ export class AccountService {
     public static logout(): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             api
-                .delete("/auth")
+                .delete("/auth", {withCredentials: false})
                 .then(res => {
                     resolve(true);
                 })
@@ -43,7 +43,7 @@ export class AccountService {
     public static login(postData: ILoginRequest): Promise<User> {
         return new Promise<User>((resolve, reject) => {
             api
-                .post<ILoginRequest, AxiosResponse<[ILoginResponse, number]>>("/auth", postData)
+                .post<ILoginRequest, AxiosResponse<[ILoginResponse, number]>>("/auth", postData, {withCredentials: false})
                 .then((res) => {
                     if (res.status === 200) {
                         let user = User.from_document(res.data[0].user);
@@ -61,8 +61,8 @@ export class AccountService {
                                 reject(err.errorMessages);
                         }
                     }
-                    console.error(err.errorMessages)
-                    reject(err.errorMessages);
+                    console.error(err.errorMessages || err);
+                    reject(err.errorMessages || err);
                 });
         });
     }

@@ -48,7 +48,7 @@ export const NotePage = () => {
     };
 
     const onChangeTemplate = (e: ChangeEvent<HTMLSelectElement>) => {
-        const newTemplate = e.target.value;
+        const newTemplate = e.target.value as CardTemplateType;
         setNote({
             ...note,
             template: newTemplate
