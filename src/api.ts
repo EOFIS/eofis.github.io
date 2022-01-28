@@ -3,7 +3,7 @@ import { ClientError, GenericErrorResponse, IErrorResponse, ServerError } from "
 
 export const api = axios.create({
     // baseURL: process.env.NODE_ENV === 'development' ? 'https://localhost:5000/api/v0' : 'https://eofis-dev.herokuapp.com/api/v0',
-    // baseURL: 'https://eofis-dev.herokuapp.com/api/v0', // for deployed dev api
+    baseURL: 'https://eofis-dev.herokuapp.com/api/v0', // for deployed dev api
     // baseURL: 'https://localhost:5000/api/v0', // for `./serve.sh`
     // baseURL: 'http://localhost:5000/api/v0', // for `heroku local`
     // doesn't work when using "proxy" : "" in package.json
