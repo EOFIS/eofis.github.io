@@ -25,6 +25,7 @@
     "styled-components": "^5.3.3",
     "yup": "^0.32.11"
   },
+  "proxy": "https://127.0.0.1:5000/api/v0",
   "scripts": {
     "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",

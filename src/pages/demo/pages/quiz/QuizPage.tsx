@@ -44,11 +44,8 @@ export default function QuizPage(props: IQuizPageProps) {
     };
     const retrieveCards = async () => {
         CardService.getLowestRecall(20).then((response) => {
-        console.debug(`RESPONSE: ${response}`);
         setCards(response);
         setToReview(response);
-        console.debug(`CARDS: ${cards}`);
-        console.debug(`TOREVIEW: ${toReview}`);
         });
     };
 

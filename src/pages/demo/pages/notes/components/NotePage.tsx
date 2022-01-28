@@ -99,7 +99,6 @@ export const NotePage = () => {
         event.preventDefault()
         NoteService.update(note._id.toString(), note)
         .then((value) => {
-        console.debug(`Succesfully updated note`);
         }).catch(err => console.error(`Error updating note: ${err}`));
     }
 

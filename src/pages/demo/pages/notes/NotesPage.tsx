@@ -40,7 +40,10 @@ export default function NotesPage(props: INotesPageProps) {
             .then(response => {
                 // TODO: remove this reverse
                 setNotes(response.reverse());
-            });
+            })
+            .catch(err => {
+                console.error(`ERROR RETRIEVING NOTES: ${JSON.stringify(err)}`);
+            })
     };
 
     const refreshList = () => {

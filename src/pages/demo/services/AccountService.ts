@@ -29,12 +29,16 @@ export class AccountService {
     public static logout(): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             api
-                .delete("/auth", {withCredentials: false})
+                .delete<void, AxiosResponse<void,void>>("/auth", {withCredentials: false})
                 .then(res => {
-                    resolve(true);
+                    if (res?.status === 201) {
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
                 })
                 .catch(err => {
-                    console.error(`Error logging out: ${err}`);
+                    console.error(`Error logging out: ${JSON.stringify(err)}`);
                     reject(err);
                 });
         });
@@ -59,8 +63,10 @@ export class AccountService {
                             case 404: case 403:
                                 console.info(`Issue logging in: [${err.status}] "${err.errorMessages}" | ${JSON.stringify(err)}`);
                                 reject(err.errorMessages);
+                                break;
                         }
                     }
+                    console.error(`Issue logging in: `)
                     console.error(err.errorMessages || err);
                     reject(err.errorMessages || err);
                 });

@@ -29,12 +29,6 @@ export function useAuth() {
 
 const useProvideAuth = (): IAuthContext => {
     const [user, setUser] = useState<IUser | undefined>(undefined);
-    // useEffect(() => {
-    //     const loggedInUser : string|null = localStorage.getItem(LOCAL_STORAGE.USER);
-    //     if (loggedInUser != null) {
-    //         setUser(User.from_localstorage(loggedInUser));
-    //     }
-    // });
 
     const signin = async (loginRequest: ILoginRequest, signedIn: () => void, error: (messages: Array<string>) => void) => {
         AccountService.login(loginRequest)
@@ -51,9 +45,13 @@ const useProvideAuth = (): IAuthContext => {
     const signout = async (signedOut: () => void, error: (messages: Array<string>) => void) => {
         AccountService.logout()
         .then((value: boolean) => {
-            localStorage.removeItem(LOCAL_STORAGE.USER);
-            setUser(undefined);
-            signedOut();
+            if (value === true) {
+                localStorage.removeItem(LOCAL_STORAGE.USER);
+                setUser(undefined);
+                signedOut();
+            } else {
+                error(['Error signing out']);
+            }
         }, (reason: Array<string>) => {
             error(reason);
         });

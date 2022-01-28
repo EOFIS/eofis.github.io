@@ -37,14 +37,12 @@ export default function AddNotePage() {
     let createNewNote = (newNote: INewNoteData) => {
         setErrorMessages([]);
         newNote.tags = tags;
-        // console.debug(`Creating new note: ${JSON.stringify(newNote)} with tags [${tags}] and template ${template}`);
 
         NoteService.create({
             _partition: `userid=${auth.user?._id}`,
             ...newNote
         })
         .then(() => {
-            console.debug(`CREATED NEW NOTE`);
             history.push(`/demo/notes`);
         }, (messages) => {
             setErrorMessages(messages);

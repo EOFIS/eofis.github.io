@@ -40,22 +40,24 @@ export default (props: IAccountPageProps) => {
     };
 
     return (
-        <InsetContainer>
-            {cachedUser ? (
-                <>
-                    <h1>{cachedUser.name}</h1>
-                    <img src="../profile-128.png"/>
-                    <h2>{cachedUser.email}</h2>
-                    <div title={cachedUser.last_login.toLocaleString()}>Last login: <DateView>{lastLogin}</DateView></div>
-                    {cachedUser.loggedIn ? <div>Logged in</div> : ''}
-                    {!cachedUser.is_activated ?
-                        <div>
-                            Email address not verified for this account
-                        </div>
-                        : ''}
-                    <StyledButton onClick={() => logout()}>Sign out</StyledButton>
-                </>
-            ) : 'No user logged in'}
-        </InsetContainer>
+        <>
+            <InsetContainer>
+                {cachedUser ? (
+                    <>
+                        <h1>{cachedUser.name}</h1>
+                        <img src="../profile-128.png" />
+                        <h2>{cachedUser.email}</h2>
+                        <div title={cachedUser.last_login.toLocaleString()}>Last login: <DateView>{lastLogin}</DateView></div>
+                        {cachedUser.loggedIn ? <div>Logged in</div> : ''}
+                        {!cachedUser.is_activated ?
+                            <div>
+                                Email address not verified for this account
+                            </div>
+                            : ''}
+                    </>
+                ) : 'No user logged in'}
+            </InsetContainer>
+            <StyledButton onClick={() => logout()}>Sign out</StyledButton>
+        </>
     );
 }
