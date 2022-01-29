@@ -26,9 +26,9 @@
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
-  "proxy": "https://127.0.0.1:5000/api/v0",
   "scripts": {
     "start": "react-scripts start",
+    "start-dev": "HTTPS=true REACT_APP_API_URL=https://localhost:5000/api/v0/ react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

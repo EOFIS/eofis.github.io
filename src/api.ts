@@ -7,6 +7,7 @@ export const api = axios.create({
     // baseURL: 'https://localhost:5000/api/v0', // for `./serve.sh`
     // baseURL: 'http://localhost:5000/api/v0', // for `heroku local`
     // doesn't work when using "proxy" : "" in package.json
+    // baseURL: '/api/v0', // for other proxies
     headers: {
         "Content-Type": "application/json"
     },
