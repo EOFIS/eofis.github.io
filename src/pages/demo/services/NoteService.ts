@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { ObjectId } from "bson";
-import { api } from "../../../api";
+import { authApi } from "../../../api";
 import { ICard } from "../types/ICard";
 import { ICreateRequest } from "../types/ICreateRequest";
 import { ICreateResponse } from "../types/ICreateResponse";
@@ -9,7 +9,7 @@ import { ICreateNoteRequest, INewNoteData, INote } from "../types/INote";
 export class NoteService {
     public static getNotes() : Promise<INote[]> {
         return new Promise<INote[]>((resolve, reject) => {
-            api
+            authApi
             .get("/notes", {withCredentials: true})
             .then((res : AxiosResponse<any>) => {
                 resolve(res.data?.map((note : any) => ({
@@ -29,7 +29,7 @@ export class NoteService {
     }
     public static get(id: string) : Promise<INote> {
         return new Promise<INote>((resolve, reject) => {
-            api
+            authApi
             .get(`/notes/${id}`, {withCredentials: true})
             .then((res: AxiosResponse<any>) => {
                 resolve({
@@ -45,7 +45,7 @@ export class NoteService {
 
     public static create(note: ICreateRequest<INewNoteData>) {
         return new Promise<ObjectId>((resolve, reject) => {
-            api
+            authApi
             .post<ICreateRequest<INewNoteData>, AxiosResponse<[ICreateResponse<INote>, number]>>(`/notes`, note)
             .then((res) => {
                 if (res.status === 201) {
@@ -63,7 +63,7 @@ export class NoteService {
     }
     public static update(id: string, note: INote) {
         return new Promise((resolve, reject) => {
-            api
+            authApi
             .put(`/notes/${id}`, note)
             .then((res: AxiosResponse<any>) => {
                 // TODO: implement typing of response
@@ -79,7 +79,7 @@ export class NoteService {
 
     public static queryNotes(searchQuery: string) : Promise<INote[]> {
         return new Promise<INote[]>((resolve, reject) => {
-            api
+            authApi
             .get("/notes", {params: {searchQuery: searchQuery}})
             .then((res: AxiosResponse<any>) => {
                 resolve(res.data);

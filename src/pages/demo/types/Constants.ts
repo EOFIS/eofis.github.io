@@ -1,5 +1,6 @@
 export enum LOCAL_STORAGE {
-    USER = "USER"
+    USER = "USER",
+    JWT = "JWT"
 }
 
 export const EMAIL_PATTERN = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/;
