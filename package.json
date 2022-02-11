@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-dev": "HTTPS=true REACT_APP_API_URL=https://localhost:5000/api/v0/ react-scripts start",
+    "start-dev": "HTTPS=true REACT_APP_API_URL=https://eofis-dev.herokuapp.com/api/v0/ react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
