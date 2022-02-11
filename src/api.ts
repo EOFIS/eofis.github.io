@@ -35,6 +35,7 @@ authApi.interceptors.request.use(
         if (config.headers && !config.headers.Authorization) {
             config.headers.Authorization = `Bearer ${localStorage.getItem(LOCAL_STORAGE.JWT)}`;
         }
+        console.debug(`NODE_ENV: ${process.env.NODE_ENV}`);
         return config;
     }, error => Promise.reject(error)
 );
