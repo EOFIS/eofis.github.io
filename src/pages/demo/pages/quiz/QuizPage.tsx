@@ -4,6 +4,8 @@ import { CardService } from "../../services/CardService";
 import { Card, ICard } from "../../types/ICard";
 import "./QuizPage.sass"
 import { ICardReview } from "../../types/ICardReview";
+import { ResponsiveDrawer, SideDrawer } from "../../components/SideDrawer";
+import { CardDrawer } from "../../components/CardDrawer";
 
 export interface IQuizPageProps {
 
@@ -77,7 +79,11 @@ export default function QuizPage(props: IQuizPageProps) {
         <>
             <h1>Today's Quiz</h1>
             <br />
-            <div className="container-fluid">
+            <ResponsiveDrawer>
+                Side Drawer
+            </ResponsiveDrawer>
+            <CardDrawer sideDrawerOpen={toReviewOpen}>
+<div className="container-fluid">
                 <div className="row mb-3">
                     <div className="col-3 text-left">
                         <div className="row">
@@ -171,6 +177,8 @@ export default function QuizPage(props: IQuizPageProps) {
                     </div>
                 </div>
             </div>
+            </CardDrawer>
+            
         </>
     )
 };
