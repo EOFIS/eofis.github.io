@@ -14,9 +14,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 const RegistrationPageStyle = styled.div`
-background: #771527;
-// padding: 48px 128px;
-color: #FCECB6;
 `;
 
 interface IRegistrationFormInputs {

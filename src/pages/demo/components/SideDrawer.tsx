@@ -10,21 +10,21 @@ export const SideDrawer = styled.div<ISideDrawerProps>`
 top: 0;
 height: 100vh;
 float: left;
-background-color: #00f;
+background-color: #eee;
+color: #111;
 position: relative;
 flex-direction: column;
 z-index: 1;
 overflow-y: hidden;
 & > .content {
+    overflow-x: hidden;
     padding: 4px;
     width: ${props => props.width}px;
     display: ${props => props.open ? 'block' : 'none'};
     user-select: none;
+    z-index: 1;
 }
 `;
-
-export const SideDrawerHandle = styled.div
-
 
 interface IDraggerProps {
     drawerOpen: boolean;
@@ -39,7 +39,7 @@ const Dragger = styled.div<IDraggerProps>`
     bottom: 0;
     height: 100%;
     z-index: 100;
-    background-color: ${props => props.drawerOpen? '#00d' : 'darkred'}; // Slightly darker than SideDrawer when open, slightly darker than background when closed
+    background-color: ${props => props.drawerOpen ? '#00d' : 'darkred'}; // Slightly darker than SideDrawer when open, slightly darker than background when closed
 
     &:hover {
         background-color: #222;
@@ -71,7 +71,7 @@ export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
         let maxW = 300;
         if (newW > minW && newW < maxW)
             setDrawerWidth(newW);
-        
+
     }
 
     return (
@@ -85,17 +85,14 @@ export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
                 onMouseMove={onMouseMove}
             >
                 <Dragger drawerOpen={open}
-                onMouseDown={(e) => {
-                    setIsResizing(true);
-                    setLastXDown(e.clientX);
-                }}  
+                    onMouseDown={(e) => {
+                        setIsResizing(true);
+                        setLastXDown(e.clientX);
+                    }}
                 />
+
                 <div className='content'>
-                    {open && 'O'}<br/>
-                    {isResizing && 'R'}<br/>
-                    {lastXDown}<br/>
-                    {drawerWidth}<br/>
-                {props.children}
+                    {props.children}
                 </div>
             </SideDrawer>
         </div>

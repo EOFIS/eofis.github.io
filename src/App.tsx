@@ -6,13 +6,16 @@ import Contact from "./pages/contact/Contact";
 import Demo from "./pages/demo/DemoApp";
 import Home from "./pages/home/Home";
 import React from "react";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
+import { LightTheme } from "./pages/demo/themes/LightTheme";
 
 const AppStyle = styled.div`
-background-color: #771527;
+background: ${props => props.theme.colour.bg.layer0};
 width: 100vw;
 height: 100vh;
-color: #FCECB6;
+color: ${props => props.theme.font.colour.layer0.normal};
+font-size: ${props => props.theme.font.size.normal};
+font-family: ${props => props.theme.font.family};
 
 h1 {
   font-family: "GT Haptik Medium", sans-serif;
@@ -35,6 +38,7 @@ h3 {
 
 const App = () => {
   return (
+    <ThemeProvider theme={LightTheme}>
     <AppStyle>
       <header className={style["App-header"]}>
         <nav>
@@ -74,6 +78,7 @@ const App = () => {
         </Route>
       </Switch>
     </AppStyle>
+    </ThemeProvider>
   );
 };
 

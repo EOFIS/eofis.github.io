@@ -13,17 +13,16 @@ import RegistrationPage from "./pages/account/RegistrationPage";
 import { NotePage } from "./pages/notes/components/NotePage";
 import RegistrationConfirmationPage from "./pages/account/RegistrationConfirmationPage";
 import AddNotePage from "./pages/notes/components/AddNotePage";
+import { LightTheme } from "./themes/LightTheme";
 
 const AppStyle = styled.div`
-padding: 48px 128px;
-color: ${props => props.theme.normalFontColor};
-font-size: ${props => props.theme.normalFontSize};
+color: ${props => props.theme.font.colour.layer0.normal};
+font-size: ${props => props.theme.font.size.normal};
+background: ${props => props.theme.colour.bg.layer0};
+float: left;
+width: 100%;
+height: 100%;
 `;
-
-const theme = {
-    normalFontColor: 'palevioletred',//'#FCECB6',
-    normalFontSize: '24pt'
-}
 
 export default () => {
     const [notes, setNotes] = useState<Array<INote>>([]);
@@ -34,42 +33,40 @@ export default () => {
 
     return (
         <AppStyle>
-            <ThemeProvider theme={theme}>
-                <ProvideAuth>
-                    <Switch>
-                        <ProtectedRoute path="/demo/quiz">
-                            <QuizPage />
-                        </ProtectedRoute>
-                        <ProtectedRoute path="/demo/notes/new" >
-                            <AddNotePage />
-                        </ProtectedRoute>
-                        <ProtectedRoute path="/demo/notes/:id" >
-                            <NotePage />
-                        </ProtectedRoute>
-                        <ProtectedRoute path="/demo/notes">
-                            <NotesPage />
-                        </ProtectedRoute>
-                        <Route path="/demo/login">
-                            <LoginPage />
-                        </Route>
-                        <Route path="/demo/register/confirmation">
-                            <RegistrationConfirmationPage />
-                        </Route>
-                        <Route path="/demo/register">
-                            <RegistrationPage />
-                        </Route>
-                        <ProtectedRoute path="/demo/account">
-                            <AccountPage />
-                        </ProtectedRoute>
-                        <ProtectedRoute path="/demo/protected">
-                            <div>PROTECTED</div>
-                        </ProtectedRoute>
-                        <Route path="/demo">
-                            <DemoHome />
-                        </Route>
-                    </Switch>
-                </ProvideAuth>
-            </ThemeProvider>
+            <ProvideAuth>
+                <Switch>
+                    <ProtectedRoute path="/demo/quiz">
+                        <QuizPage />
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/demo/notes/new" >
+                        <AddNotePage />
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/demo/notes/:id" >
+                        <NotePage />
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/demo/notes">
+                        <NotesPage />
+                    </ProtectedRoute>
+                    <Route path="/demo/login">
+                        <LoginPage />
+                    </Route>
+                    <Route path="/demo/register/confirmation">
+                        <RegistrationConfirmationPage />
+                    </Route>
+                    <Route path="/demo/register">
+                        <RegistrationPage />
+                    </Route>
+                    <ProtectedRoute path="/demo/account">
+                        <AccountPage />
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/demo/protected">
+                        <div>PROTECTED</div>
+                    </ProtectedRoute>
+                    <Route path="/demo">
+                        <DemoHome />
+                    </Route>
+                </Switch>
+            </ProvideAuth>
         </AppStyle>
     );
 };

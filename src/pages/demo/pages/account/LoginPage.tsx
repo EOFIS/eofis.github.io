@@ -10,8 +10,6 @@ import { ErrorWrapper } from "../../components/ErrorWrapper";
 import styled from "styled-components";
 
 const LoginPageStyle = styled.div`
-background: #771527;
-color: #FCECB6;
 `;
 export default function LoginPage() {
     let history = useHistory();

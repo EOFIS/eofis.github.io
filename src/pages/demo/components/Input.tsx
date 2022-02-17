@@ -24,6 +24,7 @@ input {
     padding-left: 16px;
     font-size: 0.875rem;
     line-height: 1.4rem;
+    box-sizing: border-box;
 
     &.error {
         background: white;

@@ -42,6 +42,7 @@ export default (props: IAccountPageProps) => {
     return (
         <>
             <InsetContainer>
+                <div className="container">
                 {cachedUser ? (
                     <>
                         <h1>{cachedUser.name}</h1>
@@ -56,6 +57,7 @@ export default (props: IAccountPageProps) => {
                             : ''}
                     </>
                 ) : 'No user logged in'}
+                </div>
             </InsetContainer>
             <StyledButton onClick={() => logout()}>Sign out</StyledButton>
         </>

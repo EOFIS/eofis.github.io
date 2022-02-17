@@ -6,6 +6,7 @@ import "./QuizPage.sass"
 import { ICardReview } from "../../types/ICardReview";
 import { ResponsiveDrawer, SideDrawer } from "../../components/SideDrawer";
 import { CardDrawer } from "../../components/CardDrawer";
+import { CardListItem } from "../../components/CardListItem";
 
 export interface IQuizPageProps {
 
@@ -80,35 +81,14 @@ export default function QuizPage(props: IQuizPageProps) {
             <h1>Today's Quiz</h1>
             <br />
             <ResponsiveDrawer>
-                Side Drawer
+                {
+                    toReview &&
+                    toReview.map((card, cardi) => <CardListItem key={cardi} card={card}/>)
+                }
             </ResponsiveDrawer>
             <CardDrawer sideDrawerOpen={toReviewOpen}>
 <div className="container-fluid">
                 <div className="row mb-3">
-                    <div className="col-3 text-left">
-                        <div className="row">
-                            <Button
-                                className="col"
-                                onClick={toggleReviewList}
-                                aria-expanded={toReviewOpen}
-                                aria-controls="upcomingList">
-                                View upcoming
-                            </Button>
-                        </div>
-                        {
-                            toReview ? (
-                                <Collapse in={toReviewOpen} className="row">
-                                    <div id="upcomingList" className="container">
-                                        <ol>
-                                            {toReview.map((card: ICard, index: number) => (
-                                                <li className="note-list-item" key={index}>{card.fields[0]}</li>
-                                            ))}
-                                        </ol>
-                                    </div>
-                                </Collapse>
-                            ) : 'No cards to review'
-                        }
-                    </div>
                     <div className="col-9">
                         {
                             reviewedList.map((cardReview, index) => (
