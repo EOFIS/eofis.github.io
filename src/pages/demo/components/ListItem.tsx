@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 interface IListItemStyleProps {
-    isSelected: boolean;
+    isSelected?: boolean;
 }
 const ListItemStyle = styled.li<IListItemStyleProps>`
 overflow:hidden;
@@ -28,7 +28,7 @@ export interface IListItemProps {
     allowScroll?: boolean;
 }
 export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>> = ({ ...props }) => {
-    return <ListItemStyle isSelected={props.isSelected || false} onClick={props.onClick}>
+    return <ListItemStyle isSelected={props.isSelected} onClick={props.onClick}>
         {props.title}
         </ListItemStyle>
 }

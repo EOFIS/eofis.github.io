@@ -19,6 +19,7 @@ const AppStyle = styled.div`
 color: ${props => props.theme.font.colour.layer0.normal};
 font-size: ${props => props.theme.font.size.normal};
 background: ${props => props.theme.colour.bg.layer0};
+width: 100%;
 float: left;
 width: 100%;
 height: 100%;

@@ -70,7 +70,7 @@ export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
             offsetL = elemOffset.left - bodyOffset.left;
         let newW = (e.clientX - offsetL);
         let minW = 50;
-        let maxW = 300;
+        let maxW = 1000;
         if (newW > minW && newW < maxW)
             setDrawerWidth(newW);
 
