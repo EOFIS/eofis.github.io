@@ -10,7 +10,11 @@ export const LightTheme: DefaultTheme = {
             layer4: { normal: '#20040B' },
         },
         size: {
-            normal: '14pt'
+            heading: 'clamp(2.25rem,5.3vw,5rem)',
+            large: '24pt',
+            normal: '14pt',
+            small: '12pt',
+            verysmall: '8pt',
         },
         family: 'Tahoma, Geneva, sans-serif'
     },

@@ -11,7 +11,11 @@ declare module 'styled-components' {
                 layer4: { normal: string; },
             },
             size: {
-                normal: string
+                heading: string,
+                large: string,
+                normal: string,
+                small: string,
+                verysmall: string,
             },
             family: string,
         }

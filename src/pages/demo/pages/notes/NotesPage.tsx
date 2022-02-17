@@ -2,12 +2,10 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import { Link } from "react-router-dom";
 import { NoteService } from "../../services/NoteService";
 import { INote } from "../../types/INote";
-import { ObjectId } from "mongodb";
-import BSON from "bson";
 import { StyledLink } from "../../components/StyledLink";
 import StyledButton from "../../components/StyledButton";
-import { Input } from "../../components/Input";
-import { CardService } from "../../services/CardService";
+import { NoteListItem } from "../../components/NoteListItem";
+import { ResponsiveDrawer } from "../../components/SideDrawer";
 
 export interface INotesPageProps {
 
@@ -82,25 +80,13 @@ export default function NotesPage(props: INotesPageProps) {
                 <StyledLink to="/demo/notes/new">
                     <StyledButton primary>New note</StyledButton>
                 </StyledLink>
-                <div className="col-md-6">
-                    <h4>Notes List</h4>
-                    <ul className="list-group">
+                <h4>Notes List</h4>
+                <ResponsiveDrawer allowScroll={true}>
                         {
-                            notes && notes.map((note: INote, index: number) => (
-                                <li
-                                    className={
-                                        "list-group-item " + (index === currentIndex ? "active" : "")
-                                    }
-                                    onClick={() => setActiveNote(note, index)}
-                                    key={index}
-                                >
-                                    {note.fields[0]}
-                                </li>
-                            ))
+                            notes && notes.map((note, notei) => <NoteListItem key={notei} isSelected={notei === currentIndex} note={note} onClick={() => setActiveNote(note, notei)}/>)
                         }
-                    </ul>
-                </div>
-                <div className="col-md-6">
+                </ResponsiveDrawer>
+                <div>
                     {currentNote ? (
                         <div>
                             <h4>Note</h4>

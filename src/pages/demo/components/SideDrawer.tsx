@@ -5,17 +5,19 @@ import styled from "styled-components";
 export interface ISideDrawerProps {
     open: boolean;
     width: number;
+    allowScroll?: boolean;
 }
 export const SideDrawer = styled.div<ISideDrawerProps>`
 top: 0;
 height: 100vh;
 float: left;
-background-color: #eee;
-color: #111;
+background: ${props => props.theme.colour.bg.layer1};
+color: ${props => props.theme.font.colour.layer1.normal};
 position: relative;
 flex-direction: column;
 z-index: 1;
 overflow-y: hidden;
+
 & > .content {
     overflow-x: hidden;
     padding: 4px;
@@ -39,15 +41,15 @@ const Dragger = styled.div<IDraggerProps>`
     bottom: 0;
     height: 100%;
     z-index: 100;
-    background-color: ${props => props.drawerOpen ? '#00d' : 'darkred'}; // Slightly darker than SideDrawer when open, slightly darker than background when closed
+    background-color: ${props => props.drawerOpen ? props.theme.colour.bg.layer3 : props.theme.colour.bg.layer1}; // Slightly darker than SideDrawer when open, slightly darker than background when closed
 
     &:hover {
-        background-color: #222;
+        background-color: ${props => props.drawerOpen ? props.theme.colour.bg.layer1 : props.theme.colour.bg.layer2};
     }
 `;
 
 export interface IResponsiveDrawerProps {
-
+    allowScroll?: boolean;
 }
 
 export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
@@ -76,7 +78,7 @@ export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
 
     return (
         <div>
-            <SideDrawer open={open} width={drawerWidth}
+            <SideDrawer open={open} width={drawerWidth} allowScroll={props.allowScroll}
                 onMouseUp={(e) => {
                     setIsResizing(false);
                     if (e.clientX === lastXDown)
