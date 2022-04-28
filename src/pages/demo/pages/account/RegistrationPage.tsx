@@ -74,7 +74,7 @@ export default function RegistrationPage() {
     <RegistrationPageStyle>
       <h1>Register</h1>
       <h3>Let's get revising!</h3>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form inset onSubmit={handleSubmit(onSubmit)}>
         {errorMessages.length > 0 ?
           <ErrorWrapper>
             {errorMessages.map((value, index, array) =>

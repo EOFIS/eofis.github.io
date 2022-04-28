@@ -12,7 +12,7 @@ import { LightTheme } from "./pages/demo/themes/LightTheme";
 const AppStyle = styled.div`
 background: ${props => props.theme.colour.bg.layer0};
 width: 100%;
-height: 100vh;
+height: 100%;
 color: ${props => props.theme.font.colour.layer0.normal};
 font-size: ${props => props.theme.font.size.normal};
 font-family: ${props => props.theme.font.family};

@@ -1,17 +1,18 @@
 import React, { FormEvent, FormEventHandler, useEffect, useState } from "react"
 import { useHistory, useLocation } from "react-router"
-import { useAuth } from "../../components/ProtectedRoute";
-import ILocationState from "../../types/ILocationState";
-import { ILoginRequest } from "../../types/ILoginRequest";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Form } from "../../components/Form";
-import { Input } from "../../components/Input";
-import { ErrorWrapper } from "../../components/ErrorWrapper";
 import styled from "styled-components";
+import ILocationState from "../../../types/ILocationState";
+import { useAuth } from "../../../components/ProtectedRoute";
+import { ILoginRequest } from "../../../types/ILoginRequest";
+import { Form } from "../../../components/Form";
+import { Input } from "../../../components/Input";
+import { ErrorWrapper } from "../../../components/ErrorWrapper";
 
-const LoginPageStyle = styled.div`
+const LoginFormStyle = styled.div`
+width: 20em;
 `;
-export default function LoginPage() {
+export default function LoginForm(props: {onSuccess: () => {}}) {
     let history = useHistory();
     let location = useLocation<ILocationState>();
     let auth = useAuth();
@@ -23,7 +24,8 @@ export default function LoginPage() {
     let login = (loginRequest: ILoginRequest) => {
         setErrorMessages([]);
         auth.signin(loginRequest, () => {
-            history.replace(from);
+            props.onSuccess();
+            // history.replace(from);
         }, (messages) => {
             setErrorMessages(messages);
         });
@@ -31,17 +33,15 @@ export default function LoginPage() {
 
     const onLoginSubmit: SubmitHandler<ILoginRequest> = (data: ILoginRequest) => login(data);
 
-    useEffect(() => {
-        if (auth.user) {
-            history.replace(from);
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (auth.user) {
+    //         history.replace(from);
+    //     }
+    // }, []);
 
     return (
-        <LoginPageStyle>
-            <h1>Log in to your account</h1>
-            <h3>Let's get revising!</h3>
-            <Form inset onSubmit={handleSubmit(onLoginSubmit)}>
+        <LoginFormStyle>
+            <Form onSubmit={handleSubmit(onLoginSubmit)}>
             {errorMessages && errorMessages.length > 0 ?
                     <ErrorWrapper>
                         {errorMessages.map((value, index, array) =>
@@ -56,6 +56,6 @@ export default function LoginPage() {
 
                 {/* <Input type="checkbox" placeholder="Remember Me" {...register("rememberMe", { required: false })} /> */}
             </Form>
-        </LoginPageStyle>
+        </LoginFormStyle>
     )
 }

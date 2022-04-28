@@ -3,6 +3,7 @@ import React from "react";
 import { InsetContainer } from "./InsetContainer";
 
 interface IFormProps {
+    inset?: boolean;
 }
 
 const FormStyle = styled.form`
@@ -15,11 +16,16 @@ hr {
 `;
 
 export const Form: React.FC<IFormProps & React.HTMLProps<HTMLFormElement>> = ({ children, onSubmit, ...props }) => {
-    return <InsetContainer>
-        <div className="container">
-            <FormStyle onSubmit={onSubmit}>
-                {children}
-            </FormStyle>
-        </div>
-    </InsetContainer>
+    return props.inset ?
+        <InsetContainer>
+            <div className="container">
+                <FormStyle onSubmit={onSubmit}>
+                    {children}
+                </FormStyle>
+            </div>
+        </InsetContainer>
+        :
+        <FormStyle onSubmit={onSubmit}>
+            {children}
+        </FormStyle>
 }

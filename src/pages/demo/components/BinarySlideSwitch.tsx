@@ -55,7 +55,7 @@ const BinarySlideSwitchStyle = styled.label<BinarySlideSwitchStyleProps>`
     vertical-align: bottom;
     font-size: 20pt;
     font-weight: bold;
-    color: ${props => props.switched ? props.theme.colour.bg.layer0 : props.theme.font.colour.layer0.normal};
+    color: ${props => props.switched ? props.theme.font.colour.layer0.normal : props.theme.colour.bg.layer0};
 }
 `;
 

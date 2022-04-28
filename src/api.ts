@@ -1,5 +1,4 @@
-import dotenv from "dotenv";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError } from "axios";
 import { LOCAL_STORAGE } from "./pages/demo/types/Constants";
 import { ClientError, GenericErrorResponse, IErrorResponse, ServerError } from "./pages/demo/types/IErrorResponse";
 
