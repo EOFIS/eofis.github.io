@@ -33,8 +33,8 @@ export default (props: IAccountPageProps) => {
     let logout = () => {
         setErrorMessages([]);
         auth.signout(() => {
-            history.push('/demo/login');
-        }, (messages) => {
+            history.push('/login');
+        }, (messages: string[]) => {
             setErrorMessages(messages);
         });
     };

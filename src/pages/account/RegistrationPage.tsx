@@ -46,7 +46,7 @@ export default function RegistrationPage() {
     setErrorMessages([]);
     AccountService.register(registerRequest)
       .then(() => {
-        history.push(`/demo/register?registered=true`);
+        history.push(`/register?registered=true`);
       }, (messages) => {
         setErrorMessages(messages);
       });

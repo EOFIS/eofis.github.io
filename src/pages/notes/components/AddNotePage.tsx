@@ -43,7 +43,7 @@ export default function AddNotePage() {
             ...newNote
         })
         .then(() => {
-            history.push(`/demo/notes`);
+            history.push(`/notes`);
         }, (messages) => {
             setErrorMessages(messages);
         });

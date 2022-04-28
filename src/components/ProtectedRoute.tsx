@@ -74,7 +74,7 @@ export const ProtectedRoute: React.FC<{ path: string }> = ({ children, ...rest }
                     <>
                         <Redirect
                             to={{
-                                pathname: "/demo/login",
+                                pathname: "/login",
                                 state: { from: location }
                             }}
                         />

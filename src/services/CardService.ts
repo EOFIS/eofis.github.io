@@ -1,7 +1,7 @@
 import { Card, CardId, ICard } from "../types/ICard";
 import ebisu from "ebisu-js";
 import { ICardReview } from "../types/ICardReview";
-import { authApi } from "../../../api";
+import { authApi } from "../api";
 import { IUpdateResponse } from "../types/IUpdateResponse";
 import { AxiosResponse } from "axios";
 import { IGetResponse } from "../types/IGetResponse";

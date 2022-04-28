@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
-import { LOCAL_STORAGE } from "./pages/demo/types/Constants";
-import { ClientError, GenericErrorResponse, IErrorResponse, ServerError } from "./pages/demo/types/IErrorResponse";
+import { LOCAL_STORAGE } from "./types/Constants";
+import { ClientError, GenericErrorResponse, IErrorResponse, ServerError } from "./types/IErrorResponse";
 
 
 axios.interceptors.response.use(

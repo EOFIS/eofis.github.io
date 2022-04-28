@@ -1,13 +1,15 @@
 import logo from "./logo.svg";
 import style from "./App.module.sass";
 import { Link, Route, Switch } from "react-router-dom";
-import FAQ from "./pages/faq/FAQ";
-import Contact from "./pages/contact/Contact";
-import Demo from "./pages/demo/DemoApp";
 import Home from "./pages/home/Home";
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { LightTheme } from "./pages/demo/themes/LightTheme";
+import { LightTheme } from "./themes/LightTheme";
+import { ProtectedRoute, ProvideAuth } from "./components/ProtectedRoute";
+import LoginPage from "./pages/account/LoginPage";
+import RegistrationConfirmationPage from "./pages/account/RegistrationConfirmationPage";
+import RegistrationPage from "./pages/account/RegistrationPage";
+import AccountPage from "./pages/account/AccountPage";
 
 const AppStyle = styled.div`
 background: ${props => props.theme.colour.bg.layer0};
@@ -16,6 +18,8 @@ height: 100%;
 color: ${props => props.theme.font.colour.layer0.normal};
 font-size: ${props => props.theme.font.size.normal};
 font-family: ${props => props.theme.font.family};
+
+float: left;
 
 h1 {
   font-family: "GT Haptik Medium", sans-serif;
@@ -39,45 +43,27 @@ h3 {
 const App = () => {
   return (
     <ThemeProvider theme={LightTheme}>
-    <AppStyle>
-      <header className={style["App-header"]}>
-        <nav>
-          <div>
-            <Link to="/" className={style['pull-left']}>
-              <img src={logo} className={style['logo']} />
-            </Link>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/faq">FAQ</Link>
-              </li>
-              <li>
-                <Link to="/contact">Contact</Link>
-              </li>
-              <li>
-                <Link to="/demo">Demo</Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </header>
-      <Switch>
-        <Route path="/faq">
-          <FAQ />
-        </Route>
-        <Route path="/contact">
-          <Contact />
-        </Route>
-        <Route path="/demo">
-          <Demo />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </AppStyle>
+      <AppStyle>
+        <ProvideAuth>
+          <Switch>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <Route path="/register/confirmation">
+              <RegistrationConfirmationPage />
+            </Route>
+            <Route path="/register">
+              <RegistrationPage />
+            </Route>
+            <ProtectedRoute path="/account">
+              <AccountPage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/">
+              <Home/>
+            </ProtectedRoute>
+          </Switch>
+        </ProvideAuth>
+      </AppStyle>
     </ThemeProvider>
   );
 };

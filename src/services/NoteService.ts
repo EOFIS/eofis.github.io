@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { ObjectId } from "bson";
-import { authApi } from "../../../api";
+import { authApi } from "../api";
 import { ICard } from "../types/ICard";
 import { ICreateRequest } from "../types/ICreateRequest";
 import { ICreateResponse } from "../types/ICreateResponse";

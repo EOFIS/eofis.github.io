@@ -5,7 +5,7 @@ import { INote } from "../../types/INote";
 import { StyledLink } from "../../components/StyledLink";
 import StyledButton from "../../components/StyledButton";
 import { NoteListItem } from "../../components/NoteListItem";
-import { ResponsiveDrawer } from "../../components/SideDrawer";
+import { ResponsiveDrawer } from "../../components/ResponsiveDrawer";
 
 export interface INotesPageProps {
 
@@ -77,7 +77,7 @@ export default function NotesPage(props: INotesPageProps) {
                         Search
                     </StyledButton>
                 </div> */}
-                <StyledLink to="/demo/notes/new">
+                <StyledLink to="/notes/new">
                     <StyledButton primary>New note</StyledButton>
                 </StyledLink>
                 <h4>Notes List</h4>
@@ -118,7 +118,7 @@ export default function NotesPage(props: INotesPageProps) {
                                 </label>
                                 {": " + currentNote._id}
                             </div>
-                            <Link to={'/demo/notes/' + currentNote._id}
+                            <Link to={'/notes/' + currentNote._id}
                                 className="badge badge-warning">
                                 Edit
                             </Link>

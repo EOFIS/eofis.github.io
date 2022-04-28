@@ -4,7 +4,7 @@ import { CardService } from "../../services/CardService";
 import { Card, ICard } from "../../types/ICard";
 import "./QuizPage.sass"
 import { ICardReview } from "../../types/ICardReview";
-import { ResponsiveDrawer, SideDrawer } from "../../components/SideDrawer";
+import { ResponsiveDrawer, SideDrawer } from "../../components/ResponsiveDrawer";
 import { CardDrawer } from "../../components/CardDrawer";
 import { CardListItem } from "../../components/CardListItem";
 
@@ -33,7 +33,6 @@ export default function QuizPage(props: IQuizPageProps) {
     useEffect(() => {
         refreshList().then(() => {
             nextCard();
-            console.debug("NEXT CARD")
         });
     }, []);
     // ON UNMOUNT, COMMIT REVIEWS

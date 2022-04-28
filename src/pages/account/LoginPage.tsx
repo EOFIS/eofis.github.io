@@ -1,18 +1,17 @@
-import React, { FormEvent, FormEventHandler, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useHistory, useLocation } from "react-router"
+import { useAuth } from "../../components/ProtectedRoute";
+import ILocationState from "../../types/ILocationState";
+import { ILoginRequest } from "../../types/ILoginRequest";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { Form } from "../../components/Form";
+import { Input } from "../../components/Input";
+import { ErrorWrapper } from "../../components/ErrorWrapper";
 import styled from "styled-components";
-import ILocationState from "../../../types/ILocationState";
-import { useAuth } from "../../../components/ProtectedRoute";
-import { ILoginRequest } from "../../../types/ILoginRequest";
-import { Form } from "../../../components/Form";
-import { Input } from "../../../components/Input";
-import { ErrorWrapper } from "../../../components/ErrorWrapper";
 
-const LoginFormStyle = styled.div`
-width: 20em;
+const LoginPageStyle = styled.div`
 `;
-export default function LoginForm(props: {onSuccess: () => {}}) {
+export default function LoginPage() {
     let history = useHistory();
     let location = useLocation<ILocationState>();
     let auth = useAuth();
@@ -24,24 +23,25 @@ export default function LoginForm(props: {onSuccess: () => {}}) {
     let login = (loginRequest: ILoginRequest) => {
         setErrorMessages([]);
         auth.signin(loginRequest, () => {
-            props.onSuccess();
-            // history.replace(from);
-        }, (messages) => {
+            history.replace(from);
+        }, (messages : string[]) => {
             setErrorMessages(messages);
         });
     };
 
     const onLoginSubmit: SubmitHandler<ILoginRequest> = (data: ILoginRequest) => login(data);
 
-    // useEffect(() => {
-    //     if (auth.user) {
-    //         history.replace(from);
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (auth.user) {
+            history.replace(from);
+        }
+    }, []);
 
     return (
-        <LoginFormStyle>
-            <Form onSubmit={handleSubmit(onLoginSubmit)}>
+        <LoginPageStyle>
+            <h1>Log in to your account</h1>
+            <h3>Let's get revising!</h3>
+            <Form inset onSubmit={handleSubmit(onLoginSubmit)}>
             {errorMessages && errorMessages.length > 0 ?
                     <ErrorWrapper>
                         {errorMessages.map((value, index, array) =>
@@ -56,6 +56,6 @@ export default function LoginForm(props: {onSuccess: () => {}}) {
 
                 {/* <Input type="checkbox" placeholder="Remember Me" {...register("rememberMe", { required: false })} /> */}
             </Form>
-        </LoginFormStyle>
+        </LoginPageStyle>
     )
 }

@@ -1,6 +1,6 @@
 import { IRegistrationRequest } from "../types/IRegistrationRequest";
 import { IRegistrationResponse } from "../types/IRegistrationResponse";
-import { authApi, openApi } from "../../../api";
+import { authApi, openApi } from "../api";
 import { AxiosResponse } from "axios";
 import { ILoginRequest } from "../types/ILoginRequest";
 import { ILoginResponse } from "../types/ILoginResponse";
