@@ -11,8 +11,8 @@ export const SideDrawer = styled.div<ISideDrawerProps>`
 top: 0;
 height: 100vh;
 float: left;
-background: ${props => props.theme.colour.bg.layer1};
-color: ${props => props.theme.font.colour.layer1.normal};
+background: ${props => props.theme.colour.bg.layer0};
+color: ${props => props.theme.font.colour.layer0.normal};
 position: relative;
 flex-direction: column;
 z-index: 1;
@@ -50,13 +50,14 @@ const Dragger = styled.div<IDraggerProps>`
 
 export interface IResponsiveDrawerProps {
     allowScroll?: boolean;
+    initialWidth?: number;
 }
 
 export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
     const [open, setOpen] = useState(true);
     const [isResizing, setIsResizing] = useState(false);
     const [lastXDown, setLastXDown] = useState(0);
-    const [drawerWidth, setDrawerWidth] = useState<number>(200);
+    const [drawerWidth, setDrawerWidth] = useState<number>(props.initialWidth || 400);
 
 
 
@@ -93,9 +94,9 @@ export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
                     }}
                 />
 
-                <div className='content'>
+                <ul className='content'>
                     {props.children}
-                </div>
+                </ul>
             </SideDrawer>
         </div>
     )

@@ -33,7 +33,7 @@ export default function LoginPage() {
 
     useEffect(() => {
         if (auth.user) {
-            history.replace(from);
+            history.replace("/");
         }
     }, []);
 

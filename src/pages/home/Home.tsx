@@ -7,6 +7,7 @@ import { CardService } from "../../services/CardService";
 import { ICardReview } from "../../types/ICardReview";
 import { Card } from "../../types/ICard";
 import { CardListItem } from "../../components/CardListItem";
+import { CalendarCheck, Trash3 } from "react-bootstrap-icons";
 
 const Style = styled.div`
 height: 100vh;
