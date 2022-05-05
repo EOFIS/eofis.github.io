@@ -3,13 +3,17 @@ import { FieldError } from "react-hook-form";
 import styled from "styled-components";
 import { ErrorWrapper } from "./ErrorWrapper";
 
-const InputStyle = styled.div`
+interface IInputStyleProps {
+    inline?: boolean;
+}
+
+const InputStyle = styled.div<IInputStyleProps>`
 display: inline-block;
-width: 100%;
-margin-top: 24px;
+width:  ${props => props.inline ? '150px' : '100%'};
+margin-top: ${props => props.inline ? '' : '24px'};
 
 label {
-    display: block;
+    display:  ${props => props.inline ? 'none' : 'block'};
     text-align: left;
     line-height: 1.5;
     font-size: clamp(1.0125rem, 1.25vm, 1.125rem);
@@ -20,7 +24,7 @@ input {
     color: #FCECB6;
     background: none;
     width: 100%;
-    height: 48px;
+    height: ${props => props.inline ? '100%' : '48px'};
     padding-left: 16px;
     font-size: 0.875rem;
     line-height: 1.4rem;
@@ -73,13 +77,14 @@ interface IInputProps extends React.HTMLProps<HTMLInputElement | HTMLSelectEleme
     name?: string;
     autoComplete?: string;
     error?: FieldError;
+    inline?: boolean;
     // onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void | null;
 }
 export const Input: React.FC<IInputProps> = React.forwardRef(({ ...props }, ref) => {
     return (
-        <InputStyle>
+        <InputStyle inline={props.inline}>
             {
-                props.labeltext ?
+                props.labeltext && !props.inline ?
                     <label htmlFor={props.name}>
                         {props.labeltext}
                     </label>

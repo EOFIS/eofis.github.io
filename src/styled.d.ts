@@ -9,6 +9,8 @@ declare module 'styled-components' {
                 layer2: { normal: string; hover: string; },
                 layer3: { normal: string; hover: string; },
                 layer4: { normal: string; hover: string; },
+                dirty: string,
+                delete: string,
             },
             size: {
                 heading: string,

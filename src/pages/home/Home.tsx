@@ -73,7 +73,9 @@ export default function Home() {
     return (
         <Style>
             <ResponsiveDrawer allowScroll>
-                { toReview && toReview.map((card, cardi) => <CardListItem key={cardi} card={card} />)}
+                { toReview && toReview.map((card, cardi) => <CardListItem key={cardi} card={card} editContent={function (id: string | number, newContent: string[] | null): void {
+                    throw new Error("Function not implemented.");
+                } } />)}
             </ResponsiveDrawer>
         </Style>
     )
