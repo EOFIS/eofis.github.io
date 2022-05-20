@@ -7,8 +7,9 @@ import { Input } from "./Input";
 const TagInputStyle = styled.div<{}>`
 display: flex;
 flex-wrap: wrap;
-min-height: 48px;
-padding: 0 8px;
+// min-height: 48px;
+padding: 4px;
+// margin: 4px;
   // border: 1px solid #d6d8da;
   // border-radius: 6px;
 
@@ -28,7 +29,6 @@ input:focus {
   display: flex;
   flex-wrap: wrap;
   padding: 0;
-  margin: 8px 0 0;
 }
 .tag {
   width: auto;
@@ -41,7 +41,7 @@ input:focus {
   font-size: 14px;
   list-style: none;
   border-radius: 6px;
-  margin: 0 8px 8px 0;
+  margin: 0 8px 0 0;
   background: #2b2934;
 }
 .tag-title{
@@ -108,7 +108,7 @@ export const TagInput = React.forwardRef((props: ITagInputProps, ref) => {
                     </li>
                 ))}
             </ul>
-            <Input
+            {/* <Input
                 type="text"
                 value={newTag}
                 onChange={onChange}
@@ -117,7 +117,7 @@ export const TagInput = React.forwardRef((props: ITagInputProps, ref) => {
                 placeholder="Press enter, comma, or semicolon to add a tag"
                 // labeltext="Add tags"
                 inline={true}
-                ref={ref} />
+                ref={ref} /> */}
         </TagInputStyle>
     );
 }

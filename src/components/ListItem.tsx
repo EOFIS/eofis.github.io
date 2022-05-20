@@ -3,7 +3,8 @@ import { ChevronDown, ChevronUp, Trash3 } from "react-bootstrap-icons";
 import styled from "styled-components";
 import { Card } from "../types/ICard";
 import { ITag } from "../types/ITag";
-import { CardTemplateType } from "../types/Template";
+import { CardTemplateType, TemplateDetails } from "../types/Template";
+import { NoteTemplateCycler } from "./NoteTemplateCycler";
 import { TagInput } from "./TagInput";
 
 interface IListItemStyleProps {
@@ -15,7 +16,7 @@ overflow:hidden;
 width: 100%;
 margin-bottom: 4px;
 line-height: 1.5;
-font-size: ${props => props.theme.font.size.small};
+font-size: ${props => props.theme.font.size.normal};
 background: none;//${props => props.theme.colour.bg.layer1};
 color: ${props => props.theme.font.colour.layer0.normal};
 cursor: pointer;
@@ -86,26 +87,33 @@ padding: 2px 0 2px 4px;
 
 .list-item-footer {
     display: none;
+    width: 100%;
     &.expanded {
-        display: block;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: left;
+        align-items: baseline;
+        gap: 4px;
     }
-    flex-direction: row;
     & > * {
-        float: left;
-        height: 100%;
-        margin: auto;
+        flex-grow: 0;
     }
 }
 
+
 .list-item-edit-controls {
-    float: right;
-    height: 100%;
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction:row;
+    justify-content: right;
+    align-items: last baseline;
 }
 
 .pull-left {
     float: left;
 }
-
 .dirty {
     color: ${props => props.theme.font.colour.dirty}
 }
@@ -114,12 +122,11 @@ padding: 2px 0 2px 4px;
 const EditControlsForCardType = {
     SIMPLE: [],
     BASIC: [],
-
 }
 
 export interface IListItemProps {
     card: Card;
-    templateType: CardTemplateType;
+    templateType?: CardTemplateType;
     isSelected?: boolean;
     allowScroll?: boolean;
     onTagClick?: () => void;
@@ -129,13 +136,22 @@ export interface IListItemProps {
 export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>> = ({ ...props }) => {
     const [expanded, setExpanded] = useState(false);
     const [dirty, setDirty] = useState(false);
-    const [content, setContent] = useState<Array<string>>([]);
+    const [fields, setFields] = useState<Array<string>>([]);
+    const [visibleFieldCount, setVisibleFieldCount] = useState<number>(fields.length);
     const [tags, setTags] = useState<Array<ITag>>([]);
+    // TODO: configure the below default value somewhere central
+    const [templateType, setTemplateType] = useState<CardTemplateType>(props.templateType??CardTemplateType.BASIC);
+
+    useEffect(() => {
+        setFields(props.card.fields);
+        setTags(props.card.tags);
+        setVisibleFieldCount(props.card.fields.length);
+    }, [props.card]);
 
     const setContentField = (fieldIndex: number, newFieldText: string | null) => {
-        let oldContent = [...content];
-        oldContent[fieldIndex] = newFieldText || "";
-        setContent(oldContent);
+        let oldFields = [...fields];
+        oldFields[fieldIndex] = newFieldText || "";
+        setFields(oldFields);
     }
     const handleClickOnContentField: MouseEventHandler = (e) => {
         e.stopPropagation();
@@ -146,13 +162,14 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
 
     const handleSave = () => {
         setExpanded(false);
-        props.editContent(props.card.id, content);
+        let visibleFields = fields.slice(0,visibleFieldCount);
+        props.editContent(props.card.id, visibleFields);
     }
 
-    useEffect(() => {
-        setContent(props.card.fields);
-        setTags(props.card.tags);
-    }, [props.card]);
+    const onChangeTemplateType = (newTemplateType: CardTemplateType) => {
+        setTemplateType(newTemplateType);
+        setVisibleFieldCount( TemplateDetails[newTemplateType].fieldCount);
+    }
 
     return <ListItemStyle isSelected={props.isSelected} onClick={props.onClick}>
         <div className="list-item-tag-abbreviation">
@@ -168,22 +185,24 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
                 <Trash3 onClick={props.onDeleteClick} />
             </div>
             <div className={`list-item-content-wrapper ${expanded ? "expanded " : ''}`} onClick={handleClickOnContentField}>
-                <div contentEditable={expanded} onInput={e => setContentField(0, e.currentTarget.textContent)} >
+                <div contentEditable={expanded} onInput={e => setContentField(0, e.currentTarget.textContent)} suppressContentEditableWarning={true}>
                     {props.card.fields[0]}
                 </div>
                 {
-                    props.card.fields.length > 0 ?
-                        props.card.fields.slice(1).map((field, fi) =>
-                            <div contentEditable={expanded} hidden={!expanded} onInput={e => setContentField(fi, e.currentTarget.textContent)} >
+                    props.card.fields.length > 1 ?
+                        props.card.fields.slice(1,visibleFieldCount).map((field, fi) =>
+                            <div contentEditable={expanded} hidden={!expanded} onInput={e => setContentField(fi, e.currentTarget.textContent)} suppressContentEditableWarning={true}>
                                 {field}
                             </div>
                         ) : ''
                 }
             </div>
             <div className={`list-item-footer ${expanded ? "expanded " : ''}`}>
-                <div className="list-item-template-switcher">{props.templateType}</div>
-                <div className="pull-left"><TagInput onChangeTags={(tags: string[]) => setTags(tags)} tags={tags} /></div>
-                <div className="list-item-edit-controls pull-right"><a className={"save " + dirty ? ' dirty ' : ''} onClick={handleSave}>SAVE</a></div>
+                <NoteTemplateCycler value={templateType} onChange={(t: CardTemplateType) => onChangeTemplateType(t)}/>
+                <TagInput onChangeTags={(tags: string[]) => setTags(tags)} tags={tags}/>
+                <div className="list-item-edit-controls">
+                    <a className={"save " + dirty ? ' dirty ' : ''} onClick={handleSave}>SAVE</a>
+                </div>
             </div>
         </div>
     </ListItemStyle>
