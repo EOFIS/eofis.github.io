@@ -73,12 +73,20 @@ padding: 2px 0 2px 4px;
     overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding: 2px 4px;
 
     &.expanded {
-        background: ${props => props.theme.colour.bg.layer2};
         white-space: break-spaces;
-        color: ${props => props.theme.font.colour.layer2};
+        color: ${props => props.theme.font.colour.layer2.normal};
+        & > * {
+            background: ${props => props.theme.colour.bg.layer2};
+        }
+    }
+    & > *:not(:last-child) {
+        margin-bottom: 4px;
+    }
+
+    & > * {
+        padding: 2px 4px;
     }
 }
 

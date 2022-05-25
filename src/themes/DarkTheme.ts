@@ -5,7 +5,7 @@ export const DarkTheme: DefaultTheme = {
         colour: {
             layer0: { normal: '#FFFFFF', hover: '#eeeeee' },
             layer1: { normal: '#FFFFFF', hover: '#F5F5F5' },
-            layer2: { normal: '#20040B', hover: '#20040B' },
+            layer2: { normal: '#FFFFFF', hover: '#20040B' },
             layer3: { normal: '#20040B', hover: '#20040B' },
             layer4: { normal: '#000000', hover: '#000000' },
             dirty: "#a975d0",
