@@ -7,6 +7,8 @@ export interface ICardListItemProps {
     card: Card;
     isSelected?: boolean;
     editContent: (id: number | string, newContent: string[] | null) => void;
+    onDeleteClick?: () => void;
+    onReviewClick?: (acceptable: boolean) => void;
 }
 export const CardListItem: React.FC<ICardListItemProps & React.HTMLProps<HTMLLIElement>> = ({ ...props }) => {
     return <ListItem isSelected={props.isSelected} templateType={CardTemplateType.BASIC} {...props}/>

@@ -1,5 +1,5 @@
 import React, { MouseEventHandler, useEffect, useState } from "react";
-import { ChevronDown, ChevronUp, Trash3 } from "react-bootstrap-icons";
+import { Check, CheckLg, ChevronDown, ChevronUp, Trash3, X, XLg } from "react-bootstrap-icons";
 import styled from "styled-components";
 import { Card } from "../types/ICard";
 import { ITag } from "../types/ITag";
@@ -139,6 +139,7 @@ export interface IListItemProps {
     allowScroll?: boolean;
     onTagClick?: () => void;
     onDeleteClick?: () => void;
+    onReviewClick?: (acceptable: boolean) => void;
     editContent: (id: number | string, newContent: Array<string>) => void;
 }
 export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>> = ({ ...props }) => {
@@ -190,7 +191,9 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
             <div className="list-item-controls pull-right">
                 <ChevronDown onClick={() => setExpanded(true)} className={`list-item-expansion-control ${expanded ? "hide" : ""}`} />
                 <ChevronUp onClick={() => setExpanded(false)} className={`list-item-expansion-control ${expanded ? "" : "hide"}`} />
-                <Trash3 onClick={props.onDeleteClick} />
+                {props.onDeleteClick && <Trash3 onClick={props.onDeleteClick} />}
+                {props.onReviewClick && <CheckLg onClick={() => props.onReviewClick !== undefined && props.onReviewClick(true)}/>}
+                {props.onReviewClick && <XLg onClick={() => props.onReviewClick !== undefined && props.onReviewClick(false)}/>}
             </div>
             <div className={`list-item-content-wrapper ${expanded ? "expanded " : ''}`} onClick={handleClickOnContentField}>
                 <div contentEditable={expanded} onInput={e => setContentField(0, e.currentTarget.textContent)} suppressContentEditableWarning={true}>
@@ -199,7 +202,7 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
                 {
                     props.card.fields.length > 1 ?
                         props.card.fields.slice(1,visibleFieldCount).map((field, fi) =>
-                            <div contentEditable={expanded} hidden={!expanded} onInput={e => setContentField(fi, e.currentTarget.textContent)} suppressContentEditableWarning={true}>
+                            <div contentEditable={expanded} hidden={!expanded} onInput={e => setContentField(fi, e.currentTarget.textContent)} suppressContentEditableWarning={true} key={fi}>
                                 {field}
                             </div>
                         ) : ''

@@ -13,7 +13,7 @@ export const DarkTheme: DefaultTheme = {
         },
         size: {
             heading: 'clamp(2.25rem,5.3vw,5rem)',
-            large: '24pt',
+            large: '20pt',
             normal: '14pt',
             small: '12pt',
             verysmall: '8pt',

@@ -3,7 +3,7 @@ import { Button, Collapse } from "react-bootstrap";
 import { CardService } from "../../services/CardService";
 import { Card, ICard } from "../../types/ICard";
 import "./QuizPage.sass"
-import { ICardReview } from "../../types/ICardReview";
+import { ICardPractice } from "../../types/ICardPractice";
 import { ResponsiveDrawer, SideDrawer } from "../../components/ResponsiveDrawer";
 import { CardDrawer } from "../../components/CardDrawer";
 import { CardListItem } from "../../components/CardListItem";
@@ -16,7 +16,7 @@ export interface IQuizPageState {
     cards: Array<ICard>;
     currentCard: ICard | undefined;
     toReview: Array<ICard>;
-    reviewedList: Array<ICardReview>;
+    reviewedList: Array<ICardPractice>;
     toReviewOpen: boolean;
     unfoldedIndex: number;
 }
@@ -26,7 +26,7 @@ export default function QuizPage(props: IQuizPageProps) {
     const [cards, setCards] = useState<Array<Card>>([]);
     const [currentCard, setCurrentCard] = useState<Card | undefined>(undefined);
     const [toReview, setToReview] = useState<Array<Card>>([]);
-    const [reviewedList, setReviewedList] = useState<Array<ICardReview>>([]);
+    const [reviewedList, setReviewedList] = useState<Array<ICardPractice>>([]);
     const [toReviewOpen, setToReviewOpen] = useState<boolean>(true);
     const [unfoldedIndex, setUnfoldedIndex] = useState<number>(0);
 
@@ -36,7 +36,7 @@ export default function QuizPage(props: IQuizPageProps) {
         });
     }, []);
     // ON UNMOUNT, COMMIT REVIEWS
-    // CardService.reviewCards(this.state.reviewedList);
+    // CardService.commitPractices(this.state.reviewedList);
 
     const refreshList = async () => {
         retrieveCards().then(() => {
@@ -59,7 +59,7 @@ export default function QuizPage(props: IQuizPageProps) {
         if (currentCard === undefined) {
             return;
         }
-        const review: ICardReview = { reviewScore: reviewScore, card: currentCard!! };
+        const review: ICardPractice = { practiceScore: reviewScore, card: currentCard!! };
         setReviewedList([...reviewedList, review]);
         nextCard()
     };

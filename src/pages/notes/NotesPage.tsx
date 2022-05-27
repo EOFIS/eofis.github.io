@@ -128,7 +128,7 @@ export default function NotesPage(props: INotesPageProps) {
                                 )} */}
                                 {/* <button>Get Cards</button>
                                 <ul>
-                                    {currentNote && currentNote.cards ? CardService.getCards(currentNote.cards.map(card => card.id)).then(res => res.map(rcard => {
+                                    {currentNote && currentNote.cards ? CardService.get(currentNote.cards.map(card => card.id)).then(res => res.map(rcard => {
                                         <li key={rcard.id}><strong>{rcard.id}</strong>{JSON.stringify(rcard.fields)}</li>
                                     })) : ''}
                                 </ul> */}

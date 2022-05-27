@@ -1,17 +1,17 @@
 import { Card, CardId, ICard } from "../types/ICard";
-import ebisu from "ebisu-js";
-import { ICardReview } from "../types/ICardReview";
+import { ICardPractice } from "../types/ICardPractice";
 import { authApi } from "../api";
 import { IUpdateResponse } from "../types/IUpdateResponse";
 import { AxiosResponse } from "axios";
 import { IGetResponse } from "../types/IGetResponse";
+import { ICardReview } from "../types/ICardReview";
 
 export class CardService {
     public static getLowestRecall(howManyCards?: number, lowestRecall?: number): Promise<Card[]> {
         return new Promise((resolve, reject) => {
-            authApi.get<{}, AxiosResponse<IGetResponse<ICard[]>>>("/cards/reviews", {
+            authApi.get<{}, AxiosResponse<IGetResponse<ICard[]>>>("/cards/practice", {
                 params: {
-                    n_to_review: howManyCards,
+                    n_to_practice: howManyCards,
                     lowest_recall: lowestRecall
                 }
             })
@@ -31,15 +31,29 @@ export class CardService {
                 });
         })
     }
-    public static getCards(cardids?: Array<CardId>): Promise<ICard[]> {
+    public static get(cardids?: Array<CardId>): Promise<ICard[]> {
         return authApi
             .get("/cards" + (cardids ? "?" + cardids.map(cardid => `cardids=${cardid}`).join("&") : ''));
     }
+    public static getPendingReviews(): Promise<Array<Card>> {
+        return authApi.get<IGetResponse<Array<ICard>>>("/cards/review")
+            .then(res => res.data.map(c => Card.from_document(c)));
+    }
 
-    public static reviewCards(cardReviews: Array<ICardReview>): Promise<IUpdateResponse<ICard>> {
+
+    public static commitPractices(cardPractices: Array<ICardPractice>): Promise<IUpdateResponse<ICard>> {
+        return authApi
+            .put<Array<ICardPractice>, IUpdateResponse<ICard>>("/cards/practice", cardPractices)
+    }
+    public static reviewCards(cardReviews: Array<ICardReview>): Promise<Array<IUpdateResponse<ICard>>> {
+        return authApi
+            .put<Array<ICardReview>, Array<IUpdateResponse<ICard>>, any>("/cards/review", cardReviews)
+    }
+
+    public static update(cards: Array<ICard>): Promise<IUpdateResponse<CardId>> {
         return new Promise<IUpdateResponse<ICard>>((resolve, reject) =>
             authApi
-                .post("/cards/reviews", cardReviews)
+                .put("/cards", cards)
                 .then((res: AxiosResponse<any, IUpdateResponse<ICard>>) => {
                     resolve(res.data);
                 })
