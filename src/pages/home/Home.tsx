@@ -10,6 +10,7 @@ import { CardListItem } from "../../components/CardListItem";
 import { CalendarCheck, Trash3 } from "react-bootstrap-icons";
 import { NoteService } from "../../services/NoteService";
 import { ICardReview } from "../../types/ICardReview";
+import { mockToReview } from "../../mockdata";
 
 const Style = styled.div`
 height: 100vh;
@@ -32,12 +33,14 @@ export default function Home() {
     // CardService.commitPractices(this.state.reviewedList);
 
     const refreshList = async () => {
-        CardService.getLowestRecall(20).then((response) => {
-            setToPractice(response);
-        });
-        CardService.getPendingReviews().then(response => {
-            setToReview(response);
-        })
+        // CardService.getLowestRecall(20).then((response) => {
+        //     setToPractice(response);
+        // });
+        // CardService.getPendingReviews().then(response => {
+        //     setToReview(response);
+        // })
+        setToPractice(mockToReview.slice(0,20));
+        setToReview(mockToReview);
     };
 
     // const reviewCard = (reviewScore: 0 | 1) => {
