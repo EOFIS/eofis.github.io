@@ -34,6 +34,7 @@ padding: 2px 0 2px 4px;
     padding-left: 0;
     text-align: left;
     width: 48px;
+    margin-left: 4px;
     margin-right: 4px;
     top: 0px;
     left: 0px;

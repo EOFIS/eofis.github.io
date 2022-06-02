@@ -1,17 +1,26 @@
 import React, { ReactElement } from "react";
 import { useState } from "react";
 import styled from "styled-components";
+import { ChevronLeft } from "./icons/ChevronLeft";
+import { ChevronRight } from "./icons/ChevronRight";
 
-export interface ISideDrawerProps {
+interface ISideDrawerProps {
     open: boolean;
     width: number;
     allowScroll?: boolean;
 }
-export const SideDrawer = styled.div<ISideDrawerProps>`
-top: 0;
+const ResponsiveDrawerStyle = styled.div<{
+    drawerWidth: number;
+}>`
+margin: 0;
+padding: 0;
+transform: width 300ms cubic-bezier(0.2, 0, 0, 1) 0s;
+background: ${props => props.theme.colour.bg.layer1};
+`;
+const SideDrawer = styled.div<ISideDrawerProps>`
 height: 100vh;
 float: left;
-background: ${props => props.theme.colour.bg.layer0};
+background: ${props => props.theme.colour.bg.layer1};
 color: ${props => props.theme.font.colour.layer0.normal};
 position: relative;
 flex-direction: column;
@@ -20,13 +29,16 @@ overflow-y: scroll;
 
 ul.content-wrapper {
     padding: 0;
-    margin: 0;
+    margin: 0 6px 0 0;
     display: ${props => props.open ? 'block' : 'none'};
-    width: ${props => props.width}px;
+    width: 100%;
+    float: left;
 }
 `;
 
-const Section = styled.li<{}>`
+const Section = styled.li<{
+    drawerWidth: number;
+}>`
 &[hidden] {
     display: none;
 }
@@ -41,37 +53,75 @@ h2 {
 & > ul {
     padding: 0;
     margin: 0;
+    width: ${props => props.drawerWidth}px;
 }
 `;
 
 interface IDraggerProps {
     drawerOpen: boolean;
+    drawerWidth: number;
+    showControls: boolean;
 }
 const Dragger = styled.div<IDraggerProps>`
-width: 5px;
-cursor: ew-resize;
-float: right;
-display: flex;
-top: 0;
-left: 0;
-bottom: 0;
-height: 100%;
-z-index: 100;
-background-color: ${props => props.drawerOpen ? props.theme.colour.bg.layer2 : props.theme.colour.bg.layer1}; // Slightly darker than SideDrawer when open, slightly darker than background when closed
+width: ${props => props.drawerOpen? '12px' : '24px'};
 
-&:hover {
-    background-color: ${props => props.drawerOpen ? props.theme.colour.bg.layer1 : props.theme.colour.bg.layer2};
+height: 100vh;
+cursor: ew-resize;
+position: absolute;
+left: ${props => props.drawerOpen? props.drawerWidth + 16 -2 : '0'}px;
+display: block;
+z-index: 100;
+background: ${props => props.theme.colour.bg.layer1};
+button.collapse-toggle-button {
+    position: absolute;
+    top: 16px;
+    left: ${props => props.drawerOpen ? '0': '12px'};
+    background: white;
+    border: 0;
+    border-radius: 12px;
+    padding: 0;
+    z-index: 100;
+    line-height: 8px;
+    cursor: pointer;
+
+    opacity: ${props => props.drawerOpen && !props.showControls ? '0' : '1'};
+    transition: opacity ease-in 1s;
+    transition: background ease-in 0.2s;
+    &:hover {
+        opacity: 1;
+        background: blue;
+    }
+
+    &>svg {
+        width: 24px;
+        height: 24px;
+        fill: white;
+    }
 }
+div.resize-handle {
+    position: absolute;
+    left: ${props => props.drawerOpen ? '11px': '22px'};
+    z-index: 99;
+    width: 2px;
+    height: 100%;
+    background-color: ${props => props.drawerOpen ? 'none' : props.theme.colour.hover.layer1};
+    &:hover {
+        background-color: ${props => props.drawerOpen ? 'white' : 'blue'};
+    }
+    
+}
+
 `;
 
 export interface IResponsiveDrawerProps {
     allowScroll?: boolean;
     initialWidth?: number;
-    items?: Array<{sectionTitle?: string; contents: Array<ReactElement>;}>;
+    items?: Array<{ sectionTitle?: string; contents: Array<ReactElement>; }>;
 }
 
 export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
     const [open, setOpen] = useState(true);
+    const [showCircle, setShowControls] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
     const [lastXDown, setLastXDown] = useState(0);
     const [drawerWidth, setDrawerWidth] = useState<number>(props.initialWidth || 600);
@@ -81,17 +131,17 @@ export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
         e.stopPropagation();
         e.preventDefault();
 
-        let bodyOffset = document.body.getBoundingClientRect(),
-            elemOffset = e.currentTarget.getBoundingClientRect(),
-            offsetL = elemOffset.left - bodyOffset.left;
-        let newW = (e.clientX - offsetL);
-        let minW = 100;
-        let maxW = 1000;
-        if (newW > minW && newW < maxW)
-            setDrawerWidth(newW);
+        // let bodyOffset = document.body.getBoundingClientRect(),
+        //     elemOffset = e.currentTarget.getBoundingClientRect(),
+        //     offsetL = elemOffset.left - bodyOffset.left;
+        // let newW = (e.clientX - offsetL);
+        // let minW = 200;
+        // let maxW = 1000;
+        // if (newW > minW && newW < maxW)
+        //     setDrawerWidth(newW);
     }
 
-    return (
+    return <ResponsiveDrawerStyle drawerWidth={drawerWidth} onMouseLeave={() => setIsResizing(false)}>
         <SideDrawer open={open} width={drawerWidth} allowScroll={props.allowScroll}
             onMouseUp={(e) => {
                 setIsResizing(false);
@@ -100,24 +150,33 @@ export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
             }}
             onMouseMove={onMouseMove}
         >
-            <Dragger drawerOpen={open}
-                onMouseDown={(e) => {
-                    setIsResizing(true);
-                    setLastXDown(e.clientX);
-                }}
-            />
             <ul className="content-wrapper">
                 {
                     props.items?.map((section) =>
-                    <Section hidden={section.contents.length <= 0}>
-                        <h2>{section.sectionTitle}</h2>
-                        <ul>
-                            {section.contents}
-                        </ul>
-                    </Section>)
+                        <Section drawerWidth={drawerWidth} hidden={section.contents.length <= 0}>
+                            <h2>{section.sectionTitle}</h2>
+                            <ul>
+                                {section.contents}
+                            </ul>
+                        </Section>)
                 }
             </ul>
-
         </SideDrawer>
-    )
+        <Dragger drawerOpen={open}
+            showControls={showCircle} 
+            drawerWidth={drawerWidth}
+            onMouseDown={(e) => {
+                setIsResizing(true);
+                setLastXDown(e.clientX);
+            }}
+            onMouseOver={() => setShowControls(true)}
+            onMouseOut={() => setShowControls(false)}
+        >
+            <button className='collapse-toggle-button' onClick={() => setOpen(!open)}>
+                {open ? <ChevronLeft /> : <ChevronRight />}
+            </button>
+
+            <div className="resize-handle" />
+        </Dragger>
+    </ResponsiveDrawerStyle>
 }
