@@ -1,7 +1,9 @@
 import React, { MouseEventHandler, useEffect, useState } from "react";
 import { Check, CheckLg, ChevronDown, ChevronUp, Trash3, X, XLg } from "react-bootstrap-icons";
+import ReactTextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 import { Card } from "../types/ICard";
+import { ISource } from "../types/ISource";
 import { ITag } from "../types/ITag";
 import { CardTemplateType, TemplateDetails } from "../types/Template";
 import { NoteTemplateCycler } from "./NoteTemplateCycler";
@@ -74,15 +76,24 @@ padding: 2px 0 2px 4px;
     overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: ${props => props.theme.font.colour.layer2.normal};
 
     &.expanded {
         white-space: break-spaces;
-        color: ${props => props.theme.font.colour.layer2.normal};
         // background: 
         & > * {
+            display: block;
+            width: fill-available;
+            color: ${props => props.theme.font.colour.layer0.normal};
+            line-height: 1.5;
+            font-size: ${props => props.theme.font.size.normal};
+            overflow: hidden;
+            resize: none;
+            font-family: inherit;
+
             background: ${props => props.theme.colour.bg.layer2};
+
             border-radius: 4px;
-            border: 1px solid ${props => props.theme.colour.bg.layer2};
             &:focus-visible {
                 background: ${props => props.theme.colour.bg.layer1};
                 border: 1px solid ${props => props.theme.colour.primary.theme};
@@ -95,6 +106,7 @@ padding: 2px 0 2px 4px;
     }
     & > * {
         padding: 2px 4px;
+        border: 1px solid ${props => props.theme.colour.bg.layer1};
     }
 }
 
@@ -125,13 +137,20 @@ padding: 2px 0 2px 4px;
     flex-direction:row;
     justify-content: right;
     align-items: last baseline;
+    gap: 0 8px;
+}
+a.save {
+    &.dirty {
+        background: ${props => props.theme.colour.secondary.theme};
+        font-weight: bold;
+    }
+}
+a.cancel {
+
 }
 
 .pull-left {
     float: left;
-}
-.dirty {
-    color: ${props => props.theme.font.colour.dirty}
 }
 `;
 
@@ -151,41 +170,67 @@ export interface IListItemProps {
     editContent: (id: number | string, newContent: Array<string>) => void;
 }
 export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>> = ({ ...props }) => {
-    const [expanded, setExpanded] = useState(false);
-    const [dirty, setDirty] = useState(false);
     const [fields, setFields] = useState<Array<string>>([]);
-    const [visibleFieldCount, setVisibleFieldCount] = useState<number>(fields.length);
     const [tags, setTags] = useState<Array<ITag>>([]);
+    const [source, setSource] = useState<ISource>(props.card.source);
+
+    const [expanded, setExpanded] = useState(false);
+    const [dirty, setDirty] = useState<{
+        fields: Array<boolean>,
+        tags: boolean,
+        source: { title: boolean, type: boolean, url: boolean }
+    }>({ fields: [], source: { title: false, type: false, url: false }, tags: false });
+    const [visibleFieldCount, setVisibleFieldCount] = useState<number>(fields.length);
     // TODO: configure the below default value somewhere central
-    const [templateType, setTemplateType] = useState<CardTemplateType>(props.templateType??CardTemplateType.BASIC);
+    const [templateType, setTemplateType] = useState<CardTemplateType>(props.templateType ?? CardTemplateType.BASIC);
 
     useEffect(() => {
-        setFields(props.card.fields);
-        setTags(props.card.tags);
-        setVisibleFieldCount(props.card.fields.length);
+        reloadCard();
     }, [props.card]);
 
+    const isDirty = (): boolean => {
+        return dirty.fields.includes(true) || dirty.tags || dirty.source.title || dirty.source.type || dirty.source.url;
+    }
     const setContentField = (fieldIndex: number, newFieldText: string | null) => {
         let oldFields = [...fields];
+        console.debug(newFieldText);
         oldFields[fieldIndex] = newFieldText || "";
         setFields(oldFields);
+        // if (newFieldText !== props.card.fields[fieldIndex]) {
+        //     setDirty({
+        //         ...dirty,
+        //         fields: [...dirty.fields.slice(0,fieldIndex), true, ...dirty.fields.slice(fieldIndex+1)]
+        //     })
+        // }
     }
     const handleClickOnContentField: MouseEventHandler = (e) => {
         e.stopPropagation();
-        console.debug('Clicked on content field');
         // if (!expanded)
         //     setExpanded(false)
     }
 
     const handleSave = () => {
         setExpanded(false);
-        let visibleFields = fields.slice(0,visibleFieldCount);
+        let visibleFields = fields.slice(0, visibleFieldCount);
         props.editContent(props.card.id, visibleFields);
+    }
+    const reloadCard = () => {
+        setFields(props.card.fields);
+        setTags(props.card.tags);
+        setSource(props.card.source);
+
+        setDirty({
+            tags: false,
+            fields: props.card.fields.map(() => false),
+            source: { title: false, type: false, url: false }
+        });
+        setVisibleFieldCount(props.card.fields.length);
+
     }
 
     const onChangeTemplateType = (newTemplateType: CardTemplateType) => {
         setTemplateType(newTemplateType);
-        setVisibleFieldCount( TemplateDetails[newTemplateType].fieldCount);
+        setVisibleFieldCount(TemplateDetails[newTemplateType].fieldCount);
     }
 
     return <ListItemStyle isSelected={props.isSelected} onClick={props.onClick}>
@@ -200,27 +245,35 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
                 <ChevronDown onClick={() => setExpanded(true)} className={`list-item-expansion-control ${expanded ? "hide" : ""}`} />
                 <ChevronUp onClick={() => setExpanded(false)} className={`list-item-expansion-control ${expanded ? "" : "hide"}`} />
                 {props.onDeleteClick && <Trash3 onClick={props.onDeleteClick} />}
-                {props.onReviewClick && <CheckLg onClick={() => props.onReviewClick !== undefined && props.onReviewClick(true)}/>}
-                {props.onReviewClick && <XLg onClick={() => props.onReviewClick !== undefined && props.onReviewClick(false)}/>}
+                {props.onReviewClick && <CheckLg onClick={() => props.onReviewClick !== undefined && props.onReviewClick(true)} />}
+                {props.onReviewClick && <XLg onClick={() => props.onReviewClick !== undefined && props.onReviewClick(false)} />}
             </div>
             <div className={`list-item-content-wrapper ${expanded ? "expanded " : ''}`} onClick={handleClickOnContentField}>
-                <div contentEditable={expanded} onInput={e => setContentField(0, e.currentTarget.textContent)} suppressContentEditableWarning={true}>
-                    {props.card.fields[0]}
-                </div>
                 {
-                    props.card.fields.length > 1 ?
-                        props.card.fields.slice(1,visibleFieldCount).map((field, fi) =>
-                            <div contentEditable={expanded} hidden={!expanded} onInput={e => setContentField(fi, e.currentTarget.textContent)} suppressContentEditableWarning={true} key={fi}>
-                                {field}
-                            </div>
+                    expanded ?
+                        <ReactTextareaAutosize value={fields[0]} onChange={e => setContentField(0, e.currentTarget.value)} />
+                        : <div onInput={e => setContentField(0, e.currentTarget.textContent)} >
+                            {fields[0]}
+                        </div>}
+                {
+                    fields.length > 1 && expanded?
+                        fields.slice(1, visibleFieldCount).map((field, fi) =>
+                            <ReactTextareaAutosize value={field} onChange={e => setContentField(fi, e.currentTarget.value)} key={fi} />
                         ) : ''
                 }
             </div>
             <div className={`list-item-footer ${expanded ? "expanded " : ''}`}>
-                <NoteTemplateCycler value={templateType} onChange={(t: CardTemplateType) => onChangeTemplateType(t)}/>
-                <TagInput onChangeTags={(tags: string[]) => setTags(tags)} tags={tags}/>
+                <NoteTemplateCycler value={templateType} onChange={(t: CardTemplateType) => onChangeTemplateType(t)} />
+                <TagInput onChangeTags={(tags: string[]) => {
+                    setTags(tags);
+                    setDirty({
+                        ...dirty,
+                        tags: true
+                    })
+                }} tags={tags} />
                 <div className="list-item-edit-controls">
-                    <a className={"save " + dirty ? ' dirty ' : ''} onClick={handleSave}>SAVE</a>
+                    <a className={'cancel'} onClick={reloadCard}>Cancel</a>
+                    <a className={'save ' + (isDirty() ? ' dirty ' : '')} onClick={handleSave}>SAVE</a>
                 </div>
             </div>
         </div>
