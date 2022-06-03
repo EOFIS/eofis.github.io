@@ -89,7 +89,7 @@ button.collapse-toggle-button {
     transition: background ease-in 0.2s;
     &:hover {
         opacity: 1;
-        background: blue;
+        background: ${props => props.theme.colour.primary.theme};
     }
 
     &>svg {
@@ -106,7 +106,7 @@ div.resize-handle {
     height: 100%;
     background-color: ${props => props.drawerOpen ? 'none' : props.theme.colour.primary.textHover};
     &:hover {
-        background-color: ${props => props.drawerOpen ? 'white' : 'blue'};
+        background-color: ${props => props.drawerOpen ? props.theme.colour.primary.theme : props.theme.colour.secondary.theme};
     }
     
 }
