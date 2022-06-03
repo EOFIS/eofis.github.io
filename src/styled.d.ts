@@ -22,12 +22,13 @@ declare module 'styled-components' {
             family: string,
         }
         colour: {
-            hover: {
-                layer0: string;
-                layer1: string;
-                layer2: string;
-                layer3: string;
-                layer4: string;
+            primary: {
+                theme: string,
+                text: string,
+                textHover: string
+            },
+            secondary: {
+                theme: string
             },
             bg: {
                 layer0: string;

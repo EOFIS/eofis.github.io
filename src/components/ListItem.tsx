@@ -17,12 +17,11 @@ width: 100%;
 margin-bottom: 4px;
 line-height: 1.5;
 font-size: ${props => props.theme.font.size.normal};
-background: none;//${props => props.theme.colour.bg.layer1};
+background: ${props => props.theme.colour.bg.layer1};
 color: ${props => props.theme.font.colour.layer0.normal};
-cursor: pointer;
 &:hover {
-    background: ${props => props.theme.colour.hover.layer1};
-    color: ${props => props.theme.font.colour.layer1.normal};
+    outline: 2px solid ${props => props.theme.colour.primary.theme}
+    color: ${props => props.theme.colour.primary.textHover};
 }
 
 margin-top: 0;
@@ -52,6 +51,8 @@ padding: 2px 0 2px 4px;
     position: relative;
     text-align: right;
     padding: 0 2px 0 2px;
+    cursor: pointer;
+
     & > * {
         float: left;
         margin: 0 4px;
@@ -64,7 +65,6 @@ padding: 2px 0 2px 4px;
     &.hide {
         display: none;
     }
-    
 }
 
 .list-item-content-wrapper {
@@ -78,14 +78,21 @@ padding: 2px 0 2px 4px;
     &.expanded {
         white-space: break-spaces;
         color: ${props => props.theme.font.colour.layer2.normal};
+        // background: 
         & > * {
             background: ${props => props.theme.colour.bg.layer2};
+            border-radius: 4px;
+            border: 1px solid ${props => props.theme.colour.bg.layer2};
+            &:focus-visible {
+                background: ${props => props.theme.colour.bg.layer1};
+                border: 1px solid ${props => props.theme.colour.primary.theme};
+                outline: none;
+            }
         }
     }
     & > *:not(:last-child) {
         margin-bottom: 4px;
     }
-
     & > * {
         padding: 2px 4px;
     }

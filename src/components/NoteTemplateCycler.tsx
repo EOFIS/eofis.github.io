@@ -22,6 +22,7 @@ interface ICyclerProps {
 const CyclerStyle = styled.div<{}>`
 font-size: ${props => props.theme.font.size.small};
 font-weight: bold;
+cursor: pointer;
 `;
 
 

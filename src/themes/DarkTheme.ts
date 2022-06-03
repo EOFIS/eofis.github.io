@@ -21,12 +21,13 @@ export const DarkTheme: DefaultTheme = {
         family: 'Tahoma, Geneva, sans-serif'
     },
     colour: {
-        hover: {
-            layer0: '#111111',
-            layer1: '#292c32',
-            layer2: '#FCBA04',
-            layer3: '#3083DC',
-            layer4: '#FFFFFF',
+        primary: {
+            theme: '#a975d0',
+            text: '#a975d0',
+            textHover: '#a975d0'
+        },
+        secondary: {
+            theme: '#7029a7'
         },
         bg: {
             layer0: '#212326',

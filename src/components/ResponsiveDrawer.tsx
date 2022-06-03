@@ -104,7 +104,7 @@ div.resize-handle {
     z-index: 99;
     width: 2px;
     height: 100%;
-    background-color: ${props => props.drawerOpen ? 'none' : props.theme.colour.hover.layer1};
+    background-color: ${props => props.drawerOpen ? 'none' : props.theme.colour.primary.textHover};
     &:hover {
         background-color: ${props => props.drawerOpen ? 'white' : 'blue'};
     }
