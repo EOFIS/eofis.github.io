@@ -80,7 +80,6 @@ padding: 2px 0 2px 4px;
 
     &.expanded {
         white-space: break-spaces;
-        // background: 
         & > * {
             display: block;
             width: fill-available;
@@ -138,15 +137,29 @@ padding: 2px 0 2px 4px;
     justify-content: right;
     align-items: last baseline;
     gap: 0 8px;
+
+    font-size: ${props => props.theme.font.size.small};
+
+    & > * {
+        cursor: pointer;
+    }
 }
 a.save {
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid ${props => props.theme.colour.primary.theme};
+    // font-weight: bold;
+    color: ${props => props.theme.colour.primary.theme};
     &.dirty {
-        background: ${props => props.theme.colour.secondary.theme};
-        font-weight: bold;
+        background: ${props => props.theme.colour.primary.theme};
+        color: inherit;
     }
 }
 a.cancel {
-
+    color: ${props => props.theme.colour.primary.theme};
+    &.dirty {
+        color: inherit;
+    }
 }
 
 .pull-left {
@@ -193,15 +206,19 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
     }
     const setContentField = (fieldIndex: number, newFieldText: string | null) => {
         let oldFields = [...fields];
-        console.debug(newFieldText);
         oldFields[fieldIndex] = newFieldText || "";
         setFields(oldFields);
-        // if (newFieldText !== props.card.fields[fieldIndex]) {
-        //     setDirty({
-        //         ...dirty,
-        //         fields: [...dirty.fields.slice(0,fieldIndex), true, ...dirty.fields.slice(fieldIndex+1)]
-        //     })
-        // }
+        if (newFieldText !== props.card.fields[fieldIndex]) {
+            setDirty({
+                ...dirty,
+                fields: [...dirty.fields.slice(0,fieldIndex), true, ...dirty.fields.slice(fieldIndex+1)]
+            });
+        } else {
+            setDirty({
+                ...dirty,
+                fields: [...dirty.fields.slice(0,fieldIndex), false, ...dirty.fields.slice(fieldIndex+1)]
+            });
+        }
     }
     const handleClickOnContentField: MouseEventHandler = (e) => {
         e.stopPropagation();
@@ -211,8 +228,14 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
 
     const handleSave = () => {
         setExpanded(false);
+        if (!isDirty()) return;
         let visibleFields = fields.slice(0, visibleFieldCount);
         props.editContent(props.card.id, visibleFields);
+    }
+    const handleCancel = () => {
+        setExpanded(false);
+        if (!isDirty()) return;
+        reloadCard();
     }
     const reloadCard = () => {
         setFields(props.card.fields);
@@ -225,8 +248,8 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
             source: { title: false, type: false, url: false }
         });
         setVisibleFieldCount(props.card.fields.length);
-
     }
+
 
     const onChangeTemplateType = (newTemplateType: CardTemplateType) => {
         setTemplateType(newTemplateType);
@@ -258,7 +281,7 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
                 {
                     fields.length > 1 && expanded?
                         fields.slice(1, visibleFieldCount).map((field, fi) =>
-                            <ReactTextareaAutosize value={field} onChange={e => setContentField(fi, e.currentTarget.value)} key={fi} />
+                            <ReactTextareaAutosize value={field} onChange={e => setContentField(fi+1, e.currentTarget.value)} key={fi} />
                         ) : ''
                 }
             </div>
@@ -272,8 +295,8 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
                     })
                 }} tags={tags} />
                 <div className="list-item-edit-controls">
-                    <a className={'cancel'} onClick={reloadCard}>Cancel</a>
-                    <a className={'save ' + (isDirty() ? ' dirty ' : '')} onClick={handleSave}>SAVE</a>
+                    <a className={'cancel ' + (isDirty() ? ' dirty ' : '')} onClick={handleCancel}>Cancel</a>
+                    <a className={'save '   + (isDirty() ? ' dirty ' : '')} onClick={handleSave}>Save</a>
                 </div>
             </div>
         </div>
