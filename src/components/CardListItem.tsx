@@ -1,12 +1,12 @@
 import React from "react";
-import { Card } from "../types/ICard";
+import { Card, CardId } from "../types/ICard";
 import { CardTemplateType } from "../types/Template";
 import { ListItem } from "./ListItem";
 
 export interface ICardListItemProps {
     card: Card;
     isSelected?: boolean;
-    editContent: (id: number | string, newContent: string[] | null) => void;
+    onSave: (id: CardId, newCard: Card) => boolean;
     onDeleteClick?: () => void;
     onReviewClick?: (acceptable: boolean) => void;
 }

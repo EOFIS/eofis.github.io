@@ -50,8 +50,8 @@ export class CardService {
             .put<Array<ICardReview>, Array<IUpdateResponse<ICard>>, any>("/cards/review", cardReviews)
     }
 
-    public static update(cards: Array<ICard>): Promise<IUpdateResponse<CardId>> {
-        return new Promise<IUpdateResponse<ICard>>((resolve, reject) =>
+    public static update(cards: Array<ICard> | ICard | Card): Promise<IUpdateResponse<CardId>> {
+        const _update = (cards: Array<ICard>) => new Promise<IUpdateResponse<ICard>>((resolve, reject) =>
             authApi
                 .put("/cards", cards)
                 .then((res: AxiosResponse<any, IUpdateResponse<ICard>>) => {
@@ -61,5 +61,8 @@ export class CardService {
                     reject(res);
                 })
         );
+        if      (cards instanceof Array) return _update( cards               );
+        else if (cards instanceof Card)  return _update([cards.to_document()]);
+        else                             return _update([cards]              );
     }
 }

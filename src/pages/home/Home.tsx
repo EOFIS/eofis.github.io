@@ -5,7 +5,7 @@ import { ResponsiveDrawer } from "../../components/ResponsiveDrawer";
 import { NoteListItem } from "../../components/NoteListItem";
 import { CardService } from "../../services/CardService";
 import { ICardPractice } from "../../types/ICardPractice";
-import { Card } from "../../types/ICard";
+import { Card, CardId } from "../../types/ICard";
 import { CardListItem } from "../../components/CardListItem";
 import { CalendarCheck, Trash3 } from "react-bootstrap-icons";
 import { NoteService } from "../../services/NoteService";
@@ -72,7 +72,14 @@ export default function Home() {
             setToReview([...toReview.slice(0,cardi).concat(toReview.slice(cardi+1))]);
         }
     }
-
+    const onSaveCardListItem = (id: CardId, newCard: Card): boolean => {
+        const modifiedCardIndex = toPractice.findIndex((c) => c.id === id);
+        if (modifiedCardIndex) {
+            toPractice[modifiedCardIndex] = newCard;
+            CardService.update(newCard).then(() => true).catch((e) => false);
+        }
+        return false;
+    }
 
     return (
         <Style>
@@ -82,13 +89,13 @@ export default function Home() {
                         sectionTitle: 'Practice',
                         contents: toPractice.map((card, cardi) => <CardListItem key={cardi} card={card}
                             onDeleteClick={() => { }}
-                            editContent={function (id: string | number, newContent: string[] | null): void { throw new Error("Function not implemented."); }} />)
+                            onSave={onSaveCardListItem} />)
                     },
                     {
                         sectionTitle: 'Review',
                         contents: toReview.map((card, cardi) => <CardListItem key={cardi} card={card}
                             onReviewClick={(acceptable: boolean) => onReviewClick(acceptable, cardi)}
-                            editContent={function (id: string | number, newContent: string[] | null): void { throw new Error("Function not implemented."); }} />)
+                            onSave={onSaveCardListItem} />)
                     }
                 ]}
             >

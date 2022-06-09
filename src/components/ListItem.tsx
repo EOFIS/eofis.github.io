@@ -2,7 +2,7 @@ import React, { MouseEventHandler, useEffect, useState } from "react";
 import { Check, CheckLg, ChevronDown, ChevronUp, Trash3, X, XLg } from "react-bootstrap-icons";
 import ReactTextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
-import { Card } from "../types/ICard";
+import { Card, CardId, ICard } from "../types/ICard";
 import { ISource } from "../types/ISource";
 import { ITag } from "../types/ITag";
 import { CardTemplateType, TemplateDetails } from "../types/Template";
@@ -180,7 +180,7 @@ export interface IListItemProps {
     onTagClick?: () => void;
     onDeleteClick?: () => void;
     onReviewClick?: (acceptable: boolean) => void;
-    editContent: (id: number | string, newContent: Array<string>) => void;
+    onSave: (id: CardId, newCard: Card) => boolean;
 }
 export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>> = ({ ...props }) => {
     const [fields, setFields] = useState<Array<string>>([]);
@@ -204,7 +204,7 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
     const isDirty = (): boolean => {
         return dirty.fields.includes(true) || dirty.tags || dirty.source.title || dirty.source.type || dirty.source.url;
     }
-    const setContentField = (fieldIndex: number, newFieldText: string | null) => {
+    const setField = (fieldIndex: number, newFieldText: string | null) => {
         let oldFields = [...fields];
         oldFields[fieldIndex] = newFieldText || "";
         setFields(oldFields);
@@ -230,7 +230,15 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
         setExpanded(false);
         if (!isDirty()) return;
         let visibleFields = fields.slice(0, visibleFieldCount);
-        props.editContent(props.card.id, visibleFields);
+        let savedCard: Card = Card.from_document({
+            ...props.card.to_document(),
+            fields: visibleFields,
+            tags: tags,
+            source: source
+        });
+        savedCard.reset_last_modified();
+
+        props.onSave(props.card.id, savedCard);
     }
     const handleCancel = () => {
         setExpanded(false);
@@ -274,14 +282,14 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
             <div className={`list-item-content-wrapper ${expanded ? "expanded " : ''}`} onClick={handleClickOnContentField}>
                 {
                     expanded ?
-                        <ReactTextareaAutosize value={fields[0]} onChange={e => setContentField(0, e.currentTarget.value)} />
-                        : <div onInput={e => setContentField(0, e.currentTarget.textContent)} >
+                        <ReactTextareaAutosize value={fields[0]} onChange={e => setField(0, e.currentTarget.value)} />
+                        : <div onInput={e => setField(0, e.currentTarget.textContent)} >
                             {fields[0]}
                         </div>}
                 {
                     fields.length > 1 && expanded?
                         fields.slice(1, visibleFieldCount).map((field, fi) =>
-                            <ReactTextareaAutosize value={field} onChange={e => setContentField(fi+1, e.currentTarget.value)} key={fi} />
+                            <ReactTextareaAutosize value={field} onChange={e => setField(fi+1, e.currentTarget.value)} key={fi} />
                         ) : ''
                 }
             </div>

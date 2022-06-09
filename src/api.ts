@@ -37,7 +37,11 @@ authApi.interceptors.request.use(
             config.headers.Authorization = `Bearer ${localStorage.getItem(LOCAL_STORAGE.JWT)}`;
         }
         return config;
-    }, error => Promise.reject(error)
+    }, error => {
+        // if (error.msg.lower() === 'token has expired')
+            // TODO: handle this by maybe authenticating in a popup then retrying the request
+        Promise.reject(error);
+    }
 );
 
 

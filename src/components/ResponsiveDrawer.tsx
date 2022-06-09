@@ -152,8 +152,8 @@ export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
         >
             <ul className="content-wrapper">
                 {
-                    props.items?.map((section) =>
-                        <Section drawerWidth={drawerWidth} hidden={section.contents.length <= 0}>
+                    props.items?.map((section, si) =>
+                        <Section drawerWidth={drawerWidth} hidden={section.contents.length <= 0} key={si}>
                             <h2>{section.sectionTitle}</h2>
                             <ul>
                                 {section.contents}
