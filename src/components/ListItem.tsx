@@ -17,7 +17,7 @@ display: inline-block;
 overflow:hidden;
 width: 100%;
 margin-bottom: 4px;
-line-height: 1.5;
+// line-height: 1.5;
 font-size: ${props => props.theme.font.size.normal};
 background: ${props => props.theme.colour.bg.layer1};
 color: ${props => props.theme.font.colour.layer0.normal};
@@ -124,14 +124,15 @@ padding: 2px 0 2px 4px;
         gap: 4px;
     }
     & > * {
-        flex-grow: 0;
     }
 }
 
+.grow-down {
+    display: flex;
+    flex: 2;
+}
 
 .list-item-edit-controls {
-    flex-grow: 1;
-
     display: flex;
     flex-direction:row;
     justify-content: right;
@@ -148,7 +149,6 @@ a.save {
     padding: 4px 8px;
     border-radius: 8px;
     border: 1px solid ${props => props.theme.colour.primary.theme};
-    // font-weight: bold;
     color: ${props => props.theme.colour.primary.theme};
     &.dirty {
         background: ${props => props.theme.colour.primary.theme};
@@ -295,13 +295,22 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
             </div>
             <div className={`list-item-footer ${expanded ? "expanded " : ''}`}>
                 <NoteTemplateCycler value={templateType} onChange={(t: CardTemplateType) => onChangeTemplateType(t)} />
-                <TagInput onChangeTags={(tags: string[]) => {
-                    setTags(tags);
-                    setDirty({
-                        ...dirty,
-                        tags: true
-                    })
-                }} tags={tags} />
+                <div className="grow-down">
+                    <TagInput onChangeTags={(tags: string[]) => {
+                        if (tags.every((t) => props.card.tags.find((pt) => pt === t) !== undefined))
+                        {
+                            setDirty({
+                                ...dirty,
+                                tags: false
+                            });
+                        } else {
+                            setTags(tags);
+                            setDirty({
+                                ...dirty,
+                                tags: true
+                            });
+                        }}} tags={tags} />
+                </div>
                 <div className="list-item-edit-controls">
                     <a className={'cancel ' + (isDirty() ? ' dirty ' : '')} onClick={handleCancel}>Cancel</a>
                     <a className={'save '   + (isDirty() ? ' dirty ' : '')} onClick={handleSave}>Save</a>

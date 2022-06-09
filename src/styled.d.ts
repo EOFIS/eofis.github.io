@@ -17,6 +17,7 @@ declare module 'styled-components' {
                 large: string,
                 normal: string,
                 small: string,
+                tag: string,
                 verysmall: string,
             },
             family: string,

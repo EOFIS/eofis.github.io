@@ -1,64 +1,79 @@
 import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
+import { PlusLg, XLg } from "react-bootstrap-icons";
 import styled from "styled-components";
 import { ITag } from "../types/ITag";
-import { Input } from "./Input";
-// import style from './TagInput.module.sass';
 
-const TagInputStyle = styled.div<{}>`
+const TagInputStyle = styled.div<{
+    isInputExpanded: boolean;
+    hover: boolean;
+}>`
 display: flex;
 flex-wrap: wrap;
-// min-height: 48px;
-padding: 4px;
-// margin: 4px;
-  // border: 1px solid #d6d8da;
-  // border-radius: 6px;
+flex-direction: row;
+padding: 0 0 0 4px;
+gap: 8px;
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    // padding: 2px ${props => props.hover ? '0' : '25px'} 2px 0; // 24px is to allow room for the tags to expand without reflowing
+    padding: 2px 0 2px 0;
+    gap: 8px;
+}
 
 input {
-  flex: 1;
-  border: none;
-  height: 46px;
-  font-size: 14px;
-  padding: 4px 0 0;
-  display: inline-block;
-  float: left;
+    display: ${props => props.isInputExpanded ? 'block' : 'none'};
+    border: none;
+    font-size: inherit;
+    padding: 4px 2px;
+    background: ${props => props.theme.colour.bg.layer2};
+    color: ${props => props.theme.font.colour.layer2.normal};
+    width: 120px;
+    border: 1px solid transparent;
+    border-radius: 4px 0 0 4px;
+    border-right: 0;
+
+    &:hover {
+        border: 1px solid ${props => props.theme.colour.secondary.theme};
+    }
+    &:focus {
+        border: 1px solid ${props => props.theme.colour.primary.theme};
+        outline: transparent;
+    }
+    &:focus, &:hover {
+        border-right: 0;
+    }
 }
-input:focus {
-  outline: transparent;
-}
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0;
-}
-.tag {
-  width: auto;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  padding: 0 8px;
-  font-size: 14px;
-  list-style: none;
-  border-radius: 6px;
-  margin: 0 8px 0 0;
-  background: #2b2934;
-}
-.tag-title{
-  margin-top: 3px;
-}
-.tag-close-icon {
-  display: block;
-  width: 16px;
-  height: 16px;
-  line-height: 16px;
-  text-align: center;
-  font-size: 14px;
-  margin-left: 8px;
-  color: #2b2934;
-  border-radius: 50%;
-  background: #fff;
-  cursor: pointer;
+.input-container {
+    padding: 0; margin: 0;
+    display: flex;
+    flex-direction: row;
+    font-size: ${props => props.theme.font.size.small};
+
+    & > button {
+        font-size: inherit;
+        background: none;
+        cursor: pointer;
+
+        &.input-toggle {
+            padding: ${props => props.isInputExpanded ? '8px' : '0'};
+            border: none;
+            color: ${props => props.theme.colour.primary.theme};
+            line-height: 16px;
+        }
+
+        &.add-tag {
+            padding: 4px 8px;
+            display: ${props => props.isInputExpanded ? 'block' : 'none'};
+            border-radius: 0 8px 8px 0;
+            border: 1px solid ${props => props.theme.colour.primary.theme};
+            color: ${props => props.theme.colour.primary.theme};
+            &:hover {
+                background: ${props => props.theme.colour.primary.theme};
+                color: inherit;
+            }
+        }
+    }
 }
 `;
 
@@ -68,14 +83,16 @@ enum DELIMITERS {
     TAB = 'Tab'
 };
 
-export interface ITagInputProps {
-    tags?: Array<ITag>,
-    onChangeTags(tags: ITag[]): void,
+interface ITagInputProps {
+    tags?: Array<ITag>;
+    onChangeTags(tags: ITag[]): void;
 };
 
-export const TagInput = React.forwardRef((props: ITagInputProps, ref) => {
+export const TagInput = React.forwardRef((props: ITagInputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const [tags, setTags] = useState<Array<ITag>>(props.tags || []);
     const [newTag, setNewTag] = useState<string>("");
+    const [isInputExpanded, setIsInputExpanded] = useState<boolean>(true);
+    const [hover, setHover] = useState(false);
 
     const onDelete = (i: number) => {
         setTags(tags.filter((tag, index) => index !== i));
@@ -86,39 +103,126 @@ export const TagInput = React.forwardRef((props: ITagInputProps, ref) => {
         setTags(props.tags || []);
     }, [props.tags]);
 
+    const _addNewTag = (tag: string) => {
+        let _newTags = [...tags, tag];
+        setTags(_newTags);
+        setNewTag("");
+        props.onChangeTags(_newTags);
+
+    }
+    const onAddClick = () => {
+        if (newTag !== '') {
+            _addNewTag(newTag);
+        }
+    };
+
     const onSubmit = (event: KeyboardEvent<HTMLInputElement>) => {
         event.preventDefault();
-        if (newTag !== '') {
-            let _newTag = (event.key === newTag.slice(-1)) ? newTag.slice(0, -1) : newTag;
-            let _newTags = [...tags, _newTag];
-            setTags(_newTags);
-            setNewTag("");
-            props.onChangeTags(_newTags);
-        }
-    }
+        let _newTag = (event.key === newTag.slice(-1)) ? newTag.slice(0, -1) : newTag;
+        _addNewTag(_newTag);
+    };
+
     const onChange = (event: ChangeEvent<HTMLInputElement>) => setNewTag(event.target.value);
 
     return (
-        <TagInputStyle>
+        <TagInputStyle isInputExpanded={isInputExpanded} hover={hover}>
             <ul className={'tags'}>
                 {tags && tags.map((tag, index) => (
-                    <li key={index} className={"tag"}>
-                        <span className={"tag-title"}>{tag}</span>
-                        <span className={"tag-close-icon"} onClick={() => onDelete(index)}>x</span>
-                    </li>
+                    <Tag onDelete={() => onDelete(index)} tag={tag} key={index} hoverCallback={setHover} />
                 ))}
+                <li className="input-container">
+                    <input
+                        type="text"
+                        value={newTag}
+                        onChange={onChange}
+                        onKeyDown={event => (event.code === 'Enter') ? event.preventDefault() : null}
+                        onKeyUp={event => (event.code === 'Comma' || event.code === 'Semicolon' || event.code === 'Enter' ? onSubmit(event) : null)}
+                        placeholder="New tag name"
+                        ref={ref} />
+                    <button className="add-tag" onClick={onAddClick}>Add</button>
+                    <button className="input-toggle" onClick={()=>setIsInputExpanded(!isInputExpanded)}>{isInputExpanded?<XLg/>:<PlusLg/>}</button>
+                </li>
             </ul>
-            {/* <Input
-                type="text"
-                value={newTag}
-                onChange={onChange}
-                onKeyDown={event => (event.code === 'Enter') ? event.preventDefault() : null}
-                onKeyUp={event => (event.code === 'Comma' || event.code === 'Semicolon' || event.code === 'Enter' ? onSubmit(event) : null)}
-                placeholder="Press enter, comma, or semicolon to add a tag"
-                // labeltext="Add tags"
-                inline={true}
-                ref={ref} /> */}
+
         </TagInputStyle>
     );
+});
+
+const TagStyle = styled.li<{
+    isHovering: boolean;
+}>`
+width: auto;
+height: 32px;
+display: flex;
+align-items: center;
+color: white;
+padding: 0 12px;
+font-size: ${props => props.theme.font.size.small};
+list-style: none;
+border-radius: 4px;
+border-width: 4px;
+border-style: none solid;
+border-color: ${props => props.theme.colour.secondary.theme};
+background: ${props => props.theme.colour.secondary.theme};
+
+transition: all 0.1s;
+line-height:normal;
+
+&:hover {
+    border-color: white;
+    padding: 0 4px;
 }
-)
+& > * {
+}
+.tag-title{
+    &:hover {
+    }
+    margin: 0 2px;
+}
+.tag-close-icon {
+    display: block;
+    width: 4px;
+    transition: width 0.1s 0.2s;
+    &>*{
+        width: 0px;
+        opacity: 0;
+    }
+    &.hover{
+        &>*{
+            width: 16px;
+            transition: opacity 0.2s 0.2s;
+            display: initial;
+            opacity: 1;
+        }
+        width: 12px;
+        height: 12px;
+        margin: 0 4px;
+        color: grey;
+        cursor: pointer;
+
+        &:hover {
+            color: white;
+        }
+    }
+}
+`;
+interface ITagProps {
+    tag: ITag;
+    onDelete: () => void;
+    hoverCallback: (hover: boolean) => void;
+}
+const Tag: React.FC<ITagProps & React.HTMLProps<HTMLLIElement>> = ({ ...props }) => {
+    const [isHovering, setIsHovering] = useState(false);
+    return <TagStyle onMouseOver={() => {
+        setIsHovering(true);
+        props.hoverCallback(true);
+    }} onMouseLeave={() => {
+        setIsHovering(false);
+        props.hoverCallback(false);
+    }}
+    isHovering={isHovering}
+    >
+        <span className={"tag-title"}>{props.tag}</span>
+        <span className={"tag-close-icon " + (isHovering ? 'hover' : '')} onClick={() => props.onDelete()}><XLg /></span>
+    </TagStyle>
+};

@@ -9,7 +9,7 @@ export const mockToReview: Array<Card> = [
         url: "function URL() { [native code] }"
       },
       tags: [
-        "Auto-generated"
+        "Auto-generated", "Cattle", "GDPR", "Financial projections", "Analysis"
       ],
       fields: [
         "What is the total global turnover of the preceding fiscal year?",

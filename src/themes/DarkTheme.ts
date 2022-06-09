@@ -16,6 +16,7 @@ export const DarkTheme: DefaultTheme = {
             large: '20pt',
             normal: '14pt',
             small: '12pt',
+            tag: '10pt',
             verysmall: '8pt',
         },
         family: 'Tahoma, Geneva, sans-serif'
@@ -26,7 +27,7 @@ export const DarkTheme: DefaultTheme = {
             text: '#a975d0',
             textHover: '#a975d0'
         },
-        secondary: {
+        secondary: { //#2b2934
             theme: '#7029a7'
         },
         bg: {
