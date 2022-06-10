@@ -55,6 +55,68 @@ h2 {
     margin: 0;
     width: ${props => props.drawerWidth}px;
 }
+
+div.load-more {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    cursor: pointer;
+    font-size: ${props => props.theme.font.size.small};
+    padding: 8px 0;
+
+    &:hover {
+        height: auto;
+    }
+
+    &:hover > .expander-line {
+        background: ${props => props.theme.colour.primary.theme};
+        &.l {
+            margin-inline-end: 16px;
+        }
+        &.r {
+            margin-inline-start: 16px;
+        }
+    }
+    & > .expander-line {
+        flex: 1;
+        background: white;
+        height: 2px;
+        transition: all 0.4s;
+        margin-inline: 16px;
+
+        &.l {
+            margin-inline-end: -32px;
+        }
+        &.r {
+            margin-inline-start: -32px;
+        }
+    }
+    &:hover > button {
+        color: ${props => props.theme.colour.primary.theme};
+        opacity: 1;
+        transition: opacity 0.3s 0.2s, color 0.2s 0s;
+    }
+    & > button {
+        cursor: pointer;
+        margin: 0;
+        padding: 4px 8px;
+
+        border-radius: 4px;
+
+        border: none;
+
+        transition: opacity 0.1s 0s, color 0.3s 0s;
+
+        opacity: 0;
+        background: none;
+        color: inherit;
+        &:hover {
+            color: inherit;
+        }
+    }
+}
+
 `;
 
 interface IDraggerProps {
@@ -110,13 +172,16 @@ div.resize-handle {
     }
     
 }
-
 `;
 
 export interface IResponsiveDrawerProps {
     allowScroll?: boolean;
     initialWidth?: number;
-    items?: Array<{ sectionTitle?: string; contents: Array<ReactElement>; }>;
+    items?: Array<{
+        sectionTitle?: string;
+        contents: Array<ReactElement>;
+        onLoadMore?: () => void;
+    }>;
 }
 
 export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
@@ -158,6 +223,13 @@ export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
                             <ul>
                                 {section.contents}
                             </ul>
+                            {section.onLoadMore ?
+                                <div className="load-more">
+                                    <span className="expander-line l"></span>
+                                    <button onClick={section.onLoadMore}>Load more</button>
+                                    <span className="expander-line r"></span>
+                                </div>
+                                : ''}
                         </Section>)
                 }
             </ul>

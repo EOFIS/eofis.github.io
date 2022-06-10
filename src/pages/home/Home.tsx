@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../components/ProtectedRoute";
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 import { ResponsiveDrawer } from "../../components/ResponsiveDrawer";
-import { NoteListItem } from "../../components/NoteListItem";
 import { CardService } from "../../services/CardService";
 import { ICardPractice } from "../../types/ICardPractice";
 import { Card, CardId } from "../../types/ICard";
 import { CardListItem } from "../../components/CardListItem";
-import { CalendarCheck, Trash3 } from "react-bootstrap-icons";
-import { NoteService } from "../../services/NoteService";
-import { ICardReview } from "../../types/ICardReview";
 import { mockToReview } from "../../mockdata";
 
 const Style = styled.div`
@@ -23,6 +18,9 @@ export default function Home() {
     const [toReview, setToReview] = useState<Array<Card>>([]);
     const [practicedList, setPracticedList] = useState<Array<ICardPractice>>([]);
     const [unfoldedIndex, setUnfoldedIndex] = useState<number>(0);
+    const [idOfLastRetrievedCard, setIdOfLastRetrievedCard] = useState<CardId>();
+
+    const practiceChunkSize = 3;
 
     useEffect(() => {
         refreshList().then(() => {
@@ -33,14 +31,16 @@ export default function Home() {
     // CardService.commitPractices(this.state.reviewedList);
 
     const refreshList = async () => {
-        // CardService.getLowestRecall(5).then((response) => {
-        //     setToPractice(response);
-        // });
-        // CardService.getPendingReviews().then(response => {
-        //     setToReview(response);
-        // })
-        setToPractice(mockToReview.slice(0,20));
-        setToReview(mockToReview);
+        CardService.getLowestRecall(practiceChunkSize).then((response) => {
+            setToPractice(response);
+            setIdOfLastRetrievedCard(response.at(-1)?.id);
+        }).catch((why) => console.error(`Error retrieving lowest recall cards to practice: ${why}`));
+        CardService.getPendingReviews().then(response => {
+            setToReview(response);
+        }).catch((why) => console.error(`Error retrieving cards pending review: ${why}`));
+        // setToPractice(mockToReview.slice(0,practiceChunkSize));
+        // setIdOfLastRetrievedCard(mockToReview.at(-1)?.id);
+        // setToReview(mockToReview.slice(4,4+practiceChunkSize));
     };
 
     // const reviewCard = (reviewScore: 0 | 1) => {
@@ -90,7 +90,13 @@ export default function Home() {
                         contents: toPractice.map((card, cardi) => <CardListItem key={cardi} card={card}
                             onDeleteClick={() => { }}
                             onSave={onSaveCardListItem}
-                            readOnly={true}/>)
+                            readOnly={true}/>),
+                        onLoadMore: () => {
+                            CardService.getLowestRecall(practiceChunkSize, undefined, idOfLastRetrievedCard).then((response) => {
+                                setToPractice([...toPractice,...response]);
+                                setIdOfLastRetrievedCard(response.at(-1)?.id);
+                            });
+                        },
                     },
                     {
                         sectionTitle: 'New questions to review',

@@ -7,12 +7,13 @@ import { IGetResponse } from "../types/IGetResponse";
 import { ICardReview } from "../types/ICardReview";
 
 export class CardService {
-    public static getLowestRecall(howManyCards?: number, lowestRecall?: number): Promise<Card[]> {
+    public static getLowestRecall(howManyCards?: number, lowestRecall?: number, lastRetrievedId?: CardId): Promise<Card[]> {
         return new Promise((resolve, reject) => {
             authApi.get<{}, AxiosResponse<IGetResponse<ICard[]>>>("/cards/practice", {
                 params: {
                     n_to_practice: howManyCards,
-                    lowest_recall: lowestRecall
+                    lowest_recall: lowestRecall,
+                    last_retrieved_id: lastRetrievedId,
                 }
             })
                 .then((res) => {
@@ -29,7 +30,7 @@ export class CardService {
                         reject(reason);
                     }
                 });
-        })
+        });
     }
     public static get(cardids?: Array<CardId>): Promise<ICard[]> {
         return authApi
