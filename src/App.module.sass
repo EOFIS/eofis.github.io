@@ -3,7 +3,8 @@
 @import "bulma/sass/grid/columns.sass"
 
 .App
-  text-align: center
+  width: 100%
+  height: 100%
 
 .App-logo
   height: 2em
@@ -12,15 +13,16 @@
 @media (prefers-reduced-motion: no-preference)
   .App-logo
     animation: App-logo-spin infinite 20s linear
-
+.app-content
+    padding: 16px
 .App-header
-  background-color: #282c34
+  background-color: var(--bg-colour)
   min-height: 2em
   display: flex
   flex-direction: column
   font-size: 16pt
   text-align: center
-  color: white
+  color: var(--colour-primary-text)
   nav
     img
       padding: 4px
@@ -38,11 +40,10 @@
           text-align: center
           display: block
           padding: 0.5em 1em
-          :hover
-            background: #30353f
-          color: #fff
-          :visited
-            color: #fff
+          transition: color 0.2s
+          &:hover
+            color: var(--colour-primary-textHover)
+          color: var(--font-colour-layer0-normal)
         .left
           float: left
 

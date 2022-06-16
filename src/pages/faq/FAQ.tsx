@@ -11,7 +11,7 @@ class FAQ extends React.Component {
             </div>
             <div>
                 <h2>I like what I see. How can I invest/find out more?</h2>
-                <p>Please send us an email through the <Link to="/contact">Contact</Link> page and we can senf you some info or set up a meeting to discuss.</p>
+                <p>Please send us an email through the <Link to="/contact">Contact</Link> page and we can send you some info or set up a meeting to discuss.</p>
             </div>
             <div>
                 <h2>This looks really interesting! How can I join?</h2>
