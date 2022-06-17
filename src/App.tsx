@@ -5,7 +5,7 @@ import FAQ from "./pages/faq/FAQ";
 import Contact from "./pages/contact/Contact";
 import Home from "./pages/home/Home";
 import React from "react";
-import SubscribeForm from "./components/SubscribeForm";
+import { SubscribeForm } from "./components/SubscribeForm";
 import ConfirmSubscription from "./pages/confirm-subscription/ConfirmSubscription";
 
 const App = () => {
@@ -47,7 +47,7 @@ const App = () => {
                     </Route>
                 </Switch>
             </div>
-            <SubscribeForm/>
+            <SubscribeForm id="subscribe-form"/>
         </div>
     );
 };

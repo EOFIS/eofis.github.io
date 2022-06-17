@@ -1,11 +1,16 @@
 .personList
     margin: 16px 0
+    width: 100%
 
     display: flex
     flex-wrap: wrap
+    flex-direction: row
+    justify-content: space-around
     gap: 32px
+
 .personListItem
-    width: 300px
+    min-width: 300px
+    max-width: 480px
     height: fit-content
     flex-grow: 1
     img
@@ -20,14 +25,6 @@
         img
             margin: 5%
             width: 90%
-        h2
-            transition: color 0.3s
-            // color: var(--font-colour-layer0-normal)
-            // font-weight: 700
-        h4
-            transition: color 0.3s
-            // color: var(--colour-primary-text)
-        .textContainer
         .description
             &>*
                 transition: color 0.3s

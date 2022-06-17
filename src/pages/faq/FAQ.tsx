@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 class FAQ extends React.Component {
     render() {
-        return <div className="container center">
+        return <div className="centreContent center">
             <h1>Frequently Asked Questions</h1>
             <p>
                 <h2>What does EOFIS mean?</h2>

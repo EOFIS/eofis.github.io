@@ -1,0 +1,45 @@
+.imageShowcase
+    display: block
+    &:hover
+        *>.overlayContainer
+            opacity: 1
+            // background: #fffb
+        img
+            opacity: 0.2
+
+.imageContainer
+    position: relative
+    img
+        position: relative
+        z-index: 1
+        width: 100%
+        transition: all 0.5s
+.overlayContainer
+    position: absolute
+    top: 0
+    width: 40%
+    height: 100%
+    z-index: 3
+    transition: all 0.5s
+    background: none
+    opacity: 0
+    
+    &>*
+        list-style: none
+        margin: 0
+        padding: 16px
+        font-size: var(--font-size-large)
+        line-height: 2
+        font-weight: 700
+        color: var(--font-colour-layer0-normal)
+
+        display: flex
+        flex-direction: column
+        align-content: space-between
+        align-items: center
+        height: 100%
+        b
+            color: var(--colour-primary-text)
+        &>*
+            display: block
+            flex-grow: 1

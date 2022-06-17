@@ -12,7 +12,7 @@ export const PersonList: React.FC<{
     }>;
 }> = ({ people }) => {
     return <div className={style.personList}>
-        {people.map((p, pi) => <div className={style.personListItem}>
+        {people.map((p, pi) => <div className={style.personListItem} key={pi}>
             <img src={p.imageSrc} />
             <div className={style.textContainer}>
             <h2>{p.name}</h2>

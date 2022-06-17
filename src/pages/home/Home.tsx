@@ -1,12 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ImagePane } from "../../components/ImagePane";
+import { ImageShowcase } from "../../components/ImageShowcase";
 import { PersonList } from "../../components/PersonList";
+import {HashLink} from "react-router-hash-link";
 import style from "./Home.module.sass";
 
 class Home extends React.Component {
     render() {
-        return <div>
+        return <div className="centreContent">
             <h1>
                 EOFIS
             </h1>
@@ -18,7 +20,7 @@ class Home extends React.Component {
             <ImagePane imageLocation='left' src='img/mnt.webp'>
                 <h2>Our Story</h2>
                 <p>
-                    We're two young entrepreneurs with a new take on an old idea. We saw the power of modern natural language processing and saw it could help people learn more effectively and efficiently.
+                    We're a team of young entrepreneurs with a new take on an old idea. We saw the power of modern natural language processing and saw it could help people learn more effectively and efficiently.
                 </p>
                 <p>
                     At EOFIS, we recognize that we live in a knowledge economy.
@@ -28,7 +30,7 @@ class Home extends React.Component {
                 <p>
                     We build our software in constant communication with our clients and are deeply grateful for all the support and feedback we receive.
                 </p>
-                <Link to="/contact">{/* Subscribe for updates */}Contact us</Link>
+                <HashLink to="#subscribe-form">Subscribe for updates</HashLink>
             </ImagePane>
             <ImagePane imageLocation="right" src='img/ConceptMap.png' inset fillWidth>
                 <h2>What We Do</h2>
@@ -41,8 +43,15 @@ class Home extends React.Component {
                 </p>
                 <Link to="/faq">Learn More</Link>
             </ImagePane>
+            <ImageShowcase src="img/DocClosed.png" overlay={
+                <ul>
+                    <li><b>Autogenerate</b> questions from any input</li>
+                    <li><b>Collaborate</b> on topics with a powerful group system</li>
+                    <li><b>Control</b> your content, don't let it control you</li>
+                </ul>
+            }/>
             <div>
-                <h2>Meet the team</h2>
+                <h1>Meet the team</h1>
                 <PersonList people={[
                     {
                         imageSrc: 'img/tiarnach.jpg',
