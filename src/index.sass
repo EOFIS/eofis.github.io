@@ -14,13 +14,15 @@
     --font-colour-delete: "#F5F5F5"
     --font-size-heading: clamp(2.25rem,5.3vw,5rem)
     --font-size-large: 20pt
-    --font-size-normal: 14pt
-    --font-size-small: 12pt
+    --font-size-caption: 16pt
+    --font-size-normal: 12pt
+    --font-size-small: 10pt
     --font-size-verysmall: 8pt
     --font-family-body: Tahoma, Geneva, sans-serif
     --font-family-heading: DejaVu Serif, Garamond, serif
     --colour-primary-theme: #ec244c
     --colour-primary-text: #ec244c
+    --colour-text-on-primary: white
     --colour-primary-textHover: #B12497
     --colour-secondary-theme: #7029a7
     --colour-bg-layer0: #ffffff
@@ -30,11 +32,11 @@
     --colour-bg-layer4: #FFFFFF
 
 body
-  margin: 0
-  font-family: var(--font-family-body)
-  font-size: var(--font-size-normal)
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
+    margin: 0
+    font-family: var(--font-family-body)
+    font-size: var(--font-size-normal)
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
 
 h1, h2, h3, h4, h5, h6
     text-align: center
@@ -57,7 +59,7 @@ h3
     font-weight: 500
 
 h4
-    font-size: var(--font-size-small)
+    font-size: var(--font-size-caption)
 
 a
     color: var(--colour-primary-text)
@@ -71,8 +73,11 @@ html
     background: var(--bg-colour)
 
 code
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace
 
 .container
-  padding: 16px
-  border-radius: 4px
+    padding: 16px
+    border-radius: 4px
+
+.center
+    text-align: center

@@ -1,0 +1,54 @@
+.personList
+    margin: 16px 0
+
+    display: flex
+    flex-wrap: wrap
+    gap: 32px
+.personListItem
+    width: 300px
+    height: fit-content
+    flex-grow: 1
+    img
+        width: 100%
+        flex-grow: 1
+        transition: width 0.3s, margin 0.3s
+    h2, h4
+        margin: 4px
+    transition: background 0.3s, width 0.3s
+    &:hover
+        background: var(--colour-primary-theme)
+        img
+            margin: 5%
+            width: 90%
+        h2
+            transition: color 0.3s
+            // color: var(--font-colour-layer0-normal)
+            // font-weight: 700
+        h4
+            transition: color 0.3s
+            // color: var(--colour-primary-text)
+        .textContainer
+        .description
+            &>*
+                transition: color 0.3s
+                color: inherit
+        .socialBanner
+            &>a
+                transition: opacity 0.3s
+                opacity: 1
+.textContainer
+    margin: 5%
+    background: var(--bg-colour)
+    padding: 16px
+    height: auto
+.description
+    color: inherit
+    &>*
+        color: var(--bg-colour)
+        transition: color 0.3s
+
+.socialBanner
+    display: flex
+    justify-content: flex-start
+    &>a
+        opacity: 0
