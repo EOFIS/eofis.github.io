@@ -5,6 +5,7 @@ import { ImageShowcase } from "../../components/ImageShowcase";
 import { PersonList } from "../../components/PersonList";
 import {HashLink} from "react-router-hash-link";
 import style from "./Home.module.sass";
+import { FeatureList } from "../../components/FeatureList";
 
 class Home extends React.Component {
     render() {
@@ -16,7 +17,19 @@ class Home extends React.Component {
                 Automatically generated flashcards and concept maps.<br />
                 All in one place.
             </h3>
-
+            <FeatureList>
+                <h2>Select your text. We do the rest.</h2>
+                <dl>
+                    <dt>No-hassle generated quizzes</dt>
+                    <dd>Our automatic generation models work to turn your text into flashcards that capture the key points of your text. Using state of the art natural language processing, Eofis can turn any text into a set of flashcards that we store in your <HashLink to="/#concept-map">concept map</HashLink> and show you in a <HashLink to="/#quiz">quiz</HashLink> when you need to remember them.</dd>
+                    <dt id="quiz">Automatic study timetable</dt>
+                    <dd>Remember anything you want with the proven spaced repetition study method. Eofis shows you what you need to study exactly when you need to study it. We know you have a lot going on so don't worry if you miss a day here and there, Eofis will just reschedule your learning and you can pick up where you left off.</dd>
+                    <dt id="concept-map">Stay organised and make connections</dt>
+                    <dd>Never lose a note again with our automatic yet personalisable visual concept map that links everything together. Create topics to group your learning, set colours and images to help you remember, shape the map however it helps you, Eofis is here to help.</dd>
+                    <dt>Connections aren't just for data</dt>
+                    <dd>Do you like to study like a lone wolf or prefer to run with a pack? We've got you either way with our opt-in powerful group learning system. Create study groups, informal competitions or just put the head down and crack on.</dd>
+                </dl>
+            </FeatureList>
             <ImagePane imageLocation='left' src='img/mnt.webp'>
                 <h2>Our Story</h2>
                 <p>
