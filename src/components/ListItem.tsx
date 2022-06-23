@@ -17,7 +17,7 @@ display: inline-block;
 overflow:hidden;
 width: 100%;
 margin-bottom: 4px;
-// line-height: 1.5;
+line-height: normal;
 font-size: ${props => props.theme.font.size.normal};
 background: ${props => props.theme.colour.bg.layer1};
 color: ${props => props.theme.font.colour.layer0.normal};
@@ -123,8 +123,6 @@ padding: 2px 0 2px 4px;
         align-items: baseline;
         gap: 4px;
     }
-    & > * {
-    }
 }
 
 .grow-down {
@@ -181,6 +179,7 @@ export interface IListItemProps {
     onDeleteClick?: () => void;
     onReviewClick?: (acceptable: boolean) => void;
     onSave: (id: CardId, newCard: Card) => boolean;
+    readOnly?: boolean;
 }
 export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>> = ({ ...props }) => {
     const [fields, setFields] = useState<Array<string>>([]);
@@ -211,12 +210,12 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
         if (newFieldText !== props.card.fields[fieldIndex]) {
             setDirty({
                 ...dirty,
-                fields: [...dirty.fields.slice(0,fieldIndex), true, ...dirty.fields.slice(fieldIndex+1)]
+                fields: [...dirty.fields.slice(0, fieldIndex), true, ...dirty.fields.slice(fieldIndex + 1)]
             });
         } else {
             setDirty({
                 ...dirty,
-                fields: [...dirty.fields.slice(0,fieldIndex), false, ...dirty.fields.slice(fieldIndex+1)]
+                fields: [...dirty.fields.slice(0, fieldIndex), false, ...dirty.fields.slice(fieldIndex + 1)]
             });
         }
     }
@@ -287,9 +286,9 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
                             {fields[0]}
                         </div>}
                 {
-                    fields.length > 1 && expanded?
+                    fields.length > 1 && expanded ?
                         fields.slice(1, visibleFieldCount).map((field, fi) =>
-                            <ReactTextareaAutosize value={field} onChange={e => setField(fi+1, e.currentTarget.value)} key={fi} />
+                            <ReactTextareaAutosize value={field} onChange={e => setField(fi + 1, e.currentTarget.value)} key={fi} />
                         ) : ''
                 }
             </div>
@@ -297,8 +296,7 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
                 <NoteTemplateCycler value={templateType} onChange={(t: CardTemplateType) => onChangeTemplateType(t)} />
                 <div className="grow-down">
                     <TagInput onChangeTags={(tags: string[]) => {
-                        if (tags.every((t) => props.card.tags.find((pt) => pt === t) !== undefined))
-                        {
+                        if (tags.every((t) => props.card.tags.find((pt) => pt === t) !== undefined)) {
                             setDirty({
                                 ...dirty,
                                 tags: false
@@ -309,12 +307,17 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
                                 ...dirty,
                                 tags: true
                             });
-                        }}} tags={tags} />
+                        }
+                    }}
+                        tags={tags}
+                        readOnly={props.readOnly} />
                 </div>
-                <div className="list-item-edit-controls">
-                    <a className={'cancel ' + (isDirty() ? ' dirty ' : '')} onClick={handleCancel}>Cancel</a>
-                    <a className={'save '   + (isDirty() ? ' dirty ' : '')} onClick={handleSave}>Save</a>
-                </div>
+                {!props.readOnly &&
+                    <div className="list-item-edit-controls">
+                        <a className={'cancel ' + (isDirty() ? ' dirty ' : '')} onClick={handleCancel}>Cancel</a>
+                        <a className={'save ' + (isDirty() ? ' dirty ' : '')} onClick={handleSave}>Save</a>
+                    </div>
+                }
             </div>
         </div>
     </ListItemStyle>

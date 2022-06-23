@@ -33,14 +33,14 @@ export default function Home() {
     // CardService.commitPractices(this.state.reviewedList);
 
     const refreshList = async () => {
-        CardService.getLowestRecall(5).then((response) => {
-            setToPractice(response);
-        });
-        CardService.getPendingReviews().then(response => {
-            setToReview(response);
-        })
-        // setToPractice(mockToReview.slice(0,20));
-        // setToReview(mockToReview);
+        // CardService.getLowestRecall(5).then((response) => {
+        //     setToPractice(response);
+        // });
+        // CardService.getPendingReviews().then(response => {
+        //     setToReview(response);
+        // })
+        setToPractice(mockToReview.slice(0,20));
+        setToReview(mockToReview);
     };
 
     // const reviewCard = (reviewScore: 0 | 1) => {
@@ -89,13 +89,15 @@ export default function Home() {
                         sectionTitle: 'Daily Practice',
                         contents: toPractice.map((card, cardi) => <CardListItem key={cardi} card={card}
                             onDeleteClick={() => { }}
-                            onSave={onSaveCardListItem} />)
+                            onSave={onSaveCardListItem}
+                            readOnly={true}/>)
                     },
                     {
                         sectionTitle: 'New questions to review',
                         contents: toReview.map((card, cardi) => <CardListItem key={cardi} card={card}
                             onReviewClick={(acceptable: boolean) => onReviewClick(acceptable, cardi)}
-                            onSave={onSaveCardListItem} />)
+                            onSave={onSaveCardListItem}
+                            readOnly={false}/>),
                     }
                 ]}
             >

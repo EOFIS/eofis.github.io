@@ -86,12 +86,13 @@ enum DELIMITERS {
 interface ITagInputProps {
     tags?: Array<ITag>;
     onChangeTags(tags: ITag[]): void;
+    readOnly?: boolean;
 };
 
 export const TagInput = React.forwardRef((props: ITagInputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
     const [tags, setTags] = useState<Array<ITag>>(props.tags || []);
     const [newTag, setNewTag] = useState<string>("");
-    const [isInputExpanded, setIsInputExpanded] = useState<boolean>(true);
+    const [isInputExpanded, setIsInputExpanded] = useState<boolean>(false);
     const [hover, setHover] = useState(false);
 
     const onDelete = (i: number) => {
@@ -128,9 +129,10 @@ export const TagInput = React.forwardRef((props: ITagInputProps, ref: React.Forw
         <TagInputStyle isInputExpanded={isInputExpanded} hover={hover}>
             <ul className={'tags'}>
                 {tags && tags.map((tag, index) => (
-                    <Tag onDelete={() => onDelete(index)} tag={tag} key={index} hoverCallback={setHover} />
+                    <Tag readOnly={props.readOnly} onDelete={() => onDelete(index)} tag={tag} key={index} hoverCallback={setHover} />
                 ))}
-                <li className="input-container">
+                {
+                    !props.readOnly && <li className="input-container">
                     <input
                         type="text"
                         value={newTag}
@@ -142,6 +144,8 @@ export const TagInput = React.forwardRef((props: ITagInputProps, ref: React.Forw
                     <button className="add-tag" onClick={onAddClick}>Add</button>
                     <button className="input-toggle" onClick={()=>setIsInputExpanded(!isInputExpanded)}>{isInputExpanded?<XLg/>:<PlusLg/>}</button>
                 </li>
+
+                }
             </ul>
 
         </TagInputStyle>
@@ -150,66 +154,70 @@ export const TagInput = React.forwardRef((props: ITagInputProps, ref: React.Forw
 
 const TagStyle = styled.li<{
     isHovering: boolean;
+    readOnly?: boolean;
 }>`
 width: auto;
 height: 32px;
 display: flex;
 align-items: center;
 color: white;
-padding: 0 12px;
+padding: ${props => props.readOnly? '0 8px': '0 12px'};
 font-size: ${props => props.theme.font.size.small};
 list-style: none;
-border-radius: 4px;
-border-width: 4px;
-border-style: none solid;
+border-radius: 32px;
+border-width: ${props => props.readOnly? '2px': '4px'};
+border-style: ${props => props.readOnly? 'solid': 'none solid'};
 border-color: ${props => props.theme.colour.secondary.theme};
 background: ${props => props.theme.colour.secondary.theme};
 
 transition: all 0.1s;
 line-height:normal;
+${props => props.readOnly ? '\
+&:hover {\
+    border: white solid 2px;\
+}':'\
+&:hover {\
+    border-color: white;\
+    padding: 0 4px;\
+}'}
 
-&:hover {
-    border-color: white;
-    padding: 0 4px;
-}
-& > * {
-}
 .tag-title{
-    &:hover {
-    }
-    margin: 0 2px;
+    margin: ${props => props.readOnly? '0': '0 2px'};
 }
 .tag-close-icon {
-    display: block;
+    display: ${props => props.readOnly ? 'none' : 'block'};
     width: 4px;
     transition: width 0.1s 0.2s;
     &>*{
         width: 0px;
         opacity: 0;
     }
-    &.hover{
-        &>*{
-            width: 16px;
-            transition: opacity 0.2s 0.2s;
-            display: initial;
-            opacity: 1;
-        }
-        width: 12px;
-        height: 12px;
-        margin: 0 4px;
-        color: grey;
-        cursor: pointer;
-
-        &:hover {
-            color: white;
-        }
-    }
+    ${props => !props.readOnly && '\
+    &.hover{\
+        &>*{\
+            width: 16px;\
+            transition: opacity 0.2s 0.2s;\
+            display: initial;\
+            opacity: 1;\
+        }\
+        width: 12px;\
+        height: 12px;\
+        margin: 0 4px;\
+        color: grey;\
+        cursor: pointer;\
+\
+        &:hover {\
+            color: white;\
+        }\
+    }\
+'}
 }
 `;
 interface ITagProps {
     tag: ITag;
     onDelete: () => void;
     hoverCallback: (hover: boolean) => void;
+    readOnly?: boolean;
 }
 const Tag: React.FC<ITagProps & React.HTMLProps<HTMLLIElement>> = ({ ...props }) => {
     const [isHovering, setIsHovering] = useState(false);
@@ -221,6 +229,7 @@ const Tag: React.FC<ITagProps & React.HTMLProps<HTMLLIElement>> = ({ ...props })
         props.hoverCallback(false);
     }}
     isHovering={isHovering}
+    readOnly={props.readOnly}
     >
         <span className={"tag-title"}>{props.tag}</span>
         <span className={"tag-close-icon " + (isHovering ? 'hover' : '')} onClick={() => props.onDelete()}><XLg /></span>

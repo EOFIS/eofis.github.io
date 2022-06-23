@@ -9,7 +9,8 @@ export interface ICardListItemProps {
     onSave: (id: CardId, newCard: Card) => boolean;
     onDeleteClick?: () => void;
     onReviewClick?: (acceptable: boolean) => void;
+    readOnly?: boolean;
 }
 export const CardListItem: React.FC<ICardListItemProps & React.HTMLProps<HTMLLIElement>> = ({ ...props }) => {
-    return <ListItem isSelected={props.isSelected} templateType={CardTemplateType.BASIC} {...props}/>
+    return <ListItem templateType={CardTemplateType.BASIC} {...props}/>
 }
