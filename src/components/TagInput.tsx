@@ -1,11 +1,12 @@
 import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
-import { PlusLg, XLg } from "react-bootstrap-icons";
+import { PlusLg, Tags, TagsFill, XLg } from "react-bootstrap-icons";
 import styled from "styled-components";
 import { ITag } from "../types/ITag";
 
 const TagInputStyle = styled.div<{
     isInputExpanded: boolean;
     hover: boolean;
+    center?: boolean;
 }>`
 display: flex;
 flex-wrap: wrap;
@@ -19,6 +20,13 @@ gap: 8px;
     // padding: 2px ${props => props.hover ? '0' : '25px'} 2px 0; // 24px is to allow room for the tags to expand without reflowing
     padding: 2px 0 2px 0;
     gap: 8px;
+    list-style: none;
+    ${props => props.center && 'justify-content: center;'}
+}
+.tags-icon {
+    font-size: ${props => props.theme.font.size.normal};
+    display: flex;
+    align-items: center;
 }
 
 input {
@@ -85,8 +93,10 @@ enum DELIMITERS {
 
 interface ITagInputProps {
     tags?: Array<ITag>;
-    onChangeTags(tags: ITag[]): void;
+    onChangeTags?: (tags: ITag[]) => void;
     readOnly?: boolean;
+    showIcon?: boolean;
+    center?: boolean;
 };
 
 export const TagInput = React.forwardRef((props: ITagInputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
@@ -97,7 +107,7 @@ export const TagInput = React.forwardRef((props: ITagInputProps, ref: React.Forw
 
     const onDelete = (i: number) => {
         setTags(tags.filter((tag, index) => index !== i));
-        props.onChangeTags(tags);
+        props.onChangeTags && props.onChangeTags(tags);
     };
 
     useEffect(() => {
@@ -108,7 +118,7 @@ export const TagInput = React.forwardRef((props: ITagInputProps, ref: React.Forw
         let _newTags = [...tags, tag];
         setTags(_newTags);
         setNewTag("");
-        props.onChangeTags(_newTags);
+        props.onChangeTags && props.onChangeTags(_newTags);
 
     }
     const onAddClick = () => {
@@ -126,13 +136,14 @@ export const TagInput = React.forwardRef((props: ITagInputProps, ref: React.Forw
     const onChange = (event: ChangeEvent<HTMLInputElement>) => setNewTag(event.target.value);
 
     return (
-        <TagInputStyle isInputExpanded={isInputExpanded} hover={hover}>
+        <TagInputStyle isInputExpanded={isInputExpanded} hover={hover} center={props.center}>
             <ul className={'tags'}>
+                {props.showIcon&&<li className="tags-icon"><TagsFill/></li>}
                 {tags && tags.map((tag, index) => (
-                    <Tag readOnly={props.readOnly} onDelete={() => onDelete(index)} tag={tag} key={index} hoverCallback={setHover} />
+                    <Tag readOnly={props.readOnly || props.onChangeTags === undefined} onDelete={() => onDelete(index)} tag={tag} key={index} hoverCallback={setHover} />
                 ))}
                 {
-                    !props.readOnly && <li className="input-container">
+                    !(props.readOnly || props.onChangeTags === undefined) && <li className="input-container">
                     <input
                         type="text"
                         value={newTag}

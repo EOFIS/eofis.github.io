@@ -185,7 +185,7 @@ export interface IResponsiveDrawerProps {
 }
 
 export const ResponsiveDrawer: React.FC<IResponsiveDrawerProps> = (props) => {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [showCircle, setShowControls] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
     const [lastXDown, setLastXDown] = useState(0);
