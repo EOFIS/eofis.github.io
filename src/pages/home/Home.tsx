@@ -56,8 +56,12 @@ export default function Home() {
         setPracticedList([...practicedList, practice]);
         nextCard();
     };
-    const flagCard = (card: Card) => {
-        nextCard();
+    const onFlagCard = (card: Card) => {
+        CardService.flagCards([card.id])
+            .then(() => {
+                let flagIdx = toPractice.findIndex((c) => c.id === card.id);
+                setToPractice([...toPractice.slice(0,flagIdx), ...toPractice.slice(flagIdx+1)]);
+            });
     };
 
     const nextCard = () => {
@@ -96,7 +100,7 @@ export default function Home() {
                     {
                         sectionTitle: 'Daily Practice',
                         contents: toPractice.map((card, cardi) => <CardListItem key={cardi} card={card}
-                            onFlagClick={() => { }}
+                            onFlagClick={onFlagCard}
                             onSave={onSaveCardListItem}
                             readOnly={true} />),
                         onLoadMore: onLoadMoreToPractice,
@@ -115,7 +119,7 @@ export default function Home() {
                 card={currentCard}
                 onLoadMore={onLoadMoreToPractice}
                 onPracticeCard={practiceCard}
-                onFlag={flagCard}
+                onFlag={onFlagCard}
             />
         </Style>
     )

@@ -9,7 +9,8 @@ export interface ICard {
     tags: string[];
     fields: Array<string>,
     last_modified: string,
-    recall_model: [number, number, number]
+    recall_model: [number, number, number],
+    flagged_on?: string
 }
 
 export type CardId = string;
@@ -18,6 +19,7 @@ export class Card implements ICard {
     id: CardId;
 
     last_practiced: string | number | Date;
+    flagged_on?: string | undefined;
     source: ISource;
     tags: string[];
     fields: string[];
@@ -36,7 +38,7 @@ export class Card implements ICard {
     // }
     recall_model: [number, number, number];
 
-    constructor(id: CardId, last_practiced: string | number | Date, source: ISource, tags: string[], fields: string[], last_modified: string, recall_model: [number, number, number]) {
+    constructor(id: CardId, last_practiced: string | number | Date, source: ISource, tags: string[], fields: string[], last_modified: string, recall_model: [number, number, number], flagged_on?: string|undefined) {
         this.id = id;
         this.last_modified = last_modified;
         this.last_practiced = last_practiced || '';
@@ -44,9 +46,10 @@ export class Card implements ICard {
         this.tags = tags;
         this.fields = fields;
         this.recall_model = recall_model;
+        this.flagged_on = flagged_on;
     }
     public static from_document(doc: ICard): Card {
-        return new Card(doc.id, doc.last_practiced, doc.source, doc.tags, doc.fields, doc.last_modified, doc.recall_model);
+        return new Card(doc.id, doc.last_practiced, doc.source, doc.tags, doc.fields, doc.last_modified, doc.recall_model, doc.flagged_on);
     }
     public to_document(): ICard {
         return this;

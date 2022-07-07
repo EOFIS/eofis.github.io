@@ -50,6 +50,10 @@ export class CardService {
         return authApi
             .put<Array<ICardReview>, Array<IUpdateResponse<ICard>>, any>("/cards/review", cardReviews)
     }
+    public static flagCards(cardids: Array<CardId>): Promise<Array<IUpdateResponse<CardId>>> {
+        return authApi
+            .put<Array<CardId>, Array<IUpdateResponse<CardId>>, any>("/cards/flag", cardids);
+    }
 
     public static update(cards: Array<ICard> | ICard | Card): Promise<IUpdateResponse<CardId>> {
         const _update = (cards: Array<ICard>) => new Promise<IUpdateResponse<ICard>>((resolve, reject) =>

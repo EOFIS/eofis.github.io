@@ -176,7 +176,7 @@ export interface IListItemProps {
     isSelected?: boolean;
     allowScroll?: boolean;
     onTagClick?: () => void;
-    onFlagClick?: () => void;
+    onFlagClick?: (card: Card) => void;
     onReviewClick?: (acceptable: boolean) => void;
     onSave: (id: CardId, newCard: Card) => boolean;
     readOnly?: boolean;
@@ -274,7 +274,7 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
             <div className="list-item-controls pull-right">
                 <ChevronDown onClick={() => setExpanded(true)} className={`list-item-expansion-control ${expanded ? "hide" : ""}`} />
                 <ChevronUp onClick={() => setExpanded(false)} className={`list-item-expansion-control ${expanded ? "" : "hide"}`} />
-                {props.onFlagClick && <FlagFill onClick={props.onFlagClick} />}
+                {props.onFlagClick && <FlagFill onClick={() => props.onFlagClick && props.onFlagClick(props.card)} />}
                 {props.onReviewClick && <CheckLg onClick={() => props.onReviewClick !== undefined && props.onReviewClick(true)} />}
                 {props.onReviewClick && <XLg onClick={() => props.onReviewClick !== undefined && props.onReviewClick(false)} />}
             </div>
