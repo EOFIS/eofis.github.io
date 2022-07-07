@@ -7,7 +7,7 @@ export interface ICardListItemProps {
     card: Card;
     isSelected?: boolean;
     onSave: (id: CardId, newCard: Card) => boolean;
-    onDeleteClick?: () => void;
+    onFlagClick?: () => void;
     onReviewClick?: (acceptable: boolean) => void;
     readOnly?: boolean;
 }

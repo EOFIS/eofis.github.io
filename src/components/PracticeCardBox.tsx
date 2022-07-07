@@ -107,6 +107,7 @@ export const PracticeCardBox: React.FC<{
     card?: Card;
     onLoadMore: () => void;
     onPracticeCard: (card: Card, practiceScore: CardPracticeValue) => void;
+    onFlag: (card: Card) => void;
 }> = (props) => {
     const [unfoldedIndex, setUnfoldedIndex] = useState<number>(0);
     useEffect(() => {
@@ -121,9 +122,9 @@ export const PracticeCardBox: React.FC<{
 
     return <PracticeCardBoxStyle>
         {props.card ? <div className="practice-card-box-container">
-            <div className="review-controls"><FlagFill className="flag"/></div>
-            <div className="practice-card-box">
-                <div className="flashcard-content" onClick={unfoldNextField}>
+            <div className="review-controls"><FlagFill className="flag" onClick={() => props.card&&props.onFlag(props.card)}/></div>
+            <div className="practice-card-box" onClick={unfoldNextField}>
+                <div className="flashcard-content">
                     {props.card.fields.map((f, fi) => <p key={fi} className={unfoldedIndex>=fi?'visible':''}>{f}</p>)}
                     {/* {props.card.fields.map((f, fi) => <p key={fi}>{f}</p>)} */}
                 </div>

@@ -1,5 +1,5 @@
 import React, { MouseEventHandler, useEffect, useState } from "react";
-import { Check, CheckLg, ChevronDown, ChevronUp, Trash3, X, XLg } from "react-bootstrap-icons";
+import { Check, CheckLg, ChevronDown, ChevronUp, FlagFill, Trash3, X, XLg } from "react-bootstrap-icons";
 import ReactTextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 import { Card, CardId, ICard } from "../types/ICard";
@@ -176,7 +176,7 @@ export interface IListItemProps {
     isSelected?: boolean;
     allowScroll?: boolean;
     onTagClick?: () => void;
-    onDeleteClick?: () => void;
+    onFlagClick?: () => void;
     onReviewClick?: (acceptable: boolean) => void;
     onSave: (id: CardId, newCard: Card) => boolean;
     readOnly?: boolean;
@@ -274,7 +274,7 @@ export const ListItem: React.FC<IListItemProps & React.HTMLProps<HTMLLIElement>>
             <div className="list-item-controls pull-right">
                 <ChevronDown onClick={() => setExpanded(true)} className={`list-item-expansion-control ${expanded ? "hide" : ""}`} />
                 <ChevronUp onClick={() => setExpanded(false)} className={`list-item-expansion-control ${expanded ? "" : "hide"}`} />
-                {props.onDeleteClick && <Trash3 onClick={props.onDeleteClick} />}
+                {props.onFlagClick && <FlagFill onClick={props.onFlagClick} />}
                 {props.onReviewClick && <CheckLg onClick={() => props.onReviewClick !== undefined && props.onReviewClick(true)} />}
                 {props.onReviewClick && <XLg onClick={() => props.onReviewClick !== undefined && props.onReviewClick(false)} />}
             </div>

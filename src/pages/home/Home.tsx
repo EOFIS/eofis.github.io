@@ -28,31 +28,35 @@ export default function Home() {
         refreshList().then(() => {
             nextCard();
         });
-    },[]);
+    }, []);
     useEffect(() => {
         if (currentCard === undefined)
             nextCard();
-    },[toPractice]);
+    }, [toPractice]);
     // ON UNMOUNT, COMMIT REVIEWS
     // CardService.commitPractices(this.state.reviewedList);
 
     const refreshList = async () => {
         // BELOW IS WORKING, TEMPORARILY DISABLED TO WORK OFFLINE
-        // CardService.getLowestRecall(practiceChunkSize).then((response) => {
-        //     setToPractice(response);
-        //     setIdOfLastRetrievedCard(response.at(-1)?.id);
-        // }).catch((why) => console.error(`Error retrieving lowest recall cards to practice: ${why}`));
-        // CardService.getPendingReviews().then(response => {
-        //     setToReview(response);
-        // }).catch((why) => console.error(`Error retrieving cards pending review: ${why}`));
-        setToPractice(mockToReview.slice(0,practiceChunkSize));
-        setIdOfLastRetrievedCard(mockToReview.at(-1)?.id);
-        setToReview(mockToReview.slice(4,4+practiceChunkSize));
+        CardService.getLowestRecall(practiceChunkSize).then((response) => {
+            setToPractice(response);
+            setIdOfLastRetrievedCard(response.at(-1)?.id);
+        }).catch((why) => console.error(`Error retrieving lowest recall cards to practice: ${why}`));
+        CardService.getPendingReviews().then(response => {
+            setToReview(response);
+        }).catch((why) => console.error(`Error retrieving cards pending review: ${why}`));
+        // setToPractice(mockToReview.slice(0,practiceChunkSize));
+        // setIdOfLastRetrievedCard(mockToReview.at(-1)?.id);
+        // setToReview(mockToReview.slice(4,4+practiceChunkSize));
     };
 
     const practiceCard = (card: Card, practiceScore: CardPracticeValue) => {
         const practice: ICardPractice = { card: card, practiceScore: practiceScore };
+        CardService.commitPractices([practice]);
         setPracticedList([...practicedList, practice]);
+        nextCard();
+    };
+    const flagCard = (card: Card) => {
         nextCard();
     };
 
@@ -67,7 +71,7 @@ export default function Home() {
                 cardId: reviewedCard.id,
                 isAcceptable: acceptable
             }]);
-            setToReview([...toReview.slice(0,cardi).concat(toReview.slice(cardi+1))]);
+            setToReview([...toReview.slice(0, cardi).concat(toReview.slice(cardi + 1))]);
         }
     }
     const onSaveCardListItem = (id: CardId, newCard: Card): boolean => {
@@ -80,7 +84,7 @@ export default function Home() {
     }
     const onLoadMoreToPractice = () => {
         CardService.getLowestRecall(practiceChunkSize, undefined, idOfLastRetrievedCard).then((response) => {
-            setToPractice([...toPractice,...response]);
+            setToPractice([...toPractice, ...response]);
             setIdOfLastRetrievedCard(response.at(-1)?.id);
         });
     }
@@ -92,9 +96,9 @@ export default function Home() {
                     {
                         sectionTitle: 'Daily Practice',
                         contents: toPractice.map((card, cardi) => <CardListItem key={cardi} card={card}
-                            onDeleteClick={() => { }}
+                            onFlagClick={() => { }}
                             onSave={onSaveCardListItem}
-                            readOnly={true}/>),
+                            readOnly={true} />),
                         onLoadMore: onLoadMoreToPractice,
                     },
                     {
@@ -102,15 +106,17 @@ export default function Home() {
                         contents: toReview.map((card, cardi) => <CardListItem key={cardi} card={card}
                             onReviewClick={(acceptable: boolean) => onReviewClick(acceptable, cardi)}
                             onSave={onSaveCardListItem}
-                            readOnly={false}/>),
+                            readOnly={false} />),
                     }
                 ]}
             >
             </ResponsiveDrawer>
             <PracticeCardBox
-            card={currentCard}
-            onLoadMore={onLoadMoreToPractice}
-            onPracticeCard={practiceCard}/>
+                card={currentCard}
+                onLoadMore={onLoadMoreToPractice}
+                onPracticeCard={practiceCard}
+                onFlag={flagCard}
+            />
         </Style>
     )
 }
