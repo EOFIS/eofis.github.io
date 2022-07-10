@@ -3,6 +3,9 @@
   "homepage": "https://eofis-web-dev.herokuapp.com",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+      "node": ">=14"
+  },
   "dependencies": {
     "@hookform/resolvers": "^2.8.5",
     "@types/mongodb": "^4.0.7",
@@ -31,7 +34,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start-dev-local": "HTTPS=true REACT_APP_API_URL=https://localhost:5000/api/v0/ react-scripts start",
-    "start-dev-remote": "HTTPS=true REACT_APP_API_URL=https://eofis-dev.herokuapp.com/api/v0/ react-scripts start",
+    "start-dev-remote": "HTTPS=true REACT_APP_API_URL=http://34.79.161.103:5000/api/v0/ react-scripts start",
     "start-dev-local-http": "REACT_APP_API_URL=http://localhost:5000/api/v0/ react-scripts start",
     "start-dev-remote-http": "REACT_APP_API_URL=http://34.79.161.103:5000/api/v0/ react-scripts start",
     "build": "react-scripts build",
