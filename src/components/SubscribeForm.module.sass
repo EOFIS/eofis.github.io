@@ -1,0 +1,27 @@
+.subscribeForm
+    background: var(--colour-primary-theme)
+    display: flex
+    flex-direction: row
+    padding: 8px
+    color: var(--colour-text-on-primary)
+    form
+        margin: auto
+        display: flex
+        flex-direction: row
+        gap: 8px
+        align-items: center
+        align-content: space-around
+        input
+            font-size: var(--font-size-normal)
+            &[type='text'], &[type='email']
+                background: var(--bg-colour)
+                border: 2px solid var(--bg-colour)
+                border-radius: 4px
+            &[type='submit']
+                cursor: pointer
+                border: 2px solid var(--bg-colour)
+                border-radius: 4px
+                background: var(--bg-colour)
+                &:hover
+                    background: var(--colour-primary-theme)
+                    color: var(--bg-colour)

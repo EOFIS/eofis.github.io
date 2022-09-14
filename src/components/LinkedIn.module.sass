@@ -1,0 +1,18 @@
+@mixin social($fill, $background)
+    width: 2em
+    display: inline-block
+    &:hover
+        svg
+            background-color: $background
+            &>*
+                fill: $fill
+
+    svg
+        border: solid 1px $fill
+        background-color: $fill
+        &>*
+            fill: $background
+.socialLinkedIn
+    @include social(#0a66c2, #ffffff)
+    
+        

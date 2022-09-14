@@ -1,0 +1,87 @@
+:root
+    --bg-colour: white
+    --font-colour-layer0-normal: '#000000'
+    --font-colour-layer0-hover: '#EEEEEE'
+    --font-colour-layer1-normal: '#FFFFFF'
+    --font-colour-layer1-hover: '#F5F5F5'
+    --font-colour-layer2-normal: '#FFFFFF'
+    --font-colour-layer2-hover: '#20040B'
+    --font-colour-layer3-normal: '#20040B'
+    --font-colour-layer3-hover: '#20040B'
+    --font-colour-layer4-normal: '#000000'
+    --font-colour-layer4-hover: '#000000'
+    --font-colour-dirty: "#a975d0"
+    --font-colour-delete: "#F5F5F5"
+    --font-size-heading: clamp(2.25rem,5.3vw,5rem)
+    --font-size-large: 20pt
+    --font-size-caption: 16pt
+    --font-size-normal: 12pt
+    --font-size-small: 10pt
+    --font-size-verysmall: 8pt
+    --font-family-body: Tahoma, Geneva, sans-serif
+    --font-family-heading: DejaVu Serif, Garamond, serif
+    --colour-primary-theme: #ec244c
+    --colour-primary-text: #ec244c
+    --colour-text-on-primary: white
+    --colour-primary-textHover: #B12497
+    --colour-secondary-theme: #7029a7
+    --colour-bg-layer0: #ffffff
+    --colour-bg-layer1: #292c32
+    --colour-bg-layer2: #313337
+    --colour-bg-layer3: #3083DC
+    --colour-bg-layer4: #FFFFFF
+
+body
+    margin: 0
+    font-family: var(--font-family-body)
+    font-size: var(--font-size-normal)
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+
+h1, h2, h3, h4, h5, h6
+    text-align: center
+    font-weight: 500
+
+h1, h2
+    font-family: var(--font-family-heading)
+    color: var(--colour-primary-text)
+    line-height: 1.1
+h1
+    font-size: var(--font-size-heading)
+    font-weight: 400
+
+h2
+    font-size: var(--font-size-large)
+    font-weight: 500
+
+h3
+    font-size: var(--font-size-large)
+    font-weight: 500
+
+h4
+    font-size: var(--font-size-caption)
+
+a
+    color: var(--colour-primary-text)
+    text-decoration: none
+    transition: color 1s
+    &:hover
+        transition: color 0.2s
+        color: var(--colour-primary-textHover)
+
+html
+    background: var(--bg-colour)
+
+code
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace
+
+.container
+    padding: 16px
+    border-radius: 4px
+
+.center
+    text-align: center
+
+.centreContent
+    max-width: 1000px
+    margin: auto

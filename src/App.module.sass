@@ -1,0 +1,61 @@
+@import "../node_modules/bulma/sass/layout/_all"
+@import "bulma/sass/utilities/_all.sass"
+@import "bulma/sass/grid/columns.sass"
+
+.App
+  width: 100%
+  height: 100%
+
+.App-logo
+  height: 2em
+  pointer-events: none
+
+@media (prefers-reduced-motion: no-preference)
+  .App-logo
+    animation: App-logo-spin infinite 20s linear
+.app-content
+    padding: 16px
+    min-height: 90vh
+.App-header
+  background-color: var(--bg-colour)
+  min-height: 2em
+  display: flex
+  flex-direction: column
+  font-size: 16pt
+  text-align: center
+  color: var(--colour-primary-text)
+  nav
+    img
+      padding: 4px
+    ul
+      list-style-type: none
+      margin: 0
+      padding: 0
+      overflow: hidden
+      float: right
+      display: block
+      li
+        float: left
+        a
+          text-decoration: none
+          text-align: center
+          display: block
+          padding: 0.5em 1em
+          transition: color 0.2s
+          &:hover
+            color: var(--colour-primary-textHover)
+          color: var(--font-colour-layer0-normal)
+        .left
+          float: left
+
+.pull-left
+  display: inline-block
+  float: left
+
+.logo 
+  @extend .App-logo
+  @extend .pull-left
+  @extend .left
+
+.App-link
+  color: #61dafb
