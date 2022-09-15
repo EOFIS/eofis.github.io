@@ -6,16 +6,22 @@ import { PersonList } from "../../components/PersonList";
 import { HashLink } from "react-router-hash-link";
 import style from "./Home.module.sass";
 import { FeatureList } from "../../components/FeatureList";
+import decorativeConceptMap from "../../decorativeConceptMap.svg";
 
 export const HomePage = () => {
-    return <div className="centreContent">
-        <h1>
-            EOFIS
-        </h1>
-        <h3>
-            Automatically generated flashcards and concept maps.<br />
-            All in one place.
-        </h3>
+    return <div>
+        <div className={style["full-height-screen"]}>
+            <div className={style["message"]}>
+                <h2>
+                    Automatically generated flashcards and concept maps.<br />
+                    All in one place.
+                </h2>
+                <h4>
+                    Select your text. We do the rest.
+                </h4>
+            </div>
+            <img title="Concept map diagram" src={decorativeConceptMap} className={style['decorative-concept-map']}/>
+        </div>
         <FeatureList>
             <h2>Select your text. We do the rest.</h2>
             <dl>

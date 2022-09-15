@@ -1,2 +1,19 @@
-.personList
-    margin: 16px 0
+.full-height-screen
+    min-height: 90vh
+    display: flex
+    align-items: center
+    padding: 8px
+@media only screen and (max-width: 768px)
+    .full-height-screen
+        flex-direction: column
+@media only screen and (min-width: 768px)
+    .full-height-screen
+        flex-direction: row
+
+.message
+    h2
+        color: white
+    h4
+        color: var(--theme-colour-orange)
+.decorative-concept-map
+    width: 100%

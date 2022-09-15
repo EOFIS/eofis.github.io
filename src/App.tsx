@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import style from "./App.module.sass";
 import { Link, Route, Switch } from "react-router-dom";
 import { ContactPage } from "./pages/contact/ContactPage";
@@ -8,6 +7,9 @@ import { ConfirmSubscriptionPage } from "./pages/confirm-subscription/ConfirmSub
 import { BlogPage } from "./pages/blog/BlogPage";
 import { AboutPage } from "./pages/about/AboutPage";
 import { TechPage } from "./pages/tech/TechPage";
+import { Logo } from "./components/Logo";
+import { Heart, HeartFill } from "react-bootstrap-icons";
+import { Linkedin } from "./components/LinkedIn";
 
 export const App = () => {
     return (
@@ -16,7 +18,7 @@ export const App = () => {
                 <nav>
                     <div>
                         <Link to="/" className={style['pull-left']}>
-                            <img src={logo} className={style['logo']} />
+                            <Logo image/>
                         </Link>
                         <ul>
                             <li>
@@ -64,7 +66,19 @@ export const App = () => {
                 </Switch>
             </div>
             <footer className={style['App-footer']}>
-
+                <div>
+                    <Logo image/>
+                    <div>Made with <HeartFill color="red"/> in Éire</div>
+                    © EOFIS 2022
+                </div>
+                <div>
+                    <h4>Help &amp; Support</h4>
+                    Contact Us
+                </div>
+                <div>
+                    <h4>Social</h4>
+                    <Linkedin name="EOFIS" url="https://www.linkedin.com/company/eofis-ie/"/>
+                </div>
             </footer>
         </div>
     );
