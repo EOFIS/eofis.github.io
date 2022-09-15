@@ -1,15 +1,15 @@
 import logo from "./logo.svg";
 import style from "./App.module.sass";
 import { Link, Route, Switch } from "react-router-dom";
-import FAQ from "./pages/faq/FAQ";
-import Contact from "./pages/contact/Contact";
-import Home from "./pages/home/Home";
+import { ContactPage } from "./pages/contact/ContactPage";
+import { HomePage } from "./pages/home/HomePage";
 import React from "react";
-import { SubscribeForm } from "./components/SubscribeForm";
-import ConfirmSubscription from "./pages/confirm-subscription/ConfirmSubscription";
-import { Blog } from "./pages/blog/Blog";
+import { ConfirmSubscriptionPage } from "./pages/confirm-subscription/ConfirmSubscriptionPage";
+import { BlogPage } from "./pages/blog/BlogPage";
+import { AboutPage } from "./pages/about/AboutPage";
+import { TechPage } from "./pages/tech/TechPage";
 
-const App = () => {
+export const App = () => {
     return (
         <div className={style["App"]}>
             <header className={style["App-header"]}>
@@ -23,13 +23,16 @@ const App = () => {
                                 <Link to="/">Home</Link>
                             </li>
                             <li>
-                                <Link to="/faq">FAQ</Link>
+                                <Link to="/tech">Tech</Link>
                             </li>
                             <li>
-                                <Link to="/blog">Blog</Link>
+                                <Link to="/about">About</Link>
                             </li>
                             <li>
                                 <Link to="/contact">Contact</Link>
+                            </li>
+                            <li>
+                                <Link to="/blog">Blog</Link>
                             </li>
                         </ul>
                     </div>
@@ -37,29 +40,32 @@ const App = () => {
             </header>
             <div className={style['app-content']}>
                 <Switch>
-                    <Route path="/faq">
-                        <FAQ />
+                    <Route path="/tech">
+                        <TechPage />
+                    </Route>
+                    <Route path="/about">
+                        <AboutPage />
                     </Route>
                     <Route path="/contact">
-                        <Contact />
+                        <ContactPage />
                     </Route>
                     <Route path="/confirm-subscription">
-                        <ConfirmSubscription />
+                        <ConfirmSubscriptionPage />
                     </Route>
                     <Route path="/blog/:id">
-                        <Blog/>
+                        <BlogPage />
                     </Route>
                     <Route path="/blog">
-                        <Blog/>
+                        <BlogPage />
                     </Route>
                     <Route path="/">
-                        <Home />
+                        <HomePage />
                     </Route>
                 </Switch>
             </div>
-            <SubscribeForm id="subscribe-form"/>
+            <footer className={style['App-footer']}>
+
+            </footer>
         </div>
     );
 };
-
-export default App;

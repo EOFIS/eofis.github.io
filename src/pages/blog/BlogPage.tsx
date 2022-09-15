@@ -23,7 +23,7 @@ const readBlogFile = async (fileName: string) => {
         })
 }
 
-export const Blog = () => {
+export const BlogPage = () => {
     const [blogPreviews, setBlogPreviews] = useState<Array<BlogPreview>>([{
         identifier: 'sample', title: 'Sample blog', tags: ['Sample', 'Journey'],
         writtenOn: new Date('2022-09-08T15:30.000Z')
