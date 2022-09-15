@@ -18,7 +18,7 @@ export const App = () => {
                 <nav>
                     <div>
                         <Link to="/" className={style['pull-left']}>
-                            <Logo image/>
+                            <Logo image />
                         </Link>
                         <ul>
                             <li>
@@ -40,7 +40,7 @@ export const App = () => {
                     </div>
                 </nav>
             </header>
-            <div className={style['app-content']}>
+            <div className={style['App-content']}>
                 <Switch>
                     <Route path="/tech">
                         <TechPage />
@@ -66,18 +66,20 @@ export const App = () => {
                 </Switch>
             </div>
             <footer className={style['App-footer']}>
+                <div className="centreContent">
                 <div>
-                    <Logo image/>
-                    <div>Made with <HeartFill color="red"/> in Éire</div>
+                    <Logo image />
+                    <div>Made with <HeartFill color="red" /> in Éire</div>
                     © EOFIS 2022
                 </div>
                 <div>
                     <h4>Help &amp; Support</h4>
-                    Contact Us
+                    <Link to="/contact">Contact Us</Link>
                 </div>
                 <div>
                     <h4>Social</h4>
-                    <Linkedin name="EOFIS" url="https://www.linkedin.com/company/eofis-ie/"/>
+                    <Linkedin name="EOFIS" url="https://www.linkedin.com/company/eofis-ie/" />
+                </div>
                 </div>
             </footer>
         </div>
