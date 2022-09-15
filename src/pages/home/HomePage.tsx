@@ -8,6 +8,7 @@ import style from "./Home.module.sass";
 import { FeatureList } from "../../components/FeatureList";
 import decorativeConceptMap from "../../decorativeConceptMap.svg";
 import { Asterisk, Calendar2Check, Calendar2Date, Calendar2Day, Calendar2DayFill, Calendar2Event, Calendar2Range, Calendar2Week, ChatDotsFill, ChatFill, ChatLeftDotsFill, ChatText, Diagram2, Diagram3, Dot, GraphDown, PeopleFill, QuestionCircle } from "react-bootstrap-icons";
+import logo from "../../logo.svg";
 
 export const HomePage = () => {
     return <div>
@@ -58,6 +59,14 @@ export const HomePage = () => {
                     <h4>Connections aren't just for data...</h4>
                     <p>Do you like to study like a lone wolf or prefer to run with the pack? We've got you covered either way with our opt-in powerful group learning system. Create study groups, informal competitions or just put the head down and crack on.</p>
                 </div>
+            </div>
+        </div>
+        <div className={style["full-height-screen"]+' '+style["w1-2"]}>
+            <img src={logo}/>
+            <div>
+                <h2>Start your certification journey with EOFIS tech.</h2>
+                <h2>Learn, manage, and track your progress on the go.</h2>
+                <h2><Link to="/tech">Get Started</Link></h2>
             </div>
         </div>
         <FeatureList>
