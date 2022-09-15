@@ -8,7 +8,7 @@ import { BlogPage } from "./pages/blog/BlogPage";
 import { AboutPage } from "./pages/about/AboutPage";
 import { TechPage } from "./pages/tech/TechPage";
 import { Logo } from "./components/Logo";
-import { Heart, HeartFill } from "react-bootstrap-icons";
+import { HeartFill } from "react-bootstrap-icons";
 import { Linkedin } from "./components/LinkedIn";
 
 export const App = () => {
