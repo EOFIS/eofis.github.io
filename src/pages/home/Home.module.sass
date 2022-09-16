@@ -1,63 +1,3 @@
-.full-height-screen
-    min-height: 100vh
-    display: flex
-    align-items: center
-    justify-content: space-evenly
-    padding: 8px
-    gap: 8px
-    max-width: 1400px
-    margin: auto
-.w1-2
-    h2
-        text-align: left
-        color: var(--colour-dark-text)
-    a
-        background: var(--colour-primary-theme)
-        color: var(--colour-dark-text)
-        font-size: var(--font-size-caption)
-        padding: 16px
-        border-radius: 8px
-        line-height: 3
-.with-underlay
-    background: var(--colour-light-bg)
-    &>div
-        display: flex
-        gap: 16px
-        &>*
-            padding: 8px 16px
-            border-radius: 16px
-        &>*:not(.underlay-container>div)
-            &:nth-child(3n+1)
-                background-color: #8eb4fe
-                // background: url('blob-bg.svg')
-                // background-size: cover
-                // background-origin: border-box
-            &:nth-child(3n+2)
-                background: #fbc02b
-            &:nth-child(3n+3)
-                background: #f04b4b
-.underlay-container
-    color: var(--colour-light-text)
-.icon-container
-    display: flex
-    flex-direction: row
-    justify-content: center
-    gap: 8px
-    svg
-        font-size: 2rem
-@media only screen and (max-width: 768px)
-    .full-height-screen
-        flex-direction: column
-        &.with-underlay > div
-            flex-direction: column
-@media only screen and (min-width: 768px)
-    .full-height-screen
-        flex-direction: row
-        &.with-underlay
-            flex-direction: column
-            &>div
-                flex-direction: row
-
 .message
     h2
         color: white
@@ -65,3 +5,5 @@
         color: var(--theme-colour-orange)
 .decorative-concept-map
     width: 100%
+.home
+    background: var(--colour-dark-bg)

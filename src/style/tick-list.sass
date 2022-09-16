@@ -1,0 +1,10 @@
+ul.tick-list
+    list-style-type: upper-alpha
+    &>li
+        &::marker
+            content: '✓'
+            color: var(--colour-correct)
+        &.skip
+            padding: 0 0 0 8px
+            &::marker
+                content: ''

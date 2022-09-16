@@ -1,0 +1,111 @@
+.full-height-screen
+    min-height: 100vh
+    display: flex
+    flex-direction: row
+    &>.full-width-container
+        display: flex
+        align-items: center
+        justify-content: space-around
+        padding: 8px
+        gap: 8px
+        max-width: var(--width-centering-max)
+        height: 100%
+        margin: auto
+        flex-grow: 1
+        &>*
+            flex: 1 0
+    img, video
+        width: 100%
+    h1, h2, h3, h4, h5, h6
+        text-align: left
+.call-to-link-box
+    h2
+        text-align: left
+        color: var(--colour-dark-text)
+    a
+        background: var(--colour-primary-theme)
+        color: var(--colour-dark-text)
+        font-size: var(--font-size-caption)
+        padding: 16px
+        border-radius: 8px
+        line-height: 3
+.w1-2
+    &>*:nth-child(1)
+        flex: 1 0 200px
+    &>*:nth-child(2)
+        flex: 2 0
+.w2-1
+    flex-direction: row-reverse
+    &>*:nth-child(1)
+        flex: 1 0 200px
+    &>*:nth-child(2)
+        flex: 2 0
+
+.with-underlay
+    background: var(--colour-light-bg)
+    &>div
+        display: flex
+        gap: 16px
+        &>*
+            padding: 8px 16px
+            border-radius: 16px
+        &>*:not(.underlay-container>div)
+            &:nth-child(3n+1)
+                background-color: #8eb4fe
+            &:nth-child(3n+2)
+                background: #fbc02b
+            &:nth-child(3n+3)
+                background: #f04b4b
+.underlay-container
+    color: var(--colour-light-text)
+.icon-container
+    display: flex
+    flex-direction: row
+    justify-content: center
+    gap: 8px
+    svg
+        font-size: 2rem
+@media only screen and (max-width: 768px)
+    .full-height-screen>.full-width-container
+        flex-direction: column
+        &.with-underlay > div
+            flex-direction: column
+@media only screen and (min-width: 768px)
+    .full-height-screen>.full-width-container
+        flex-direction: row
+        &.with-underlay
+            flex-direction: column
+            &>div
+                flex-direction: row
+
+.blob-headed-message
+    h2
+        font-family: var(--font-family-sans-serif)
+        background: var(--colour-primary-text)
+        color: var(--colour-dark-text)
+        width: fit-content
+        padding: 4px 32px
+        border-radius: 8px
+    h3
+        font-size: var(--font-size-large)
+        font-weight: 600
+
+.colour-tile-list
+    color: var(--colour-light-text)
+    &>div.full-height-screen:nth-child(odd)>.full-width-container
+        @media only screen and (min-width: 768px)
+            flex-direction: row-reverse
+            &.with-underlay>div
+                flex-direction: row-reverse
+    &>div:nth-child(3n+2)
+        background: #fed4d3
+        &>.blob-headed-message>h2
+            background: #f04b4b
+    &>div:nth-child(3n+3)
+        background: #e3ecff
+        &>.blob-headed-message>h2
+            background: #8eb4fe
+    &>div:nth-child(3n+1)
+        background: #ffefd0
+        &>.blob-headed-message>h2
+            background: #fbc02b

@@ -4,9 +4,88 @@ import { HashLink } from "react-router-hash-link";
 import { FeatureList } from "../../components/FeatureList";
 import { ImagePane } from "../../components/ImagePane";
 import { ImageShowcase } from "../../components/ImageShowcase";
+import decorativeConceptMap from "../../decorativeConceptMap.svg";
 
 export const TechPage = () => {
-    return <div>
+    return <div className="colour-tile-list">
+        <h1>Here's how EOFIS works...</h1>
+        <div className="full-height-screen">
+            <div className="full-width-container w1-2">
+                <div className="blob-headed-message">
+                    <h2>
+                        STEP 1: CHOOSE
+                    </h2>
+                    <h3>
+                        Highlight the text you want to learn
+                    </h3>
+                    <p>
+                        Select your text and send it to the EOFIS browser extension.
+                    </p>
+                    <p>
+                        EOFIS browser extension works on
+                    </p>
+                    <ul className="tick-list">
+                        <li>Chrome</li>
+                        <li>Firefox</li>
+                        <li className="skip">on</li>
+                        <li>Windows</li>
+                        <li>Mac OS</li>
+                        <li>Linux</li>
+                    </ul>
+                </div>
+                <img title="Image showing selected text in an online article" src={decorativeConceptMap} />
+
+            </div>
+        </div>
+        <div className="full-height-screen w1-2">
+            <div className="full-width-container w1-2">
+                <div className="blob-headed-message">
+                    <h2>
+                        STEP 2: MAGIC!
+                    </h2>
+                    <h3>
+                        Flashcards, quizzes and notes are automatically generated and organised from the text
+                    </h3>
+                    <p>
+                        EOFIS automatically generates flashcards and a personal concept map, complete with reminders to practice your learning.
+                    </p>
+                </div>
+                <img title="Image showing concept map" src={decorativeConceptMap} />
+            </div>
+        </div>
+        <div className="full-height-screen w1-2">
+            <div className="full-width-container w1-2">
+                <div className="blob-headed-message">
+                    <h2>
+                        STEP 3: PRACTICE
+                    </h2>
+                    <h3>
+                        Practice makes perfect!
+                    </h3>
+                    <p>
+                        Practice your learning using EOFIS' flashcards and a sophisticated scheduling algorithm to maximise your learning.
+                    </p>
+                </div>
+                <img title="Image showing selected text in an online article" src={decorativeConceptMap} />
+            </div>
+        </div>
+        <div className="full-height-screen w1-2">
+            <div className="full-width-container w1-2">
+                <div>
+                    <h2>
+                        Still wondering how EOFIS works?
+                    </h2>
+                    <h4><strong>See it in action</strong></h4>
+                </div>
+                <video controls>
+                    <source src="https://drive.google.com/u/0/uc?id=10xBdQBQJuQiIfMb_KqJgBx9TWdrSUyQJ&export=download" type="video/mp4"/>
+                    This video could not be loaded
+                </video>
+            </div>
+        </div>
+
+
+        {/* 
                 <FeatureList>
             <h2>Select your text. We do the rest.</h2>
             <dl>
@@ -52,7 +131,7 @@ export const TechPage = () => {
                 <li><b>Collaborate</b> on topics with a powerful group system</li>
                 <li><b>Control</b> your content, don't let it control you</li>
             </ul>
-        } />
+        } /> */}
 
     </div>
 }

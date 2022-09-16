@@ -1,18 +1,29 @@
+@use "./style/full-height-screen"
+@use "./style/tick-list"
+
 :root
     --bg-colour: #292c32
     --theme-colour-orange: #ffa000
     --theme-colour-red: #ec244c
     --font-colour-dirty: #a975d0
     --font-colour-delete: #F5F5F5
+
+    --colour-correct: green
+    --colour-incorrect: red
+
     --font-size-heading: clamp(2.25rem,5.3vw,5rem)
     --font-size-large: 20pt
     --font-size-caption: 16pt
     --font-size-normal: 12pt
     --font-size-small: 10pt
     --font-size-verysmall: 8pt
-    --font-family-logo: DejaVu Serif, Garamond, serif
-    --font-family-body: Tahoma, Geneva, sans-serif
-    --font-family-heading: DejaVu Serif, Garamond, serif
+
+    --font-family-sans-serif: Tahoma, Geneva, sans-serif
+    --font-family-serif: DejaVu Serif, Garamond, serif
+    --font-family-logo: var(--font-family-serif)
+    --font-family-body: var(--font-family-sans-serif)
+    --font-family-heading: var(--font-family-serif)
+    
     --colour-primary-theme: #ec244c
     --colour-primary-text: #ec244c
     --colour-text-on-primary: white
@@ -23,6 +34,8 @@
     --colour-dark-text: #ffffff
     --colour-light-bg: #f6faff
     --colour-dark-bg: #292c32
+
+    --width-centering-max: 1400px
 html
     margin: 0
     padding: 0
@@ -33,8 +46,8 @@ body
     min-height: 100vh
     font-family: var(--font-family-body)
     font-size: var(--font-size-normal)
-    background: var(--colour-dark-bg)
-    color: var(--colour-dark-text)
+    background: var(--colour-light-bg)
+    color: var(--colour-light-text)
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
 #root
@@ -85,5 +98,5 @@ code
     text-align: center
 
 .centreContent
-    max-width: 1000px
+    max-width: var(--width-centering-max)
     margin: 0 auto
