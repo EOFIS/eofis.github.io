@@ -10,15 +10,16 @@
 .w1-2
     h2
         text-align: left
-        color: var(--font-colour-layer0-normal)
+        color: var(--colour-dark-text)
     a
         background: var(--colour-primary-theme)
-        color: var(--font-colour-layer0-normal)
+        color: var(--colour-dark-text)
         font-size: var(--font-size-caption)
         padding: 16px
         border-radius: 8px
         line-height: 3
 .with-underlay
+    background: var(--colour-light-bg)
     &>div
         display: flex
         gap: 16px
@@ -35,9 +36,6 @@
                 background: #fbc02b
             &:nth-child(3n+3)
                 background: #f04b4b
-.underlay-container
-    &>div
-        background-color: var(--bg-colour)
 .icon-container
     display: flex
     flex-direction: row
