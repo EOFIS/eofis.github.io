@@ -4,7 +4,7 @@ import { HashLink } from "react-router-hash-link";
 import { FeatureList } from "../../components/FeatureList";
 import { ImagePane } from "../../components/ImagePane";
 import { ImageShowcase } from "../../components/ImageShowcase";
-import decorativeConceptMap from "../../decorativeConceptMap.svg";
+import decorativeConceptMap from "../../img/decorativeConceptMap.svg";
 
 export const TechPage = () => {
     return <div className="colour-tile-list">

@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import style from "./Home.module.sass";
-import decorativeConceptMap from "../../decorativeConceptMap.svg";
+import decorativeConceptMap from "../../img/decorativeConceptMap.svg";
 import { Asterisk, Calendar2Week, ChatText, Diagram2, Diagram3, PeopleFill, QuestionCircle } from "react-bootstrap-icons";
-import logo from "../../logo.svg";
+import logo from "../../img/logo.svg";
 
 export const HomePage = () => {
     return <div className={style.home}>
