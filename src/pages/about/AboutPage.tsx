@@ -43,31 +43,32 @@ export const AboutPage = () => {
             title="Founder Headshot Picture"
             src="img/mnt.webp"
             alt="Founders"
+            style={{ flexGrow: 0, width: "25%" }}
           />
         </div>
       </div>
       <div className="full-height-screen-column">
         <div className={style["section"]}>
-        <h1>Our Mission</h1>
-        <div className="full-width-container w1-2 with-circle-underlay">
-          <div className={style["about-ourmission-section"]}>
-            <div>
-              <h2>Envision</h2>
-              <p>Creating a personal Internet of Knowledge</p>
-            </div>
-            <div>
-              <h2>Enable</h2>
-              <p>
-                Allowing individuals to gather all their learning in one place:
-                The Eofis Concept Map
-              </p>
-            </div>
-            <div>
-              <h2>Empower</h2>
-              <p>Making learning accessible to everyone from everywhere</p>
+          <h1>Our Mission</h1>
+          <div className="full-width-container w1-2 with-circle-underlay">
+            <div >
+              <div>
+                <h2>Envision</h2>
+                <h4>Creating a personal Internet of Knowledge</h4>
+              </div>
+              <div>
+                <h2>Enable</h2>
+                <h4>
+                  Allowing individuals to gather all their learning in one
+                  place: The Eofis Concept Map
+                </h4>
+              </div>
+              <div>
+                <h2>Empower</h2>
+                <h4>Making learning accessible to everyone from everywhere</h4>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
       <div>

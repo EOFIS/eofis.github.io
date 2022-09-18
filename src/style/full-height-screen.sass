@@ -81,12 +81,21 @@
     background: var(--colour-light-bg)
     &>div
         display: flex
+        flex-direction: row
+        justify-content: space-around
         gap: 16px
         &>*
             padding: 5% 5%
             border-radius: 50%
             background: #f04b4b
-            width: 100%
+            flex: 1 0
+            h1, h2, h3
+                color: white
+                text-align: center
+                font-weight: bold 
+            h4
+                color: white
+                text-align: center
 .underlay-container
     color: var(--colour-light-text)
 .icon-container
