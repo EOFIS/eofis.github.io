@@ -38,7 +38,7 @@ export const TechPage = () => {
                 </div>
             </div>
         </div>
-        <div className="full-height-screen w1-2">
+        <div className="full-height-screen">
             <div className="full-width-container w1-2">
                 <div className="blob-headed-message">
                     <h2>
@@ -56,7 +56,7 @@ export const TechPage = () => {
                 </div>
             </div>
         </div>
-        <div className="full-height-screen w1-2">
+        <div className="full-height-screen">
             <div className="full-width-container w1-2">
                 <div className="blob-headed-message">
                     <h2>
@@ -70,11 +70,11 @@ export const TechPage = () => {
                     </p>
                 </div>
                 <div>
-                    <img title="Image showing selected text in an online article" src={decorativeConceptMap} />
+                    <img title="Image showing question being practiced" src="img/PracticeCard.png" style={{maxWidth: '816px'}}/>
                 </div>
             </div>
         </div>
-        <div className="full-height-screen w1-2">
+        <div className="full-height-screen">
             <div className="full-width-container w1-2">
                 <div>
                     <h2>
