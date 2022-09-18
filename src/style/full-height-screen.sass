@@ -1,5 +1,5 @@
 .full-height-screen
-    min-height: 100vh
+    min-height: 105vh
     display: flex
     flex-direction: row
     &>.full-width-container
@@ -31,18 +31,17 @@
         line-height: 3
 .w1-2
     &>*:nth-child(1)
-        flex: 1 0 200px
+        flex: 1 0
     &>*:nth-child(2)
         flex: 2 0
 .w2-1
     flex-direction: row-reverse
     &>*:nth-child(1)
-        flex: 1 0 200px
+        flex: 1 0
     &>*:nth-child(2)
         flex: 2 0
 
 .with-underlay
-    background: var(--colour-light-bg)
     &>div
         display: flex
         gap: 16px
@@ -89,6 +88,13 @@
     h3
         font-size: var(--font-size-large)
         font-weight: 600
+.massive-message
+    h2
+        color: white
+        font-size: var(--font-size-heading)
+    h3
+        color: var(--theme-colour-orange)
+
 
 .colour-tile-list
     color: var(--colour-light-text)

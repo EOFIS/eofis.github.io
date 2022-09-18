@@ -13,7 +13,7 @@ export const TechPage = () => {
             <div className="full-width-container w1-2">
                 <div className="blob-headed-message">
                     <h2>
-                        STEP 1: CHOOSE
+                        STEP&nbsp;1:&nbsp;CHOOSE
                     </h2>
                     <h3>
                         Highlight the text you want to learn
@@ -33,15 +33,16 @@ export const TechPage = () => {
                         <li>Linux</li>
                     </ul>
                 </div>
-                <img title="Image showing selected text in an online article" src={decorativeConceptMap} />
-
+                <div>
+                    <img title="Image showing selected text in an online article" src={decorativeConceptMap} />
+                </div>
             </div>
         </div>
         <div className="full-height-screen w1-2">
             <div className="full-width-container w1-2">
                 <div className="blob-headed-message">
                     <h2>
-                        STEP 2: MAGIC!
+                        STEP&nbsp;2:&nbsp;MAGIC!
                     </h2>
                     <h3>
                         Flashcards, quizzes and notes are automatically generated and organised from the text
@@ -50,14 +51,16 @@ export const TechPage = () => {
                         Eofis automatically generates flashcards and a personal concept map, complete with reminders to practice your learning.
                     </p>
                 </div>
-                <img title="Image showing concept map" src={decorativeConceptMap} />
+                <div>
+                    <img title="Image showing concept map" src={decorativeConceptMap} />
+                </div>
             </div>
         </div>
         <div className="full-height-screen w1-2">
             <div className="full-width-container w1-2">
                 <div className="blob-headed-message">
                     <h2>
-                        STEP 3: PRACTICE
+                        STEP&nbsp;3:&nbsp;PRACTICE
                     </h2>
                     <h3>
                         Practice makes perfect!
@@ -66,7 +69,9 @@ export const TechPage = () => {
                         Practice your learning using eofis' flashcards and a sophisticated scheduling algorithm to maximise your learning.
                     </p>
                 </div>
-                <img title="Image showing selected text in an online article" src={decorativeConceptMap} />
+                <div>
+                    <img title="Image showing selected text in an online article" src={decorativeConceptMap} />
+                </div>
             </div>
         </div>
         <div className="full-height-screen w1-2">
@@ -77,13 +82,14 @@ export const TechPage = () => {
                     </h2>
                     <h4><strong>See it in action</strong></h4>
                 </div>
-                <video controls>
-                    <source src="https://drive.google.com/u/0/uc?id=10xBdQBQJuQiIfMb_KqJgBx9TWdrSUyQJ&export=download" type="video/mp4"/>
-                    This video could not be loaded
-                </video>
+                <div>
+                    <video controls>
+                        <source src="https://drive.google.com/u/0/uc?id=10xBdQBQJuQiIfMb_KqJgBx9TWdrSUyQJ&export=download" type="video/mp4" />
+                        This video could not be loaded
+                    </video>
+                </div>
             </div>
         </div>
-
 
         {/* 
                 <FeatureList>

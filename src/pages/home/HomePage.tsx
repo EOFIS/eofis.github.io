@@ -8,22 +8,23 @@ import logo from "../../logo.svg";
 export const HomePage = () => {
     return <div className={style.home}>
         <div className="full-height-screen">
-            <div className="full-width-container w1-2">
-                <div className={style["message"]}>
+            <div className="full-width-container">
+                <div className="massive-message">
                     <h2>
                         Automatically generated flashcards and concept maps.<br />
                         All in one place.
                     </h2>
-                    <h4>
-                        Select your text. We do the rest.
-                    </h4>
+                    <h3>
+                        Select your text. <strong>We do the rest.</strong>
+                    </h3>
                 </div>
-                <img title="Concept map diagram" src={decorativeConceptMap} className={style['decorative-concept-map']} />
+                <div>
+                    <img title="Concept map diagram" src={decorativeConceptMap} />
+                </div>
             </div>
         </div>
-        <div className="full-height-screen">
+        <div className="full-height-screen" style={{ background: 'var(--colour-light-bg)' }}>
             <div className="full-width-container w1-2 with-underlay">
-
                 <div>
                     <div>
                         <div className="icon-container"><QuestionCircle /><ChatText /></div>
