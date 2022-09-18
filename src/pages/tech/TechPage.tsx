@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
+import { AnimatedProcess } from "../../components/AnimatedProcess";
 import { FeatureList } from "../../components/FeatureList";
 import { ImagePane } from "../../components/ImagePane";
 import { ImageShowcase } from "../../components/ImageShowcase";
@@ -34,7 +35,8 @@ export const TechPage = () => {
                     </ul>
                 </div>
                 <div>
-                    <img title="Image showing selected text in an online article" src={decorativeConceptMap} />
+                    <AnimatedProcess/>
+                    {/* <img title="Image showing selected text in an online article" src={decorativeConceptMap} /> */}
                 </div>
             </div>
         </div>
