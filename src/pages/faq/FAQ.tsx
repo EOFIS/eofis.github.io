@@ -5,7 +5,7 @@ export const FAQ = () => {
     return <div className="centreContent center">
         <h1>Frequently Asked Questions</h1>
         <p>
-            <h2>What does EOFIS mean?</h2>
+            <h2>What does eofis mean?</h2>
             Eo Fis is an Old Irish name for the Salmon of Knowledge, a legendary salmon who, when eaten, would give anyone access to all the world's knowledge.
         </p>
         <p>

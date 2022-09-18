@@ -70,7 +70,7 @@ export const App = () => {
                 <div>
                     <Logo image />
                     <div>Made with <HeartFill color="red" /> in Éire</div>
-                    © EOFIS 2022
+                    © eofis ltd 2022
                 </div>
                 <div>
                     <h4>Help &amp; Support</h4>
@@ -78,7 +78,7 @@ export const App = () => {
                 </div>
                 <div>
                     <h4>Social</h4>
-                    <Linkedin name="EOFIS" url="https://www.linkedin.com/company/eofis-ie/" />
+                    <Linkedin name="eofis" url="https://www.linkedin.com/company/eofis-ie/" />
                 </div>
                 </div>
             </footer>

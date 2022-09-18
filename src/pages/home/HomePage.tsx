@@ -30,7 +30,7 @@ export const HomePage = () => {
                         <h4>No-hassle generated quizzes</h4>
                         <p>
                             Our automatic generation models work to turn your text into flashcards that capture the key points of your text.
-                            Using state of the art natural processing Eofis turns any text into a set of flashcards that we store in your concept map and show you in a quiz just when you need to remember them.
+                            Using state of the art natural processing eofis turns any text into a set of flashcards that we store in your concept map and show you in a quiz just when you need to remember them.
                         </p>
                     </div>
                     <div>
@@ -40,7 +40,7 @@ export const HomePage = () => {
                             Remember anything you want with the proven spaced repetition study method.
                             Eofis shows you what you need to study exactly when you need to study it.
                             We know you have a lot going on so don't worry if you miss a day here and there,
-                            Eofis will just reschedule your learning and you can pick up where you left off.
+                            eofis will just reschedule your learning and you can pick up where you left off.
                         </p>
                     </div>
                     <div>
@@ -48,7 +48,7 @@ export const HomePage = () => {
                         <h4>Organise and link your notes</h4>
                         <p>
                             Never lose a note again with our automatic yet personalisable visual concept map that links everything together.
-                            Create topics to group your learning, set colours and images to help you remember, shape the map however it helps you, Eofis is here to help.
+                            Create topics to group your learning, set colours and images to help you remember, shape the map however it helps you, eofis is here to help.
                         </p>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ export const HomePage = () => {
             <div className="full-width-container w1-2 call-to-link-box">
                 <img src={logo} />
                 <div>
-                    <h2>Start your certification journey with EOFIS tech.</h2>
+                    <h2>Start your certification journey with eofis tech.</h2>
                     <h2>Learn, manage, and track your progress on the go.</h2>
                     <h2><Link to="/tech">Get Started</Link></h2>
                 </div>

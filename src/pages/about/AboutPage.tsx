@@ -12,7 +12,7 @@ export const AboutPage = () => {
                     position: 'CTO, Co-founder',
                     linkedInURL: "https://www.linkedin.com/in/tiarnachreidy/",
                     description: "BEng Electronics\nSoftware Developer at Spanish Point Tech.\n\
-                        Tiarnach coordinates and implements the technical vision of Eofis as the lead developer. He developed the core proof of concept as his bachelor's thesis at UCD and is currently hard at work somewhere badly lit."
+                        Tiarnach coordinates and implements the technical vision of eofis as the lead developer. He developed the core proof of concept as his bachelor's thesis at UCD and is currently hard at work somewhere badly lit."
                 },
                 {
                     imageSrc: 'img/marysol1.jpg',
@@ -37,7 +37,7 @@ export const AboutPage = () => {
                     position: 'Technical Advisor',
                     linkedInURL: 'https://www.linkedin.com/in/scassidy04/',
                     description: 'BEngSc, MEng Mechanical\nGraduate software engineer at Vodafone.\n\
-                        Sophie was a fellow participant in the NovaUCD Student Enterprise Competition with FloMo. Sophie bridges the technical and business worlds, and shares her tech expertise to guide the development of Eofis.'
+                        Sophie was a fellow participant in the NovaUCD Student Enterprise Competition with FloMo. Sophie bridges the technical and business worlds, and shares her tech expertise to guide the development of eofis.'
                 },
             ]} />
 

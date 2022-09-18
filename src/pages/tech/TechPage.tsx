@@ -8,7 +8,7 @@ import decorativeConceptMap from "../../decorativeConceptMap.svg";
 
 export const TechPage = () => {
     return <div className="colour-tile-list">
-        <h1>Here's how EOFIS works...</h1>
+        <h1>Here's how eofis works...</h1>
         <div className="full-height-screen">
             <div className="full-width-container w1-2">
                 <div className="blob-headed-message">
@@ -19,10 +19,10 @@ export const TechPage = () => {
                         Highlight the text you want to learn
                     </h3>
                     <p>
-                        Select your text and send it to the EOFIS browser extension.
+                        Select your text and send it to the eofis browser extension.
                     </p>
                     <p>
-                        EOFIS browser extension works on
+                        Eofis browser extension works on
                     </p>
                     <ul className="tick-list">
                         <li>Chrome</li>
@@ -47,7 +47,7 @@ export const TechPage = () => {
                         Flashcards, quizzes and notes are automatically generated and organised from the text
                     </h3>
                     <p>
-                        EOFIS automatically generates flashcards and a personal concept map, complete with reminders to practice your learning.
+                        Eofis automatically generates flashcards and a personal concept map, complete with reminders to practice your learning.
                     </p>
                 </div>
                 <img title="Image showing concept map" src={decorativeConceptMap} />
@@ -63,7 +63,7 @@ export const TechPage = () => {
                         Practice makes perfect!
                     </h3>
                     <p>
-                        Practice your learning using EOFIS' flashcards and a sophisticated scheduling algorithm to maximise your learning.
+                        Practice your learning using eofis' flashcards and a sophisticated scheduling algorithm to maximise your learning.
                     </p>
                 </div>
                 <img title="Image showing selected text in an online article" src={decorativeConceptMap} />
@@ -73,7 +73,7 @@ export const TechPage = () => {
             <div className="full-width-container w1-2">
                 <div>
                     <h2>
-                        Still wondering how EOFIS works?
+                        Still wondering how eofis works?
                     </h2>
                     <h4><strong>See it in action</strong></h4>
                 </div>
@@ -90,11 +90,11 @@ export const TechPage = () => {
             <h2>Select your text. We do the rest.</h2>
             <dl>
                 <dt>No-hassle generated quizzes</dt>
-                <dd>Our automatic generation models work to turn your text into flashcards that capture the key points of your text. Using state of the art natural language processing, Eofis can turn any text into a set of flashcards that we store in your <HashLink to="/#concept-map">concept map</HashLink> and show you in a <HashLink to="/#quiz">quiz</HashLink> when you need to remember them.</dd>
+                <dd>Our automatic generation models work to turn your text into flashcards that capture the key points of your text. Using state of the art natural language processing, eofis can turn any text into a set of flashcards that we store in your <HashLink to="/#concept-map">concept map</HashLink> and show you in a <HashLink to="/#quiz">quiz</HashLink> when you need to remember them.</dd>
                 <dt id="quiz">Automatic study timetable</dt>
-                <dd>Remember anything you want with the proven spaced repetition study method. Eofis shows you what you need to study exactly when you need to study it. We know you have a lot going on so don't worry if you miss a day here and there, Eofis will just reschedule your learning and you can pick up where you left off.</dd>
+                <dd>Remember anything you want with the proven spaced repetition study method. Eofis shows you what you need to study exactly when you need to study it. We know you have a lot going on so don't worry if you miss a day here and there, eofis will just reschedule your learning and you can pick up where you left off.</dd>
                 <dt id="concept-map">Stay organised and make connections</dt>
-                <dd>Never lose a note again with our automatic yet personalisable visual concept map that links everything together. Create topics to group your learning, set colours and images to help you remember, shape the map however it helps you, Eofis is here to help.</dd>
+                <dd>Never lose a note again with our automatic yet personalisable visual concept map that links everything together. Create topics to group your learning, set colours and images to help you remember, shape the map however it helps you, eofis is here to help.</dd>
                 <dt>Connections aren't just for data</dt>
                 <dd>Do you like to study like a lone wolf or prefer to run with a pack? We've got you either way with our opt-in powerful group learning system. Create study groups, informal competitions or just put the head down and crack on.</dd>
             </dl>
@@ -105,7 +105,7 @@ export const TechPage = () => {
                 We're a team of young entrepreneurs with a new take on an old idea. We saw the power of modern natural language processing and saw it could help people learn more effectively and efficiently.
             </p>
             <p>
-                At EOFIS, we recognize that we live in a knowledge economy.
+                At eofis, we recognize that we live in a knowledge economy.
                 The human brain is only as powerful as the information it has available.
                 We believe that the right approach and technological assistance can trigger the next great leap in human understanding.
             </p>
@@ -118,7 +118,7 @@ export const TechPage = () => {
             <h2>What We Do</h2>
             <h4>The Learning Revolution</h4>
             <p>
-                At EOFIS, we develop new technologies using the efficiency of spaced repetition and powerful and easy customization tools to enhance people's learning and retaining experience.
+                At eofis, we develop new technologies using the efficiency of spaced repetition and powerful and easy customization tools to enhance people's learning and retaining experience.
             </p>
             <p>
                 Our mission is to allow everyone to learn and retain useful information without spending excessive hours studying!
