@@ -81,6 +81,7 @@
     background: var(--colour-light-bg)
     &>div
         display: flex
+        flex-wrap: wrap
         flex-direction: row
         justify-content: space-around
         gap: 16px
@@ -89,6 +90,8 @@
             border-radius: 50%
             background: #f04b4b
             flex: 1 0
+            min-width: 250px
+            max-width: 25%
             h1, h2, h3
                 color: white
                 text-align: center
