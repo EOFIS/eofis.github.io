@@ -17,29 +17,14 @@
   display: flex
   flex-direction: column
   font-size: 16pt
-  text-align: center
+  height: max-content
   color: var(--colour-primary-text)
   nav
-    ul
-      list-style-type: none
-      margin: 0
-      padding: 0
-      overflow: hidden
-      float: right
-      display: block
-      li
-        float: left
-        a
-          text-decoration: none
-          text-align: center
-          display: block
-          padding: 0.5em 1em
-          transition: color 0.2s
-          &:hover
-            color: var(--colour-primary-textHover)
-          color: var(--font-colour-layer0-normal)
-        .left
-          float: left
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+    height: max-content
 .App-content
     flex-grow: 1
 .App-footer
@@ -70,7 +55,7 @@
             margin: 16px 0 4px 0  
 
 .pull-left
-  display: inline-block
+  width: max-content
   float: left
 
 .App-link

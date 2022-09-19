@@ -1,0 +1,24 @@
+.styled-nav
+    display: flex
+    flex-direction: column
+    justify-content: center
+    background: var(--colour-bg)
+    height: 100vh
+    text-align: left
+    padding: 2rem
+    position: absolute
+    top: 0
+    right: 0
+    a
+        font-size: 2rem
+        text-transform: uppercase
+        padding: 2rem 0
+        font-weight: bold
+        letter-spacing: 0.5rem
+        color: var(--colour-dark-text)
+        text-decoration: none
+        transition: color 0.3s linear
+        &:hover
+            color: var(--colour-primary-textHover)
+.styled-nav-hidden
+    display: none
