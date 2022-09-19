@@ -29,7 +29,7 @@ export const App = () => {
           </Link>
           <div ref={menu}>
             <Burger open={navbarOpen} setOpen={setNavbarOpen}/>
-            <Menu open={navbarOpen}/>
+            <Menu open={navbarOpen} setOpen={setNavbarOpen}/>
           </div>
         </nav>
       </header>

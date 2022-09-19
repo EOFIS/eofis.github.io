@@ -13,7 +13,6 @@ export const Burger = ({
     <div
       onClick={() => {
         setOpen((prev: any) => !prev);
-        console.log(open);
       }}
       className={style["styled-menu-btn"]}
     >
