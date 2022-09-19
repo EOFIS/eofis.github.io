@@ -2,7 +2,7 @@ import style from "./App.module.sass";
 import { Link, Route, Switch } from "react-router-dom";
 import { ContactPage } from "./pages/contact/ContactPage";
 import { HomePage } from "./pages/home/HomePage";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ConfirmSubscriptionPage } from "./pages/confirm-subscription/ConfirmSubscriptionPage";
 import { BlogPage } from "./pages/blog/BlogPage";
 import { AboutPage } from "./pages/about/AboutPage";
@@ -12,9 +12,13 @@ import { HeartFill } from "react-bootstrap-icons";
 import { Linkedin } from "./components/LinkedIn";
 import { Burger } from "./components/Burger"
 import { Menu } from "./components/Menu"
+import { useOnClickOutside } from './hooks';
 
 export const App = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
+
+    const menu = useRef(null); 
+    useOnClickOutside(menu, () => setNavbarOpen(false));    
 
   return (
     <div className={style["App"]}>
@@ -23,7 +27,7 @@ export const App = () => {
           <Link to="/" className={style["pull-left"]}>
             <Logo image />
           </Link>
-          <div>
+          <div ref={menu}>
             <Burger open={navbarOpen} setOpen={setNavbarOpen}/>
             <Menu open={navbarOpen}/>
           </div>
