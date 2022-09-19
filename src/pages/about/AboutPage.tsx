@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { PersonList } from "../../components/PersonList";
 import style from "./About.module.sass";
-import logo from "../../logo.svg";
+import logo from "../../img/logo.svg";
 
 export const AboutPage = () => {
   const ourstory = useRef(null);
