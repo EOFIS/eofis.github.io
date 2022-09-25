@@ -49,14 +49,12 @@ export const BlogPage = () => {
     }, []);
 
     const reloadBlogs = () => {
-        console.debug('RELOAD BLOGS');
         const bp = [...blogPreviews];
         bp.forEach((ibp) => {
             readBlogFile(ibp.identifier)
             .then((text) => ibp.previewHTML = sanitize(marked.parse(text.slice(0, previewLengthCharacters))))
             .then(() => setBlogPreviews([...bp.filter((fbp) => fbp.identifier !== ibp.identifier), ibp]));
         });
-        // setBlogPreviews(bp);
     }
     return <div className="blog-container">
         {
@@ -64,7 +62,6 @@ export const BlogPage = () => {
                 <div dangerouslySetInnerHTML={{ __html: blogHTML }} />
                 :
                 <>
-                    {/* {console.log(blogPreviews)} */}
                     {
                         blogPreviews.every((bp) => bp.previewHTML !== undefined) && blogPreviews?.map((bp, bpi) => <div key={bpi} title={bp.title} className="blog-preview">
                             <div dangerouslySetInnerHTML={{ __html: bp.previewHTML!! }} className="content" />
