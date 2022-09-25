@@ -2,7 +2,7 @@
     display: flex
     flex-direction: column
     justify-content: center
-    background: var(--colour-bg)
+    background: var(--colour-light-bg)
     height: 100vh
     text-align: left
     padding: 2rem
@@ -15,10 +15,23 @@
         padding: 2rem 0
         font-weight: bold
         letter-spacing: 0.5rem
-        color: var(--colour-dark-text)
+        color: var(--colour-light-text)
         text-decoration: none
         transition: color 0.3s linear
         &:hover
             color: var(--colour-primary-textHover)
 .styled-nav-hidden
     display: none
+
+.cross
+    position: absolute
+    top: 0
+    right: 0
+    padding: 8px 0px
+    width: 3rem
+    height: 3rem
+    cursor: pointer 
+    img
+        padding: 0
+        margin: 0
+        height: 100%

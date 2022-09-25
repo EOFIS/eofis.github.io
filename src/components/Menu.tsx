@@ -2,10 +2,25 @@ import React from "react";
 import { bool, func } from "prop-types";
 import style from "./Menu.module.sass";
 import { Link } from "react-router-dom";
+import cross from "../cross.png";
 
-export const Menu = ({ open, setOpen, }: { open: boolean; setOpen: Function; }) => {
+export const Menu = ({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: Function;
+}) => {
   return (
     <div className={open ? style["styled-nav"] : style["styled-nav-hidden"]}>
+      <div
+        className={style.cross}
+        onClick={() => {
+          setOpen((prev: any) => !prev);
+        }}
+      >
+        <img alt="Exit menu" src={cross} />
+      </div>
       <Link
         to="/about"
         onClick={() => {
