@@ -1,9 +1,8 @@
 import React from "react";
-import { bool, func } from "prop-types";
+import { func } from "prop-types";
 import style from "./Burger.module.sass";
 
 export const Burger = ({
-  open,
   setOpen,
 }: {
   open: boolean;
@@ -24,6 +23,5 @@ export const Burger = ({
 };
 
 Burger.propTypes = {
-  open: bool.isRequired,
   setOpen: func.isRequired,
 };
