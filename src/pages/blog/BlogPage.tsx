@@ -24,12 +24,19 @@ const readBlogFile = async (fileName: string) => {
 }
 
 export const BlogPage = () => {
-    const [blogPreviews, setBlogPreviews] = useState<Array<BlogPreview>>([{
-        identifier: 'sample', title: 'Sample blog', tags: ['Sample', 'Journey'],
-        writtenOn: new Date('2022-09-08T15:30.000Z')
-    }]);
+    const [blogPreviews, setBlogPreviews] = useState<Array<BlogPreview>>([
+        {
+            identifier: 'eofis-today-and-tomorrow', title: 'Eofis - today and tomorrow',
+            tags: ["Founder's journal"], writtenOn: new Date('2022-09-25T00:00.000Z')
+        },
+        // {
+        //     identifier: 'sample', title: 'Sample blog', tags: ['Sample', 'Journey'],
+        //     writtenOn: new Date('2022-09-08T15:30.000Z')
+        // },
+    ]);
     const { id } = useParams<{ id?: string }>();
     const [blogHTML, setBlogHTML] = useState<string>();
+
     useEffect(() => {
         if (id)
             readBlogFile(id).then((text) => setBlogHTML(sanitize(marked.parse(text))))
@@ -42,26 +49,29 @@ export const BlogPage = () => {
     }, []);
 
     const reloadBlogs = () => {
+        console.debug('RELOAD BLOGS');
         const bp = [...blogPreviews];
-        bp.forEach((bp) => {
-            readBlogFile(bp.identifier).then((text) => bp.previewHTML = sanitize(marked.parse(text.slice(0, previewLengthCharacters))))
+        bp.forEach((ibp) => {
+            readBlogFile(ibp.identifier)
+            .then((text) => ibp.previewHTML = sanitize(marked.parse(text.slice(0, previewLengthCharacters))))
+            .then(() => setBlogPreviews([...bp.filter((fbp) => fbp.identifier !== ibp.identifier), ibp]));
         });
-        setBlogPreviews(bp);
+        // setBlogPreviews(bp);
     }
-    return <div className="centreContent">
+    return <div className="blog-container">
         {
             id && blogHTML ?
-                <div className="blog-container" dangerouslySetInnerHTML={{__html: blogHTML}}/>
+                <div dangerouslySetInnerHTML={{ __html: blogHTML }} />
                 :
                 <>
-                    <button onClick={reloadBlogs}>Reload Blogs</button>
-                    {console.log(blogPreviews)}
+                    {/* {console.log(blogPreviews)} */}
                     {
-                        blogPreviews?.map((bp, bpi) => <div key={bpi} title={bp.title} className="blog-preview">
-                            <div dangerouslySetInnerHTML={{ __html: bp.previewHTML||'' }} className="content"/>
+                        blogPreviews.every((bp) => bp.previewHTML !== undefined) && blogPreviews?.map((bp, bpi) => <div key={bpi} title={bp.title} className="blog-preview">
+                            <div dangerouslySetInnerHTML={{ __html: bp.previewHTML!! }} className="content" />
                             <Link to={`/blog/${bp.identifier}`}>Read more</Link>
                         </div>)
                     }
+                    {/* <button onClick={reloadBlogs}>Reload Blogs</button> */}
                 </>
         }
     </div>
