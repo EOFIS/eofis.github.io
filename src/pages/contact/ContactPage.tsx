@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+import FAQBanner from "../../components/FAQBanner"
+import questions from "./FAQ.json"
+
 export const ContactPage = () => {
   const [inputs, setInputs] = useState<ContactUsFormInputs>({
     name: "",
@@ -42,7 +45,7 @@ export const ContactPage = () => {
           value={inputs.message}
           onChange={handleChange}
         />
-        <input type="submit" value="Send"/>
+        <input type="submit" value="Send" />
       </form>
       {/* <p>
         We would love to hear from you, whatever your query. Please email one of
@@ -54,6 +57,19 @@ export const ContactPage = () => {
         <li>info &lt;at&gt; eofis.ie : for general queries.</li>
         <li>support &lt;at&gt; eofis.ie : for help with our software.</li>
       </ul> */}
+      <div className="full-height-screen">
+          <div className="centreContent">
+            <h1>Frequently Asked Questions</h1>
+            <FAQBanner>
+                {questions.map((question) => (
+                    <FAQBanner.Entity key={question.id}>
+                        <FAQBanner.Question>{question.question}</FAQBanner.Question>
+                        <FAQBanner.Text>{question.answer}</FAQBanner.Text>
+                    </FAQBanner.Entity>
+                ))}
+            </FAQBanner>
+          </div>
+      </div>
     </div>
   );
 };
