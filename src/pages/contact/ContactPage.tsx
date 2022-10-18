@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import FAQBanner from "../../components/FAQBanner"
-import questions from "./FAQ.json"
+import FAQBanner from "../../components/FAQBanner";
+import questions from "./FAQ.json";
 
 export const ContactPage = () => {
   const [inputs, setInputs] = useState<ContactUsFormInputs>({
@@ -38,8 +38,7 @@ export const ContactPage = () => {
           value={inputs.email}
           onChange={handleChange}
         />
-        <input
-          type="text"
+        <textarea
           name="message"
           placeholder="Message"
           value={inputs.message}
@@ -57,19 +56,15 @@ export const ContactPage = () => {
         <li>info &lt;at&gt; eofis.ie : for general queries.</li>
         <li>support &lt;at&gt; eofis.ie : for help with our software.</li>
       </ul> */}
-      <div className="full-height-screen">
-          <div className="centreContent">
-            <h1>Frequently Asked Questions</h1>
-            <FAQBanner>
-                {questions.map((question) => (
-                    <FAQBanner.Entity key={question.id}>
-                        <FAQBanner.Question>{question.question}</FAQBanner.Question>
-                        <FAQBanner.Text>{question.answer}</FAQBanner.Text>
-                    </FAQBanner.Entity>
-                ))}
-            </FAQBanner>
-          </div>
-      </div>
+      <h1>Frequently Asked Questions</h1>
+      <FAQBanner>
+        {questions.map((question) => (
+          <FAQBanner.Entity key={question.id}>
+            <FAQBanner.Question>{question.question}</FAQBanner.Question>
+            <FAQBanner.Text>{question.answer}</FAQBanner.Text>
+          </FAQBanner.Entity>
+        ))}
+      </FAQBanner>
     </div>
   );
 };

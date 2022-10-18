@@ -1,11 +1,10 @@
 import styled from "styled-components/macro";
 
 export const Container = styled.div`
-  border-bottom: 9px solid #070707;
-  display: flex;
+  padding: 5px
 `;
 export const Entity = styled.div`
-  border: 1px solid #070707;
+  border-bottom: 5px solid #070707;
   width: 99%;
   margin-bottom: 10px;
   margin: auto;
