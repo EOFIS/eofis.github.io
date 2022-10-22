@@ -18,34 +18,36 @@ export const ContactPage = () => {
 
   return (
     <div className="centreContent">
-      <h1>Contact Us</h1>
-      <h2>Have questions?</h2>
-      <h3>
-        Check out our FAQs below or get in touch if you don't find your answer
-      </h3>
-      <form>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={inputs.name}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="email"
-          placeholder="Email"
-          value={inputs.email}
-          onChange={handleChange}
-        />
-        <textarea
-          name="message"
-          placeholder="Message"
-          value={inputs.message}
-          onChange={handleChange}
-        />
-        <input type="submit" value="Send" />
-      </form>
+      <div >
+        <h1>Contact Us</h1>
+        <h2>Have questions?</h2>
+        <h3>
+          Check out our FAQs below or get in touch if you don't find your answer
+        </h3>
+        <form>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={inputs.name}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="email"
+            placeholder="Email"
+            value={inputs.email}
+            onChange={handleChange}
+          />
+          <textarea
+            name="message"
+            placeholder="Message"
+            value={inputs.message}
+            onChange={handleChange}
+          />
+          <input type="submit" value="Send" />
+        </form>
+      </div>
       {/* <p>
         We would love to hear from you, whatever your query. Please email one of
         the below addresses and we'll respond as soon as possible or send us a
@@ -56,15 +58,17 @@ export const ContactPage = () => {
         <li>info &lt;at&gt; eofis.ie : for general queries.</li>
         <li>support &lt;at&gt; eofis.ie : for help with our software.</li>
       </ul> */}
-      <h1>Frequently Asked Questions</h1>
-      <FAQBanner>
-        {questions.map((question) => (
-          <FAQBanner.Entity key={question.id}>
-            <FAQBanner.Question>{question.question}</FAQBanner.Question>
-            <FAQBanner.Text>{question.answer}</FAQBanner.Text>
-          </FAQBanner.Entity>
-        ))}
-      </FAQBanner>
+      <div>
+        <h1>Frequently Asked Questions</h1>
+        <FAQBanner>
+          {questions.map((question) => (
+            <FAQBanner.Entity key={question.id}>
+              <FAQBanner.Question>{question.question}</FAQBanner.Question>
+              <FAQBanner.Text>{question.answer}</FAQBanner.Text>
+            </FAQBanner.Entity>
+          ))}
+        </FAQBanner>
+      </div>
     </div>
   );
 };

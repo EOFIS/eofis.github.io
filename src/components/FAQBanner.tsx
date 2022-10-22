@@ -14,7 +14,7 @@ Banner.Entity = function BannerEntity({ children, ...restProps }:{children: Reac
   const [open, setOpen] = useState(false);
   return (
     <QuestionContext.Provider value={{ open, setOpen }}>
-      <Entity {...restProps}> {children}</Entity>
+      <Entity {...restProps}>{children}</Entity>
     </QuestionContext.Provider>
   );
 };

@@ -4,13 +4,8 @@ export const Container = styled.div`
   padding: 5px
 `;
 export const Entity = styled.div`
-  border-bottom: 5px solid #070707;
   width: 99%;
-  margin-bottom: 10px;
   margin: auto;
-  &:first-of-type {
-    margin-top: 1.5em;
-  }
 `;
 export const Inner = styled.div`
   padding: 75px 40px;
@@ -19,21 +14,24 @@ export const Inner = styled.div`
   display: flex;
 `;
 export const Question = styled.div`
+  border-bottom: 3px solid #070707;
   font: 25px;
   justify-content: space-between;
   cursor: pointer;
-  margin-bottom: 2px;
+  margin: 10px;
   display: flex;
-  font-weight: normal;
-  padding: 0.75em 1.12em;
+  font-weight: bold;
+  padding: 0 1.12em;
   align-items: center;
 `;
 export const Text = styled.p`
+  border-bottom: 3px solid #070707;
   max-height: 1190px;
   font-size: 16px;
   font-weight: 500;
   line-height: normal;
   transition: max-height 0.23s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 0.9em 2.1em 0.7em 1.4em;
+  padding: 0em 1.12em 0.75em 1.12em;
   user-select: none;
+  margin: 10px;
 `;
