@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import emailjs from '@emailjs/browser';
 
 import FAQBanner from "../../components/FAQBanner";
 import questions from "./FAQ.json";
 
 export const ContactPage = () => {
+
   const [inputs, setInputs] = useState<ContactUsFormInputs>({
-    name: "",
-    email: "",
+    from_name: "",
+    user_email: "",
     message: "",
   });
 
@@ -16,6 +18,17 @@ export const ContactPage = () => {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    emailjs.sendForm('contact_service', 'contact_form_temp', e.target, '19ERP2s4UApNutDUw')
+      .then((result: { text: any; }) => {
+          console.log(result.text);
+      }, (error: { text: any; }) => {
+          console.log(error.text);
+      });
+  };
+
   return (
     <div className="centreContent">
       <div >
@@ -23,20 +36,20 @@ export const ContactPage = () => {
         <h2>Have questions?</h2>
         <h3>
           Check out our FAQs below or get in touch if you don't find your answer
-        </h3>
-        <form>
+        </h3 >
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
-            name="name"
+            name="from_name"
             placeholder="Name"
-            value={inputs.name}
+            value={inputs.from_name}
             onChange={handleChange}
           />
           <input
             type="text"
-            name="email"
+            name="user_email"
             placeholder="Email"
-            value={inputs.email}
+            value={inputs.user_email}
             onChange={handleChange}
           />
           <textarea
@@ -45,7 +58,7 @@ export const ContactPage = () => {
             value={inputs.message}
             onChange={handleChange}
           />
-          <input type="submit" value="Send" />
+          <input type="submit" value="Send"/>
         </form>
       </div>
       {/* <p>
@@ -74,7 +87,7 @@ export const ContactPage = () => {
 };
 
 export interface ContactUsFormInputs {
-  name: string;
-  email: string;
+  from_name: string;
+  user_email: string;
   message: string;
 }
