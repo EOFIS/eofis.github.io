@@ -3,14 +3,22 @@ import emailjs from '@emailjs/browser';
 
 import FAQBanner from "../../components/FAQBanner";
 import questions from "./FAQ.json";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const ContactPage = () => {
 
-  const [inputs, setInputs] = useState<ContactUsFormInputs>({
+  const initialInputs = {
     from_name: "",
     user_email: "",
     message: "",
-  });
+  }
+
+  const [inputs, setInputs] = useState<ContactUsFormInputs>(initialInputs);
+  
+  const clearInputs = () => {
+    setInputs({ ...initialInputs });
+  };
 
   const handleChange = (event: { target: { name: any; value: any } }) => {
     const name = event.target.name;
@@ -18,15 +26,25 @@ export const ContactPage = () => {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  const showToastMessage = () => {
+    toast.success('Contact form successfully submitted!', {
+        position: toast.POSITION.BOTTOM_RIGHT
+    });
+};
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
     emailjs.sendForm('contact_service', 'contact_form_temp', e.target, '19ERP2s4UApNutDUw')
       .then((result: { text: any; }) => {
           console.log(result.text);
+          clearInputs()
+
       }, (error: { text: any; }) => {
           console.log(error.text);
       });
+
+    showToastMessage()
   };
 
   return (
@@ -60,6 +78,7 @@ export const ContactPage = () => {
           />
           <input type="submit" value="Send"/>
         </form>
+        <ToastContainer />
       </div>
       {/* <p>
         We would love to hear from you, whatever your query. Please email one of
