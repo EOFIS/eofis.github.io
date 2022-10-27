@@ -20,7 +20,7 @@ export const ContactPage = () => {
     setInputs({ ...initialInputs });
   };
 
-  const handleChange = (event: { target: { name: any; value: any } }) => {
+  const handleChange = (event: { target: FormField }) => {
     const name = event.target.name;
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
@@ -32,10 +32,11 @@ export const ContactPage = () => {
     });
 };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    emailjs.sendForm('contact_service', 'contact_form_temp', e.target, '19ERP2s4UApNutDUw')
+    const target = e.target as HTMLFormElement
+    emailjs.sendForm('contact_service', 'contact_form_temp', target, '19ERP2s4UApNutDUw')
       .then((result: { text: any; }) => {
           console.log(result.text);
           clearInputs()
@@ -80,16 +81,6 @@ export const ContactPage = () => {
         </form>
         <ToastContainer />
       </div>
-      {/* <p>
-        We would love to hear from you, whatever your query. Please email one of
-        the below addresses and we'll respond as soon as possible or send us a
-        message via{" "}
-        <a href="https://www.linkedin.com/company/eofis-ie/">LinkedIn</a>
-      </p>
-      <ul>
-        <li>info &lt;at&gt; eofis.ie : for general queries.</li>
-        <li>support &lt;at&gt; eofis.ie : for help with our software.</li>
-      </ul> */}
       <div>
         <h1>Frequently Asked Questions</h1>
         <FAQBanner>
@@ -109,4 +100,10 @@ export interface ContactUsFormInputs {
   from_name: string;
   user_email: string;
   message: string;
+}
+
+export interface FormField {
+  name: string;
+  value: string;
+  placeholder: string;
 }
