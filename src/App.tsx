@@ -59,7 +59,7 @@ export const App = () => {
         </Switch>
       </div>
       <footer className={style["App-footer"]}>
-        <div className="centreContent">
+        <div>
           <div>
             <Logo image />
             <div>
