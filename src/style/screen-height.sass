@@ -6,7 +6,7 @@
         display: flex
         align-items: center
         justify-content: space-around
-        padding: 8px
+        padding: 50px
         gap: 8px
         max-width: var(--width-centering-max)
         height: 100%
@@ -62,9 +62,6 @@
     &>*:nth-child(2)
         flex: 2 0
 
-@mixin animate($animation,$duration,$method,$times)
-    animation: $animation $duration $method $times
-
 @mixin keyframes($name)
     @keyframes #{$name}
         @content
@@ -74,15 +71,13 @@
         0%, 100% 
             transform: translate(0, 0)
         50% 
-            transform: translate(0, -100px)
+            transform: translate(0, -50px)
     &>*
         animation: bounce 1s ease 2 alternate
-        &:nth-child(1)
-            animation-delay: 0s
-        &:nth-child(2)
-            animation-delay: 0.2s
-        &:nth-child(3)
-            animation-delay: 0.4s
+        @for $i from 1 through 3
+            $delay: ($i * 0.1)
+            &:nth-child(3n + #{$i})
+                animation-delay: #{$delay}s
 
 .with-underlay
     &>div

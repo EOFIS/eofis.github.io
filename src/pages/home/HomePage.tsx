@@ -7,11 +7,14 @@ import logo from "../../img/logo.svg";
 export const HomePage = () => {
 
     const textBubble = useRef<HTMLDivElement>(null);
-    const isInViewport1 = useIsInViewport(textBubble);
+    const isTextBubbleInViewport = useIsInViewport(textBubble);
 
-    if (isInViewport1 && textBubble.current) {
-        console.log(textBubble.current.className)
+    if (isTextBubbleInViewport && textBubble.current) {
         textBubble.current.classList.add('underlay-animation')
+    }
+
+    if (!isTextBubbleInViewport && textBubble.current) {
+        textBubble.current.classList.remove('underlay-animation')
     }
 
     return <div className={style.home}>
