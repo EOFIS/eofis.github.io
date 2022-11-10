@@ -36,15 +36,15 @@ export const HomePage = () => {
         </div>
         <div className="full-height-screen" style={{ background: 'var(--colour-light-bg)'}}>
             <div className="full-width-container w1-2 with-underlay">
-                <div ref={textBubble} className="bubbles">
-                    <div className="bubble">
+                <div ref={textBubble}>
+                    <div>
                         <h4>No-hassle generated quizzes</h4>
                         <p>
                             Our automatic generation models work to turn your text into flashcards that capture the key points of your text.
                             Using state of the art natural processing eofis turns any text into a set of flashcards that we store in your concept map and show you in a quiz just when you need to remember them.
                         </p>
                     </div>
-                    <div className="bubble">
+                    <div>
                         <h4>Automatic study timetable</h4>
                         <p>
                             Remember anything you want with the proven spaced repetition study method.
@@ -53,7 +53,7 @@ export const HomePage = () => {
                             eofis will just reschedule your learning and you can pick up where you left off.
                         </p>
                     </div>
-                    <div className="bubble">
+                    <div>
                         <h4>Organise and link your notes</h4>
                         <p>
                             Never lose a note again with our automatic yet personalisable visual concept map that links everything together.

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { PersonList } from "../../components/PersonList";
 import style from "./About.module.sass";
 import logo from "../../img/logo.svg";
@@ -16,6 +16,17 @@ export const AboutPage = () => {
       });
     }
   };
+
+  const textBubble = useRef<HTMLDivElement>(null);
+  const isTextBubbleInViewport = useIsInViewport(textBubble);
+
+  if (isTextBubbleInViewport && textBubble.current) {
+      textBubble.current.classList.add('underlay-animation')
+  }
+
+  if (!isTextBubbleInViewport && textBubble.current) {
+      textBubble.current.classList.remove('underlay-animation')
+  }
 
   return (
     <div>
@@ -64,7 +75,7 @@ export const AboutPage = () => {
         <div className={style["section"]}>
           <h1>Our Mission</h1>
           <div className="full-width-container w1-2 with-circle-underlay">
-            <div>
+            <div ref={textBubble}>
               <div>
                 <h2>Envision</h2>
                 <h4>Creating a personal Internet of Knowledge</h4>
@@ -135,3 +146,26 @@ export const AboutPage = () => {
     </div>
   );
 };
+
+function useIsInViewport(ref: React.RefObject<HTMLDivElement>) {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+
+  const observer = useMemo(
+    () =>
+      new IntersectionObserver(([entry]) =>
+        setIsIntersecting(entry.isIntersecting),
+      ),
+    [],
+  );
+
+  useEffect(() => {
+      if (ref.current)
+          observer.observe(ref.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [ref, observer]);
+
+  return isIntersecting;
+}
