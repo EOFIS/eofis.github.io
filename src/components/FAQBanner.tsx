@@ -1,12 +1,12 @@
 import React, { useState, ReactNode } from "react";
-import { Container, Entity, Inner, Question, Text } from "./FAQBannerStyle";
+import style from "./FAQBanner.module.sass";
 
 const QuestionContext = React.createContext<any | null>(null);
 export default function Banner({ children, ...restProps }:{children: ReactNode}) {
   return (
-    <Container {...restProps}>
-      <Inner>{children}</Inner>
-    </Container>
+    <div className={style.container} {...restProps}>
+      <div className={style.Inner}>{children}</div>
+    </div>
   );
 }
 
@@ -14,7 +14,7 @@ Banner.Entity = function BannerEntity({ children, ...restProps }:{children: Reac
   const [open, setOpen] = useState(false);
   return (
     <QuestionContext.Provider value={{ open, setOpen }}>
-      <Entity {...restProps}>{children}</Entity>
+      <div className={style.entity} {...restProps}>{children}</div>
     </QuestionContext.Provider>
   );
 };
@@ -23,15 +23,15 @@ Banner.Question = function BannerHeader({ children, ...restProps }:{children: Re
   const { open, setOpen } = React.useContext(QuestionContext);
 
   return (
-    <Question onClick={() => setOpen((open: any) => !open)} {...restProps}>
+    <div className={style.question} onClick={() => setOpen((open: any) => !open)} {...restProps}>
       {children}
       {open ? <h3>^</h3> : <h3>+</h3>}
-    </Question>
+    </div>
   );
 };
 
 Banner.Text = function BannerText({ children, ...restProps }:{children: ReactNode}) {
   const { open } = React.useContext(QuestionContext);
 
-  return open ? <Text {...restProps}>{children}</Text> : null;
+  return open ? <p className={style.answer} {...restProps}>{children}</p> : null;
 };
