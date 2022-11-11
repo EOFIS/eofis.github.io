@@ -89,61 +89,54 @@
         transform: rotate(720deg)
 
 .card
-    font-size: 30px
+    font-size: var(--font-size-small)
     font-weight: bolder
-    width: 40px
-    height: 60px
     display: flex
+    gap: 8px
+    flex-direction: row
     align-items: center
-    justify-content: center
+    justify-content: flex-start
 
-    transform-style: preserve-3d
-
-    animation-name: rotateAndShow, spewExpand, hideUntilOut
+    animation-name: spewExpand, hideUntilOut
     animation-duration: 20s
     animation-iteration-count: infinite
     animation-timing-function: ease
     animation-direction: normal
     animation-fill-mode: none
-    &>.back, &>.front
-        height: 100%
-        width: 100%
+    color: white
+
+    &>*.title
+        align-self: center
+        // color: var(--colour-light-text)
+        animation: titleColour 20s ease 0s infinite normal none
+    &>*.front
+        height: 60px
+        width: 40px
         display: flex
         justify-content: center
         align-items: center
-        position: absolute
         backface-visibility: hidden
-        transform-style: preserve-3d
-        animation: hideUntilOutEarly 10s ease 0s infinite normal none
-    &>.back
-        transform: rotateY(180deg)
-        color: black
+        animation: hideUntilOut 20s ease 0s infinite normal none
         opacity: 1
-    &>.front
-        background: black
-        color: white
-        opacity: 1
+        box-shadow: 1px 1px grey
+        border-radius: 4px
+        &>svg
+            font-size: var(--font-size-large)
+@keyframes titleColour
+    0%, 58%, 66%, 100%
+        color: var(--colour-light-text)
+    60%, 64%
+        color: var(--colour-logo-red)
 
-@keyframes rotateAndShow
-    0%, 54%
-        transform: rotateY(0deg)
-    58%, 100%
-        transform: rotateY(180deg)
-
-@keyframes hideUntilOutEarly
-    0%, 47%, 96%, 100%
-        opacity: 0
-    48%, 95%
-        opacity: 1
 
 @keyframes hideUntilOut
-    0%, 47%, 96%, 100%
+    0%, 45%, 95.1%, 100%
         opacity: 0
-    50%, 95%
+    46%, 95%
         opacity: 1
-        
+
 @keyframes spewExpand
-    0%, 48.5%
+    0%, 49%
         height: 0
     50%, 100%
         height: 60px
@@ -152,23 +145,30 @@
     position: relative
     display: flex
     flex-direction: column
-    gap: 8px
+    gap: 16px
     background: none
-    &>*.card>*
-        animation: hideUntilOut 20s ease 0.9s infinite normal none
-        // animation: hideUntilOut 5s ease 0s infinite normal none
+    &>*.card>*.front
+        animation: hideUntilOut 20s ease 0s infinite normal none
     &>*:nth-child(1)
-        animation-delay: 0.3s
-        *.back
+        &>.title
+            animation-delay: 0s
+        &>*.front
             background: var(--colour-list-1)
     &>*:nth-child(2)
-        animation-delay: 0.6s
-        *.back
+        &>.title
+            animation-delay: 1s
+        &>*.front
             background: var(--colour-list-2)
     &>*:nth-child(3)
-        animation-delay: 0.9s
-        *.back
+        &>.title
+            animation-delay: 2s
+        &>*.front
             background: var(--colour-list-3)
+    &>*:nth-child(4)
+        &>.title
+            animation-delay: 3s
+        &>*.front
+            background: var(--colour-list-4)
     animation: spewCards 20s ease 0s infinite normal none
 @keyframes spewCards
     0%, 48%
