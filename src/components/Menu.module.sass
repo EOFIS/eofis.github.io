@@ -1,3 +1,13 @@
+@mixin keyframes($name)
+    @keyframes #{$name}
+        @content
+    
+
+@include keyframes(slide)
+        0%
+            transform: translateX(+100%)
+        100%
+            transform: translateX(0%)   
 .styled-nav
     display: flex
     flex-direction: column
@@ -9,6 +19,7 @@
     position: fixed
     top: 0
     right: 0
+    animation: slide 1s ease 1 alternate
     a
         font-size: 2rem
         text-transform: uppercase
@@ -17,7 +28,6 @@
         letter-spacing: 0.5rem
         color: var(--colour-light-text)
         text-decoration: none
-        transition: color 0.3s linear
         &:hover
             color: var(--colour-primary-textHover)
 .styled-nav-hidden

@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./Home.module.sass";
 import decorativeConceptMap from "../../img/decorativeConceptMap.svg";
-import { Asterisk, Calendar2Week, ChatText, Diagram2, Diagram3, PeopleFill, QuestionCircle } from "react-bootstrap-icons";
 import logo from "../../img/logo.svg";
 
 export const HomePage = () => {
+
+    const textBubble = useRef<HTMLDivElement>(null);
+    const isTextBubbleInViewport = useIsInViewport(textBubble);
+
+    if (isTextBubbleInViewport && textBubble.current) {
+        textBubble.current.classList.add('underlay-animation')
+    }
+
+    if (!isTextBubbleInViewport && textBubble.current) {
+        textBubble.current.classList.remove('underlay-animation')
+    }
+
     return <div className={style.home}>
         <div className="full-height-screen">
             <div className="full-width-container">
@@ -19,15 +30,14 @@ export const HomePage = () => {
                     </h3>
                 </div>
                 <div>
-                    <img title="Concept map diagram" src={decorativeConceptMap} />
+                    <img title="Concept map diagram" alt="Concept map" src={decorativeConceptMap} />
                 </div>
             </div>
         </div>
-        <div className="full-height-screen" style={{ background: 'var(--colour-light-bg)' }}>
+        <div className="full-height-screen" style={{ background: 'var(--colour-light-bg)'}}>
             <div className="full-width-container w1-2 with-underlay">
-                <div>
+                <div ref={textBubble}>
                     <div>
-                        <div className="icon-container"><QuestionCircle /><ChatText /></div>
                         <h4>No-hassle generated quizzes</h4>
                         <p>
                             Our automatic generation models work to turn your text into flashcards that capture the key points of your text.
@@ -35,7 +45,6 @@ export const HomePage = () => {
                         </p>
                     </div>
                     <div>
-                        <div className="icon-container"><Calendar2Week /></div>
                         <h4>Automatic study timetable</h4>
                         <p>
                             Remember anything you want with the proven spaced repetition study method.
@@ -45,7 +54,6 @@ export const HomePage = () => {
                         </p>
                     </div>
                     <div>
-                        <div className="icon-container"><Asterisk /><Diagram2 /><Diagram3 /></div>
                         <h4>Organise and link your notes</h4>
                         <p>
                             Never lose a note again with our automatic yet personalisable visual concept map that links everything together.
@@ -55,7 +63,6 @@ export const HomePage = () => {
                 </div>
                 <div className="underlay-container">
                     <div>
-                        <div className="icon-container"><PeopleFill /></div>
                         <h4>Connections aren't just for data...</h4>
                         <p>Do you like to study like a lone wolf or prefer to run with the pack? We've got you covered either way with our opt-in powerful group learning system. Create study groups, informal competitions or just put the head down and crack on.</p>
                     </div>
@@ -74,3 +81,26 @@ export const HomePage = () => {
         </div>
     </div>
 };
+
+function useIsInViewport(ref: React.RefObject<HTMLDivElement>) {
+    const [isIntersecting, setIsIntersecting] = useState(false);
+  
+    const observer = useMemo(
+      () =>
+        new IntersectionObserver(([entry]) =>
+          setIsIntersecting(entry.isIntersecting),
+        ),
+      [],
+    );
+  
+    useEffect(() => {
+        if (ref.current)
+            observer.observe(ref.current);
+  
+      return () => {
+        observer.disconnect();
+      };
+    }, [ref, observer]);
+  
+    return isIntersecting;
+  }

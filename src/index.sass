@@ -1,4 +1,4 @@
-@use "./style/full-height-screen"
+@use "./style/screen-height"
 @use "./style/tick-list"
 
 :root
@@ -41,7 +41,7 @@
     --colour-light-bg: #f6faff
     --colour-dark-bg: #292c32
 
-    --width-centering-max: 1400px
+    --width-centering-max: 75%
     --width-centering-blog: 900px
 
     --colour-list-1: var(--colour-logo-red)
@@ -112,4 +112,8 @@ code
 
 .centreContent
     max-width: var(--width-centering-max)
+    display: flex
+    flex-direction: column
+    justify-content: space-between
     margin: 0 auto
+    padding: 0 10%

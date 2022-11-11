@@ -47,19 +47,19 @@ export const App = () => {
           <Route path="/confirm-subscription">
             <ConfirmSubscriptionPage />
           </Route>
-          <Route path="/blog/:id">
+          {/* <Route path="/blog/:id">
             <BlogPage />
           </Route>
           <Route path="/blog">
             <BlogPage />
-          </Route>
+          </Route> */}
           <Route path="/">
             <HomePage />
           </Route>
         </Switch>
       </div>
       <footer className={style["App-footer"]}>
-        <div className="centreContent">
+        <div>
           <div>
             <Logo image />
             <div>

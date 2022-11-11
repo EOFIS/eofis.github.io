@@ -45,14 +45,14 @@ export const Menu = ({
       >
         Contact.
       </Link>
-      <Link
+      {/* <Link
         to="/blog"
         onClick={() => {
           setOpen((prev: any) => !prev);
         }}
       >
         Blog.
-      </Link>
+      </Link> */}
     </div>
   );
 };
