@@ -75,7 +75,7 @@ export const HomePage = () => {
                 <div>
                     <h2>Start your certification journey with eofis tech.</h2>
                     <h2>Learn, manage, and track your progress on the go.</h2>
-                    <h2><Link to="/tech">Get Started</Link></h2>
+                    <h2><Link to="/tech#">Get Started</Link></h2>
                 </div>
             </div>
         </div>
