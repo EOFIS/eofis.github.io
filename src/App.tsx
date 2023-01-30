@@ -65,7 +65,7 @@ export const App = () => {
             <div>
               Made with <HeartFill color="red" /> in Éire
             </div>
-            © eofis ltd 2022
+            © eofis ltd 2023
           </div>
           <div>
             <h4>Help &amp; Support</h4>
