@@ -25,6 +25,11 @@ const readBlogFile = async (fileName: string) => {
 
 export const BlogPage = () => {
     const [blogPreviews, setBlogPreviews] = useState<Array<BlogPreview>>([
+        {
+            identifier: 'How-a-personalized-learning-journey-helps-retain-employees', title: 'How a personalized learning journey helps retain employees',
+            tags: ["personalisation", "retention"], writtenOn: new Date('2023-02-02T10:00.000Z')
+        },
+
         // {
         //     identifier: 'eofis-today-and-tomorrow', title: 'Eofis - today and tomorrow',
         //     tags: ["Founder's journal"], writtenOn: new Date('2022-09-25T00:00.000Z')
