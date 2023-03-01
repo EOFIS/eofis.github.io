@@ -50,9 +50,7 @@ export const App = () => {
           <Route path="/blog/:id">
             <BlogPage />
           </Route>
-          <Route path="/blog">
-            <BlogPage />
-          </Route>
+          <Route path="/blog" exact component={BlogPage}/>
           <Route path="/">
             <HomePage />
           </Route>

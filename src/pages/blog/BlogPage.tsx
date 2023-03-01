@@ -42,37 +42,73 @@ export const BlogPage = () => {
     const { id } = useParams<{ id?: string }>();
     const [blogHTML, setBlogHTML] = useState<string>();
 
-    useEffect(() => {
-        if (id)
-            readBlogFile(id).then((text) => setBlogHTML(sanitize(marked.parse(text))))
-    }, [id]);
+    // useEffect(() => {
+    //     if (id)
+    //         readBlogFile(id).then((text) => setBlogHTML(sanitize(marked.parse(text))))
+    // }, [id]);
 
     const previewLengthCharacters = 800;
 
+    // useEffect(() => {
+    //     reloadBlogs();
+    // }, []);
+
+    // const reloadBlogs = () => {
+    //     const bp = [...blogPreviews];
+    //     bp.forEach((ibp) => {
+    //         readBlogFile(ibp.identifier)
+    //         .then((text) => ibp.previewHTML = sanitize(marked.parse(text.slice(0, previewLengthCharacters))))
+    //         .then(() => setBlogPreviews([...bp.filter((fbp) => fbp.identifier !== ibp.identifier), ibp]));
+    //     });
+    // }
+    const [article, setArticle] = useState<{ title: string, body: string }>();
     useEffect(() => {
-        reloadBlogs();
+        if (id)
+            fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
+                .then(res => res.json())
+                .then((post: { title: string, body: string }) => setArticle(post))
+    }, [id]);
+
+
+    useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/posts')
+            .then(res => res.json())
+            .then(posts => posts.slice(0, 10))
+            .then(posts => setBlogPreviews(posts.map((p: { userId: number, id: string, title: string, body: string }) => {
+                return {
+                    identifier: p.id,//p.title.replace(/(<([^>]+)>)/ig, ''),
+                    title: p.title,
+                    tags: [],
+                    writtenOn: new Date()
+                }
+            })))
     }, []);
 
-    const reloadBlogs = () => {
-        const bp = [...blogPreviews];
-        bp.forEach((ibp) => {
-            readBlogFile(ibp.identifier)
-            .then((text) => ibp.previewHTML = sanitize(marked.parse(text.slice(0, previewLengthCharacters))))
-            .then(() => setBlogPreviews([...bp.filter((fbp) => fbp.identifier !== ibp.identifier), ibp]));
-        });
-    }
+
     return <div className="blog-container">
         {
-            id && blogHTML ?
-                <div dangerouslySetInnerHTML={{ __html: blogHTML }} />
+            // id && blogHTML ?
+            //     <div dangerouslySetInnerHTML={{ __html: blogHTML }} />
+            id && article ?
+            <div>
+                <h2>{article.title}</h2>
+                <article>{article.body}</article>
+                <p><Link to="/blog">Back to all posts</Link></p>
+                </div>
                 :
                 <>
-                    {
+                    <div>
+                        <h2>All blogs</h2>
+                        <ul>
+                            {blogPreviews.map((bp) => <li><Link to={`/blog/${bp.identifier}`}> {bp.title}</Link></li>)}
+                        </ul>
+                    </div>
+                    {/* {
                         blogPreviews.every((bp) => bp.previewHTML !== undefined) && blogPreviews?.map((bp, bpi) => <div key={bpi} title={bp.title} className="blog-preview">
                             <div dangerouslySetInnerHTML={{ __html: bp.previewHTML!! }} className="content" />
                             <Link to={`/blog/${bp.identifier}`}>Read more</Link>
                         </div>)
-                    }
+                    } */}
                     {/* <button onClick={reloadBlogs}>Reload Blogs</button> */}
                 </>
         }
