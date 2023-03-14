@@ -4,13 +4,21 @@ import { sanitize } from 'dompurify';
 import './blog.sass';
 import { Link, useParams } from "react-router-dom";
 
-interface BlogPreview {
+
+interface Author {
+    name: string;
+    pictureUrl: string;
+    blurb: string;
+}
+interface Article {
     identifier: string;
     title: string;
     tags: Array<string>;
     previewHTML?: string;
     coverImage?: string;
     writtenOn: Date;
+    author: Author;
+    blogHTML?: string;
 }
 
 const readBlogFile = async (fileName: string) => {
@@ -23,93 +31,66 @@ const readBlogFile = async (fileName: string) => {
         })
 }
 
+const tiarnach: Author = { name: "Tiarnach Ó Riada", pictureUrl: "/img/tiarnach.jpg", blurb: "Tiarnach is the CTO of eofis. He loves telling stories, fixing problems and finding cats in trees." };
+
 export const BlogPage = () => {
-    const [blogPreviews, setBlogPreviews] = useState<Array<BlogPreview>>([
+    const [articles, setArticles] = useState<Array<Article>>([
         {
             identifier: 'How-a-personalized-learning-journey-helps-retain-employees', title: 'How a personalized learning journey helps retain employees',
-            tags: ["personalisation", "retention"], writtenOn: new Date('2023-02-02T10:00.000Z')
+            tags: ["personalisation", "retention"], writtenOn: new Date('2023-02-02T10:00Z'),
+            author: tiarnach
         },
-
         // {
         //     identifier: 'eofis-today-and-tomorrow', title: 'Eofis - today and tomorrow',
-        //     tags: ["Founder's journal"], writtenOn: new Date('2022-09-25T00:00.000Z')
+        //     tags: ["Founder's journal"], writtenOn: new Date('2022-09-25T00:00Z')
         // },
         // {
         //     identifier: 'sample', title: 'Sample blog', tags: ['Sample', 'Journey'],
-        //     writtenOn: new Date('2022-09-08T15:30.000Z')
+        //     writtenOn: new Date('2022-09-08T15:30Z')
         // },
     ]);
     const { id } = useParams<{ id?: string }>();
-    const [blogHTML, setBlogHTML] = useState<string>();
+    const [article, setArticle] = useState<Article>();
 
-    // useEffect(() => {
-    //     if (id)
-    //         readBlogFile(id).then((text) => setBlogHTML(sanitize(marked.parse(text))))
-    // }, [id]);
-
-    const previewLengthCharacters = 800;
-
-    // useEffect(() => {
-    //     reloadBlogs();
-    // }, []);
-
-    // const reloadBlogs = () => {
-    //     const bp = [...blogPreviews];
-    //     bp.forEach((ibp) => {
-    //         readBlogFile(ibp.identifier)
-    //         .then((text) => ibp.previewHTML = sanitize(marked.parse(text.slice(0, previewLengthCharacters))))
-    //         .then(() => setBlogPreviews([...bp.filter((fbp) => fbp.identifier !== ibp.identifier), ibp]));
-    //     });
-    // }
-    const [article, setArticle] = useState<{ title: string, body: string }>();
     useEffect(() => {
-        if (id)
-            fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
-                .then(res => res.json())
-                .then((post: { title: string, body: string }) => setArticle(post))
+        const _article = articles.filter((a) => a.identifier === id).at(0);
+        if (_article !== undefined) {
+            readBlogFile(_article.identifier).then((text) => setArticle({
+                ..._article,
+                blogHTML: sanitize(marked.parse(text))
+            }))
+        }
     }, [id]);
-
-
-    useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(res => res.json())
-            .then(posts => posts.slice(0, 10))
-            .then(posts => setBlogPreviews(posts.map((p: { userId: number, id: string, title: string, body: string }) => {
-                return {
-                    identifier: p.id,//p.title.replace(/(<([^>]+)>)/ig, ''),
-                    title: p.title,
-                    tags: [],
-                    writtenOn: new Date()
-                }
-            })))
-    }, []);
-
 
     return <div className="blog-container">
         {
-            // id && blogHTML ?
-            //     <div dangerouslySetInnerHTML={{ __html: blogHTML }} />
-            id && article ?
-            <div>
-                <h2>{article.title}</h2>
-                <article>{article.body}</article>
-                <p><Link to="/blog">Back to all posts</Link></p>
+            id && article && article.blogHTML ?
+                <div>
+                    <p><Link to="/blog">Back to all posts</Link></p>
+                    <h2></h2>
+                    <article dangerouslySetInnerHTML={{ __html: article.blogHTML }} />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <div className="author-container">
+                        <img src={article.author.pictureUrl} alt={`Picture of the author, ${article.author.name}`} />
+                        <div>
+                            <b>{article.author.name}</b>
+                            <div>{article.author.blurb}</div>
+                        </div>
+                    </div>
+                    <p><Link to="/blog">Back to all posts</Link></p>
+
                 </div>
                 :
                 <>
                     <div>
                         <h2>All blogs</h2>
                         <ul>
-                            {blogPreviews.map((bp) => <li><Link to={`/blog/${bp.identifier}`}> {bp.title}</Link></li>)}
+                            {articles.map((bp) => <li key={bp.identifier}>{bp.writtenOn.toLocaleDateString()}<Link to={`/blog/${bp.identifier}`}> {bp.title}</Link></li>)}
                         </ul>
                     </div>
-                    {/* {
-                        blogPreviews.every((bp) => bp.previewHTML !== undefined) && blogPreviews?.map((bp, bpi) => <div key={bpi} title={bp.title} className="blog-preview">
-                            <div dangerouslySetInnerHTML={{ __html: bp.previewHTML!! }} className="content" />
-                            <Link to={`/blog/${bp.identifier}`}>Read more</Link>
-                        </div>)
-                    } */}
-                    {/* <button onClick={reloadBlogs}>Reload Blogs</button> */}
                 </>
         }
     </div>
